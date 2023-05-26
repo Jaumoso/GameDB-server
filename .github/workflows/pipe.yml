@@ -3,7 +3,8 @@ name: Build Test Run Analyze Containerize Push
 on:
   push:
     branches: 
-      # - main (remove hash symbol to activate pipeline)
+      - none
+      # main (replace with main to activate pipeline)
     paths-ignore:
       - '**/README.md'
 jobs:

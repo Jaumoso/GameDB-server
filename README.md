@@ -1,4 +1,16 @@
 # GameDB Web Application
+
+### TODO
+
+favicon.ico
+searchbar
+library
+home
+games
+login
+profile
+settings
+
 <!-- Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.
 
 ## Features (Work in Progress)
