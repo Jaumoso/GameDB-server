@@ -11,8 +11,8 @@ export class User {
     @Prop()
     password: string;
 
-    @Prop()
-    profilePic: string;
+/*     @Prop()
+    profilePic: string; */
 
     @Prop()
     joined: Date;

@@ -24,14 +24,29 @@ export class CreateUserDto {
     @IsNotEmpty()
     password: string;
 
+/*     @ApiProperty({
+        type: String, 
+        description: 'Imágen de perfil del usuario.',
+        example: 'assets/profilepic.png'
+    })
     @IsString()
-    profilePic: string;
+    profilePic: string; */
 
-    @IsDate()
+    @ApiProperty({
+        type: Date,
+        description: 'Fecha de entrada del usuario en la página.',
+        example: new Date(2023, 5, 27).toISOString()
+    })
+    @IsString()
     @IsNotEmpty()
     joined: Date;
 
-    @IsDate()
+    @ApiProperty({
+        type: Date,
+        description: 'Última fecha en la que el usuario se ha conectado.',
+        example: new Date(2023, 5, 27).toISOString()
+    })
+    @IsString()
     @IsNotEmpty()
     lastSeen: Date;
 }

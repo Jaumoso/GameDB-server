@@ -27,8 +27,8 @@ export class Game {
     @Prop({type: [{type: String}]})
     genre: string[];
 
-    @Prop({type: [{type: String}]})
-    franchise: string[];
+    @Prop()
+    franchise: string;
 
     @Prop({type: [{type: String}]})
     platform: string[];

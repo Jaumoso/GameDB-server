@@ -3,7 +3,7 @@ name: Build Test Run Analyze Containerize Push
 on:
   push:
     branches: 
-      - none
+      - main
       # main (replace with main to activate pipeline)
     paths-ignore:
       - '**/README.md'
@@ -118,34 +118,34 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
 
-  build-docker-images-and-publish:
-    needs: sonar-backend
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Docker Login
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and Publish Docker CLIENT
-      id: docker_build_frontend
-      uses: docker/build-push-action@v2
-      with:
-        context: frontend/.
-        push: true
-        tags: |
-          ghcr.io/jaumoso/cromoteca/cromoteca-frontend:${{ github.sha }}
-    - name: Build and Publish Docker SERVER
-      id: docker_build_backend
-      uses: docker/build-push-action@v2
-      with:
-        context: backend/.
-        push: true
-        tags: |
-          ghcr.io/jaumoso/cromoteca/cromoteca-backend:${{ github.sha }}
-    - name: Print Image Digests
-      run: |
-        echo ${{ steps.docker_build_frontend.outputs.digests }}
-        echo ${{ steps.docker_build_backend.outputs.digests }}
+  # build-docker-images-and-publish:
+  #   needs: sonar-backend
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Docker Login
+  #     uses: docker/login-action@v1
+  #     with:
+  #       registry: ghcr.io
+  #       username: ${{ github.actor }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #   - name: Build and Publish Docker CLIENT
+  #     id: docker_build_frontend
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       context: frontend/.
+  #       push: true
+  #       tags: |
+  #         ghcr.io/jaumoso/cromoteca/cromoteca-frontend:${{ github.sha }}
+  #   - name: Build and Publish Docker SERVER
+  #     id: docker_build_backend
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       context: backend/.
+  #       push: true
+  #       tags: |
+  #         ghcr.io/jaumoso/cromoteca/cromoteca-backend:${{ github.sha }}
+  #   - name: Print Image Digests
+  #     run: |
+  #       echo ${{ steps.docker_build_frontend.outputs.digests }}
+  #       echo ${{ steps.docker_build_backend.outputs.digests }}

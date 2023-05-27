@@ -36,6 +36,20 @@ export class UserController {
             return response.status(err.status).json(err.response);
         }
     }
+
+    @Get('checkexistinguser/:username')
+    @ApiCreatedResponse({ description: 'This function will check if a user exists in the database based on email and username' })
+    async checkExistingUser(@Res() response, @Param('username') username: string) {
+        try {
+            const userData = await this.userService.checkExistingUser(username);
+            return response.status(HttpStatus.OK).json({
+                message: 'User data found successfully', userData,
+            });
+        }
+        catch (err) {
+            return response.status(err.status).json(err.response);
+        }
+    }
     
     @Post('new')
     @ApiCreatedResponse({ description: 'Creación de un nuevo usuario.' })

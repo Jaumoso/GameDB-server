@@ -69,7 +69,7 @@ export class CreateGameDto {
         example: 'franchise'
     })
     @IsString()
-    franchise: string[];
+    franchise: string;
 
     @ApiProperty({
         type: String, 

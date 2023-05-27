@@ -1,20 +1,17 @@
-import { Controller, Get, Post, Req, Request, UseGuards } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Request, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { LocalAuthGuard } from './local-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @Get()
-    @UseGuards(AuthGuard('google'))
-    async googleAuth(@Req() req) {}
-  
-    @Get('redirect')
-    @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req) {
-      return this.authService.googleLogin(req);
+    @UseGuards(LocalAuthGuard)
+    @ApiCreatedResponse({ description: 'Función de LOGIN' })
+    @Post('/login')
+    async login(@Request() req) {
+        return this.authService.login(req.user._doc);
     }
 }

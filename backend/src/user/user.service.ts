@@ -26,6 +26,29 @@ export class UserService {
         return userData;
     }
 
+    // FUNCTION FOR CHECKING USER LOGIN
+    async findUser(username: string): Promise<UserDocument> {
+        const userData = this.userModel.findOne({ username: username });
+        if (!userData) {
+            throw new NotFoundException('User data not found!');
+        }
+        return userData;
+    }
+
+    async checkExistingUser(username: string): Promise<UserDocument[]> {
+        const usernameRegex = new RegExp('^' + username + '$','i');
+        const userData = await this.userModel
+        .find({ $or: 
+            [ 
+                { username: usernameRegex }
+            ]
+        });
+        if (!userData || userData.length == 0) {
+            throw new NotFoundException('User data not found!');
+        }
+        return userData;
+    }
+
     async createUser(userDto: CreateUserDto ): Promise<UserDocument> {
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(userDto.password, saltOrRounds);
