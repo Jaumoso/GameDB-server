@@ -111,7 +111,7 @@ jobs:
         with:
           # Additional arguments to the sonarcloud scanner
           args: 
-            -Dsonar.projectKey=jaumoso_cromoteca_backend
+            -Dsonar.projectKey=jaumoso_gamedb_backend
             -Dsonar.organization=jaumoso
           # Set the sonar.projectBaseDir analysis property
           projectBaseDir: backend/.
@@ -129,22 +129,22 @@ jobs:
   #       registry: ghcr.io
   #       username: ${{ github.actor }}
   #       password: ${{ secrets.GITHUB_TOKEN }}
-  #   - name: Build and Publish Docker CLIENT
+  #   - name: Build and Publish Docker FRONTEND
   #     id: docker_build_frontend
   #     uses: docker/build-push-action@v2
   #     with:
   #       context: frontend/.
   #       push: true
   #       tags: |
-  #         ghcr.io/jaumoso/cromoteca/cromoteca-frontend:${{ github.sha }}
-  #   - name: Build and Publish Docker SERVER
+  #         ghcr.io/jaumoso/gamedb/gamedb-frontend:${{ github.sha }}
+  #   - name: Build and Publish Docker BACKEND
   #     id: docker_build_backend
   #     uses: docker/build-push-action@v2
   #     with:
   #       context: backend/.
   #       push: true
   #       tags: |
-  #         ghcr.io/jaumoso/cromoteca/cromoteca-backend:${{ github.sha }}
+  #         ghcr.io/jaumoso/gamedb/gamedb-backend:${{ github.sha }}
   #   - name: Print Image Digests
   #     run: |
   #       echo ${{ steps.docker_build_frontend.outputs.digests }}
