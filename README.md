@@ -10,6 +10,8 @@ login
 profile
 settings
 
+protect routes
+
 forgotten password
 
 
