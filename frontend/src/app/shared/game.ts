@@ -1,4 +1,5 @@
 export class Game {
+    _id: string | undefined;
     title: string | undefined;
     description: string | undefined;
     image: string | undefined;
@@ -7,5 +8,5 @@ export class Game {
     publisher: string | undefined;
     genre: string[] | undefined;
     franchise: string | undefined;
-    platformat: string | undefined;
+    platform: string | undefined;
 }

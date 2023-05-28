@@ -2,15 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/user';
 import { baseURL } from '../shared/baseurl';
+import { Observable, map } from 'rxjs';
+import { Game } from '../shared/game';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor(private http: HttpClient) { }
 
   getUser(userId: string): Promise<User> {
     return new Promise((resolve, reject) => {
@@ -21,6 +21,11 @@ export class UserService {
         reject(err);
       });
     });
+  }
+
+  getUserGames(_id: string): Observable<Game[]> {
+    return this.http.get<{gameData: Game[]}>(baseURL + 'user/games/' + _id)
+    .pipe(map(games => games.gameData));
   }
 
   createUser(user: User): Promise<User> {

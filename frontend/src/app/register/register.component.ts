@@ -48,6 +48,9 @@ export class RegisterComponent implements OnInit {
         
         if(existingUser){
           this.invalidUser = true;
+          setTimeout(() => {
+            this.invalidUser = false;
+          }, 5000);
         }
         else {
           let user = new User;

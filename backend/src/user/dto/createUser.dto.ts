@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import mongoose from "mongoose";
 
 export class CreateUserDto {
 
@@ -49,4 +50,14 @@ export class CreateUserDto {
     @IsString()
     @IsNotEmpty()
     lastSeen: Date;
+
+    @ApiProperty({
+        type: mongoose.Types.ObjectId,
+        description: 'Array de IDs de los juegos',
+        example: [new mongoose.Types.ObjectId()]
+    })
+    @IsNotEmpty()
+    library: mongoose.Types.ObjectId[];
+
+
 }

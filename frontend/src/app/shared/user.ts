@@ -4,4 +4,5 @@ export class User{
     username: string | undefined;
     joined: Date | undefined;
     lastSeen: Date | undefined;
+    games: string[] | undefined;
 }

@@ -35,7 +35,7 @@ export class CreateGameDto {
         description: 'Fecha de salida del juego.',
         example: new Date(2023, 1, 15).toISOString()
     })
-    @IsDate()
+    @IsString()
     @IsNotEmpty()
     released: Date;
 
@@ -56,25 +56,25 @@ export class CreateGameDto {
     publisher: mongoose.Types.ObjectId;
 
     @ApiProperty({
-        type: String,
+        type: mongoose.Types.ObjectId,
         description: 'Género del juego.',
-        example: 'genre'
+        example: [new mongoose.Types.ObjectId()]
     })
     @IsString()
-    genre: string[];
+    genre: mongoose.Types.ObjectId[];
     
     @ApiProperty({
-        type: String, 
+        type: mongoose.Types.ObjectId,
         description: 'Franquicia del juego.',
-        example: 'franchise'
+        example: new mongoose.Types.ObjectId()
     })
     @IsString()
-    franchise: string;
+    franchise: mongoose.Types.ObjectId
 
     @ApiProperty({
-        type: String, 
+        type: mongoose.Types.ObjectId,
         description: 'Plataforma del juego.',
-        example: 'franchise'
+        example: [new mongoose.Types.ObjectId()]
     })
-    platform: string[];
+    platform: mongoose.Types.ObjectId[];
 }

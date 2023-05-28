@@ -2,14 +2,14 @@
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between h-16">
       <!-- Logo o nombre de la aplicación -->
-      <div class="flex-shrink-0">
+      <div class="flex-shrink-0" style="margin-right: 10px;">
         <img [routerLink]="['/home']" src="../../assets/images/GameDBlogo.png" style="height: 40px; width: 40px;" alt="Logo">
       </div>
 
       <!-- Sección de juegos -->
       <div class="hidden md:block">
         <ul class="flex space-x-4">
-          <li><a [routerLink]="['/library']" class="text-gray-300 hover:text-white">My Games</a></li>
+          <li *ngIf="loggedIn == true"><a [routerLink]="['/library']" class="text-gray-300 hover:text-white">My Games</a></li>
           <li><a [routerLink]="['/games']" class="text-gray-300 hover:text-white">Games</a></li>
           <!-- <li><a href="#" class="text-gray-300 hover:text-white">[Option 3]</a></li> -->
         </ul>
@@ -39,21 +39,23 @@
             </ul>
           </div>
 
-          <button *ngIf="loggedIn == true" (click)="toggleProfileDropdown()" class="flex items-center space-x-1 text-gray-300 hover:text-white focus:outline-none">
+          <button *ngIf="loggedIn == true" (click)="toggleProfileDropdown()" class="relative flex items-center space-x-1 text-gray-300 hover:text-white focus:outline-none">
             <span>Nombre de Usuario</span>
             <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
               <path d="M10 11a2 2 0 100-4 2 2 0 000 4z"/>
               <path d="M10 19a2 2 0 100-4 2 2 0 000 4z"/>
               <path d="M10 3a2 2 0 100-4 2 2 0 000 4z"/>
             </svg>
+          
+            <div *ngIf="isProfileDropdownOpen" (mouseleave)="hideProfileDropdown()" class="absolute right-0 mt-2 top-full w-48 bg-white rounded-md shadow-lg">
+              <ul class="py-1">
+                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="hideProfileDropdown()">Perfil</a></li>
+                <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="hideProfileDropdown()">Configuración</a></li>
+                <li><a (click)="logOut()" class="block px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="hideProfileDropdown()">Cerrar sesión</a></li>
+              </ul>
+            </div>
           </button>
-          <div *ngIf="isProfileDropdownOpen == true" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-            <ul class="py-1">
-              <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Perfil</a></li>
-              <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Configuración</a></li>
-              <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Cerrar sesión</a></li>
-            </ul>
-          </div>
+          
 
         </div>
       </div>

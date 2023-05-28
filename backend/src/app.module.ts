@@ -8,6 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { GameModule } from './game/game.module';
 import { DeveloperModule } from './developer/developer.module';
 import { PublisherModule } from './publisher/publisher.module';
+import { FranchiseModule } from './franchise/franchise.module';
+import { PlatformModule } from './platform/platform.module';
+import { GenreModule } from './genre/genre.module';
+import { DlcModule } from './dlc/dlc.module';
 
 require('dotenv').config();
 
@@ -22,7 +26,11 @@ require('dotenv').config();
     AuthModule,
     GameModule,
     DeveloperModule,
-    PublisherModule
+    PublisherModule,
+    FranchiseModule,
+    PlatformModule,
+    GenreModule,
+    DlcModule
   ],
   controllers: [AppController],
   providers: [AppService],

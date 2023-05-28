@@ -2,7 +2,6 @@
 
 ### TODO
 
-favicon.ico
 searchbar
 library
 home
@@ -11,18 +10,7 @@ login
 profile
 settings
 
-footer -> translate to english and remove junk
-
-register: 
-- username not avaiable snackBar
-- form valid? enable button
-
-login:
-- logged in snackBar
-- form valid? enable button
-
 forgotten password
-log out
 
 
 <!-- Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.

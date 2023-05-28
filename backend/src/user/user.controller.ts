@@ -37,6 +37,20 @@ export class UserController {
         }
     }
 
+    @Get('games/:id')
+    @ApiCreatedResponse({ description: 'Juegos de un usuario.' })
+    async getUserGames(@Res() response, @Param('id') userId: string) {
+        try {
+            const userData = await this.userService.getUserGames(userId);
+            return response.status(HttpStatus.OK).json({
+                message: 'User data found successfully', userData,
+            });
+        }
+        catch (err) {
+            return response.status(err.status).json(err.response);
+        }
+    }
+
     @Get('checkexistinguser/:username')
     @ApiCreatedResponse({ description: 'This function will check if a user exists in the database based on email and username' })
     async checkExistingUser(@Res() response, @Param('username') username: string) {

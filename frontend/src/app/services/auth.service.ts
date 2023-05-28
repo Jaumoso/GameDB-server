@@ -26,10 +26,10 @@ export class AuthService {
     }
     
     setSession(token: string) {
-        localStorage.setItem('token', token);
+        localStorage.setItem('GameDB_token', token);
     }
     
     closeSession(): void {
-        localStorage.removeItem('token');
+        localStorage.removeItem('GameDB_token');
     }
 }
