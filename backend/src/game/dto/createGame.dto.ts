@@ -60,7 +60,6 @@ export class CreateGameDto {
         description: 'Género del juego.',
         example: [new mongoose.Types.ObjectId()]
     })
-    @IsString()
     genre: mongoose.Types.ObjectId[];
     
     @ApiProperty({
@@ -69,7 +68,7 @@ export class CreateGameDto {
         example: new mongoose.Types.ObjectId()
     })
     @IsString()
-    franchise: mongoose.Types.ObjectId
+    franchise: mongoose.Types.ObjectId;
 
     @ApiProperty({
         type: mongoose.Types.ObjectId,

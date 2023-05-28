@@ -1,36 +1,70 @@
-<div class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold mb-8">My Game Library</h1>
-  
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Juego 1 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-xl font-bold mb-4">Game 1</h2>
-          <p class="text-gray-600 mb-4">Plataforma: Xbox One</p>
-          <p class="text-gray-600 mb-4">Género: Acción / Aventura</p>
-          <p class="text-gray-600">Fecha de lanzamiento: 01/01/2022</p>
-        </div>
-  
-        <!-- Juego 2 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-xl font-bold mb-4">Game 2</h2>
-          <p class="text-gray-600 mb-4">Plataforma: PlayStation 5</p>
-          <p class="text-gray-600 mb-4">Género: RPG</p>
-          <p class="text-gray-600">Fecha de lanzamiento: 05/15/2023</p>
-        </div>
-  
-        <!-- Juego 3 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-xl font-bold mb-4">Game 3</h2>
-          <p class="text-gray-600 mb-4">Plataforma: PC</p>
-          <p class="text-gray-600 mb-4">Género: Estrategia</p>
-          <p class="text-gray-600">Fecha de lanzamiento: 09/30/2023</p>
-        </div>
-  
-        <!-- Add more games -->
-        <div class="bg-white rounded-lg shadow-md p-6 flex items-center justify-center">
-          <a href="#" class="text-indigo-600 hover:underline">Add more games</a>
-        </div>
-      </div>
+<div class="flex">
+  <div class="w-1/4 p-4">
+    <h2 class="text-lg font-bold mb-2">Platforms</h2>
+    <ul class="space-y-2">
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
+        <span>PlayStation</span>
+        <span class="ml-auto">(10)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-green-500 rounded-full mr-2"></span>
+        <span>Xbox</span>
+        <span class="ml-auto">(8)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-red-500 rounded-full mr-2"></span>
+        <span>Nintendo Switch</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <!-- Add more platform items as needed -->
+    </ul>
+  </div>
+  <div class="w-3/4 p-4">
+    <h2 class="text-lg font-bold mb-2">Library</h2>
+    <div class="flex items-center mb-4">
+      <span class="mr-2">View:</span>
+      <button
+        class="border border-gray-400 px-3 py-1 rounded-full focus:outline-none focus:bg-gray-100"
+        (click)="toggleView('grid')"
+        [class.bg-gray-200]="view === 'grid'"
+      >
+        Grid
+      </button>
+      <button
+        class="border border-gray-400 px-3 py-1 rounded-full focus:outline-none focus:bg-gray-100 ml-2"
+        (click)="toggleView('list')"
+        [class.bg-gray-200]="view === 'list'"
+      >
+        List
+      </button>
     </div>
+    <div *ngIf="view === 'grid'" class="grid grid-cols-4 gap-4">
+      <div class="bg-white rounded shadow p-4">
+        <img src="game1.jpg" alt="Game 1" class="w-full h-48 object-cover mb-2">
+        <h3 class="text-lg font-bold">Game 1</h3>
+        <p class="text-gray-600">Platform: PlayStation</p>
+      </div>
+      <div class="bg-white rounded shadow p-4">
+        <img src="game2.jpg" alt="Game 2" class="w-full h-48 object-cover mb-2">
+        <h3 class="text-lg font-bold">Game 2</h3>
+        <p class="text-gray-600">Platform: Xbox</p>
+      </div>
+      <!-- Add more game items as needed -->
+    </div>
+    <div *ngIf="view === 'list'" class="space-y-4">
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-bold">Game 1</h3>
+        <p class="text-gray-600">Platform: PlayStation</p>
+      </div>
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-bold">Game 2</h3>
+        <p class="text-gray-600">Platform: Xbox</p>
+      </div>
+      <!-- Add more game items as needed -->
+    </div>
+    <div class="mt-4">
+      <!-- Pagination controls can be added here -->
+    </div>
+  </div>
 </div>

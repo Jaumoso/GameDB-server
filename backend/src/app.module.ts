@@ -30,7 +30,7 @@ require('dotenv').config();
     FranchiseModule,
     PlatformModule,
     GenreModule,
-    DlcModule
+    DlcModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -23,11 +23,6 @@ export class UserService {
     });
   }
 
-  getUserGames(_id: string): Observable<Game[]> {
-    return this.http.get<{gameData: Game[]}>(baseURL + 'user/games/' + _id)
-    .pipe(map(games => games.gameData));
-  }
-
   createUser(user: User): Promise<User> {
     const httpOptions = {
       headers: new HttpHeaders({

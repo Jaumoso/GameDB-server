@@ -24,13 +24,13 @@ export class Game {
     @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Publisher'})
     publisher: mongoose.Schema.Types.ObjectId;
 
-    @Prop({type: [{type: String}]})
-    genre: string[];
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Genre'}]})
+    genre: mongoose.Schema.Types.ObjectId[];
 
-    @Prop()
-    franchise: string;
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Franchise'})
+    franchise: mongoose.Schema.Types.ObjectId;
 
-    @Prop({type: [{type: String}]})
-    platform: string[];
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Platform'}]})
+    platform: mongoose.Schema.Types.ObjectId[];
 }
 export const GameSchema = SchemaFactory.createForClass(Game);

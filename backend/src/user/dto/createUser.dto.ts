@@ -52,12 +52,28 @@ export class CreateUserDto {
     lastSeen: Date;
 
     @ApiProperty({
-        type: mongoose.Types.ObjectId,
-        description: 'Array de IDs de los juegos',
-        example: [new mongoose.Types.ObjectId()]
+        enum: () => [{ gameId: mongoose.Types.ObjectId, rating: Number }],
+        description: 'Array de juegos y sus ratings',
+        example: [{ 
+            gameId: new mongoose.Types.ObjectId(), 
+            rating: 8,
+            platform: [new mongoose.Types.ObjectId()],
+            state: 0
+        }],
     })
-    @IsNotEmpty()
-    library: mongoose.Types.ObjectId[];
-
-
+    library: {
+        gameId: mongoose.Types.ObjectId; 
+        rating: Number;
+        platform: mongoose.Types.ObjectId[];
+        own: boolean;
+        state: Number;
+        // 0 Not played yet
+        // 1 Playing
+        // 2 Infinite
+        // 3 Abandoned
+        // 4 Played
+        // 5 Completed
+        // 6 Wishlist
+    }[];
+    
 }

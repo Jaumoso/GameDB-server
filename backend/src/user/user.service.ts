@@ -26,14 +26,6 @@ export class UserService {
         return userData;
     }
 
-    async getUserGames(userId: string): Promise<UserDocument> {
-        const userData = await this.userModel.findById(userId).populate('library');
-        if (!userData) {
-            throw new NotFoundException('User data not found!');
-        }
-        return userData;
-    }
-
     // FUNCTION FOR CHECKING USER LOGIN
     async findUser(username: string): Promise<UserDocument> {
         const userData = this.userModel.findOne({ username: username });

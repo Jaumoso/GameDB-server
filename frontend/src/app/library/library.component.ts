@@ -12,6 +12,7 @@ import { Game } from '../shared/game';
 })
 export class LibraryComponent implements OnInit {
   games: Game[] = [];
+  view: 'grid' | 'list' = 'list';
 
   constructor(
     private userService: UserService,
@@ -30,11 +31,14 @@ export class LibraryComponent implements OnInit {
 
     const decodedToken = this.jwtService.decodeToken(token!);
 
-      this.userService.getUserGames(decodedToken._id)
-      .subscribe((games) => {
-        this.games = games;
-        console.log(games);
+      this.userService.getUser(decodedToken._id)
+      .then((user) => {
+        // TODO: retrieve games
       })
+  }
+
+  toggleView(view: 'grid' | 'list') {
+    this.view = view;
   }
 
 }
