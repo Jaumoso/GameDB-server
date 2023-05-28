@@ -1,19 +1,62 @@
-<div class="flex">
-  <div class="w-1/4 p-4">
-    <h2 class="text-lg font-bold mb-2">Platforms</h2>
+<div class="page flex">
+  <div class="context-table w-1/6 p-4">
+    <h2 class="text-lg font-bold mb-2">State</h2>
     <ul class="space-y-2">
       <li class="flex items-center">
-        <span class="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-        <span>PlayStation</span>
+        <span class="w-4 h-4 bg-slate-500 rounded-full mr-2"></span>
+        <span>Not Interested</span>
         <span class="ml-auto">(10)</span>
       </li>
       <li class="flex items-center">
-        <span class="w-4 h-4 bg-green-500 rounded-full mr-2"></span>
+        <span class="w-4 h-4 bg-blue-800 rounded-full mr-2"></span>
+        <span>Want to play</span>
+        <span class="ml-auto">(8)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-yellow-300 rounded-full mr-2"></span>
+        <span>Playing</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-pink-500 rounded-full mr-2"></span>
+        <span>Infinite</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-red-600 rounded-full mr-2"></span>
+        <span>Abandoned</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-green-400 rounded-full mr-2"></span>
+        <span>Played</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-green-700 rounded-full mr-2"></span>
+        <span>Completed</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <li class="flex items-center">
+        <span class="w-4 h-4 bg-blue-400 rounded-full mr-2"></span>
+        <span>Wish List</span>
+        <span class="ml-auto">(5)</span>
+      </li>
+      <!-- Add more platform items as needed -->
+    </ul>
+    <hr class="border-gray-800 my-4">
+    <h2 class="text-lg font-bold mb-2">Platforms</h2>
+    <ul class="space-y-2">
+      <li class="flex items-center">
+        <span>All Games</span>
+        <span class="ml-auto">({{gameList.length}})</span>
+      </li>
+      <hr class="border-gray-800 my-1 w-1/2">
+      <li class="flex items-center">
         <span>Xbox</span>
         <span class="ml-auto">(8)</span>
       </li>
       <li class="flex items-center">
-        <span class="w-4 h-4 bg-red-500 rounded-full mr-2"></span>
         <span>Nintendo Switch</span>
         <span class="ml-auto">(5)</span>
       </li>
@@ -67,4 +110,8 @@
       <!-- Pagination controls can be added here -->
     </div>
   </div>
+  <button data-te-toggle="add-game" class="fixed bottom-4 right-4 p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg">
+    Add Game
+  </button>
+
 </div>

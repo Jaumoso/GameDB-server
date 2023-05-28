@@ -1,4 +1,4 @@
-<nav class="bg-gray-900">
+<nav class="bg-gray-900" style="width: 100%;">
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between h-16">
       <!-- Logo o nombre de la aplicación -->
@@ -40,7 +40,7 @@
           </div>
 
           <button *ngIf="loggedIn == true" (click)="toggleProfileDropdown()" class="relative flex items-center space-x-1 text-gray-300 hover:text-white focus:outline-none">
-            <span>Nombre de Usuario</span>
+            <span>{{username}}</span>
             <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
               <path d="M10 11a2 2 0 100-4 2 2 0 000 4z"/>
               <path d="M10 19a2 2 0 100-4 2 2 0 000 4z"/>

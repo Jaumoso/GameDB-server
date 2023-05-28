@@ -15,13 +15,14 @@ protect routes
 forgotten password
 
 state:
-        // 0 Not played yet
-        // 1 Playing
-        // 2 Infinite
-        // 3 Abandoned
-        // 4 Played
-        // 5 Completed
-        // 6 Wishlist
+// 0 Not interested
+// 1 Want to play
+// 2 Playing
+// 3 Infinite
+// 4 Abandoned
+// 5 Played
+// 6 Completed
+// 7 Wishlist
 
 
 <!-- Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.

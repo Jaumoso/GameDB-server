@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { initTE, Dropdown } from 'tw-elements';
+import { initTE, Dropdown, Modal, Ripple, Offcanvas } from 'tw-elements';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +47,6 @@ import { AuthInterceptorService } from './services/authInterceptor.service';
 })
 export class AppModule { 
   ngOnInit() {
-    initTE({ Dropdown });
+    initTE({ Dropdown, Modal, Ripple, Offcanvas });
   }
 }

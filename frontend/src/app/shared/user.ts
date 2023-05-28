@@ -10,13 +10,14 @@ export class User{
         platform: string | undefined;
         own: boolean;
         state: number | undefined;
-    } | undefined;
+    }[] | undefined;
 }
 
-// 0 Not played yet
-// 1 Playing
-// 2 Infinite
-// 3 Abandoned
-// 4 Played
-// 5 Completed
-// 6 Wishlist
+// 0 Not interested
+// 1 Want to play
+// 2 Playing
+// 3 Infinite
+// 4 Abandoned
+// 5 Played
+// 6 Completed
+// 7 Wishlist

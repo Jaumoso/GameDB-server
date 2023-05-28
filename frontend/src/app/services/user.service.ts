@@ -55,6 +55,23 @@ export class UserService {
     });
   }
 
+  updateUserContent(userId: string, user: User): Promise<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return new Promise((resolve, reject) => {
+      const { _id, username, password, joined, lastSeen, ... rest} = user
+      this.http.put<{updatedUser: User}>(baseURL + 'user/update/content/' + userId, rest, httpOptions)
+      .subscribe(user => {
+        resolve(user.updatedUser);
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
   async deleteUser(userId: string): Promise<User> {
     return new Promise((resolve, reject) => {
       this.http.delete<{userData: User}>(baseURL + 'user/delete/' + userId)
