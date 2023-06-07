@@ -1,6 +1,6 @@
 # GameDB Web Application
-
-### TODO
+Currently in pause.
+### TO-DO:
 
 searchbar
 library
