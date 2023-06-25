@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit {
     this.loginSubscription = this.loginStatusService.loginChanges.subscribe((loggedIn) => {
       this.loggedIn = loggedIn;
     });
+
   }
 
   logOut(){
@@ -54,14 +55,6 @@ export class HeaderComponent implements OnInit {
     }
     this.authService.closeSession();
     this.loggedIn = false;
-  }
-
-  toggleProfileDropdown(): void {
-    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
-  }
-
-  hideProfileDropdown() {
-    this.isProfileDropdownOpen = false;
   }
 
 }

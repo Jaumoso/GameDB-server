@@ -14,7 +14,6 @@ export class LibraryComponent implements OnInit {
   gameList: any[] = [];
   platforms: any[] = [];
   states: any[] = [];
-  view: 'grid' | 'list' = 'list';
   private user: User | undefined;
 
   constructor(
@@ -70,14 +69,13 @@ export class LibraryComponent implements OnInit {
               this.states.push({ states: libraryGame.state, counter: 1 });
             }
 
-
           });
         })
       })
   }
 
-  toggleView(view: 'grid' | 'list') {
-    this.view = view;
+  addGame() {
+    
   }
 
 }

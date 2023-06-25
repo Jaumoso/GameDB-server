@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { initTE, Dropdown, Modal, Ripple, Offcanvas } from 'tw-elements';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -17,6 +16,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { baseURL } from './shared/baseurl';
 import { AuthInterceptorService } from './services/authInterceptor.service';
+import { AddGameComponent } from './add-game/add-game.component';
+import { CreateGameComponent } from './create-game/create-game.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { AuthInterceptorService } from './services/authInterceptor.service';
     LoginComponent,
     LibraryComponent,
     RegisterComponent,
+    CreateGameComponent,
+    AddGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,6 @@ import { AuthInterceptorService } from './services/authInterceptor.service';
 })
 export class AppModule { 
   ngOnInit() {
-    initTE({ Dropdown, Modal, Ripple, Offcanvas });
+    // Empty
   }
 }

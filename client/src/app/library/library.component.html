@@ -1,117 +1,81 @@
-<div class="page flex">
-  <div class="context-table w-1/6 p-4">
-    <h2 class="text-lg font-bold mb-2">State</h2>
-    <ul class="space-y-2">
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-slate-500 rounded-full mr-2"></span>
-        <span>Not Interested</span>
-        <span class="ml-auto">(10)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-blue-800 rounded-full mr-2"></span>
-        <span>Want to play</span>
-        <span class="ml-auto">(8)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-yellow-300 rounded-full mr-2"></span>
-        <span>Playing</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-pink-500 rounded-full mr-2"></span>
-        <span>Infinite</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-red-600 rounded-full mr-2"></span>
-        <span>Abandoned</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-green-400 rounded-full mr-2"></span>
-        <span>Played</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-green-700 rounded-full mr-2"></span>
-        <span>Completed</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <li class="flex items-center">
-        <span class="w-4 h-4 bg-blue-400 rounded-full mr-2"></span>
-        <span>Wish List</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <!-- Add more platform items as needed -->
-    </ul>
-    <hr class="border-gray-800 my-4">
-    <h2 class="text-lg font-bold mb-2">Platforms</h2>
-    <ul class="space-y-2">
-      <li class="flex items-center">
-        <span>All Games</span>
-        <span class="ml-auto">({{gameList.length}})</span>
-      </li>
-      <hr class="border-gray-800 my-1 w-1/2">
-      <li class="flex items-center">
-        <span>Xbox</span>
-        <span class="ml-auto">(8)</span>
-      </li>
-      <li class="flex items-center">
-        <span>Nintendo Switch</span>
-        <span class="ml-auto">(5)</span>
-      </li>
-      <!-- Add more platform items as needed -->
-    </ul>
-  </div>
-  <div class="w-3/4 p-4">
-    <h2 class="text-lg font-bold mb-2">Library</h2>
-    <div class="flex items-center mb-4">
-      <span class="mr-2">View:</span>
-      <button
-        class="border border-gray-400 px-3 py-1 rounded-full focus:outline-none focus:bg-gray-100"
-        (click)="toggleView('grid')"
-        [class.bg-gray-200]="view === 'grid'"
-      >
-        Grid
-      </button>
-      <button
-        class="border border-gray-400 px-3 py-1 rounded-full focus:outline-none focus:bg-gray-100 ml-2"
-        (click)="toggleView('list')"
-        [class.bg-gray-200]="view === 'list'"
-      >
-        List
-      </button>
-    </div>
-    <div *ngIf="view === 'grid'" class="grid grid-cols-4 gap-4">
-      <div class="bg-white rounded shadow p-4">
-        <img src="game1.jpg" alt="Game 1" class="w-full h-48 object-cover mb-2">
-        <h3 class="text-lg font-bold">Game 1</h3>
-        <p class="text-gray-600">Platform: PlayStation</p>
-      </div>
-      <div class="bg-white rounded shadow p-4">
-        <img src="game2.jpg" alt="Game 2" class="w-full h-48 object-cover mb-2">
-        <h3 class="text-lg font-bold">Game 2</h3>
-        <p class="text-gray-600">Platform: Xbox</p>
-      </div>
-      <!-- Add more game items as needed -->
-    </div>
-    <div *ngIf="view === 'list'" class="space-y-4">
-      <div class="bg-white rounded shadow p-4">
-        <h3 class="text-lg font-bold">Game 1</h3>
-        <p class="text-gray-600">Platform: PlayStation</p>
-      </div>
-      <div class="bg-white rounded shadow p-4">
-        <h3 class="text-lg font-bold">Game 2</h3>
-        <p class="text-gray-600">Platform: Xbox</p>
-      </div>
-      <!-- Add more game items as needed -->
-    </div>
-    <div class="mt-4">
-      <!-- Pagination controls can be added here -->
-    </div>
-  </div>
-  <button data-te-toggle="add-game" class="fixed bottom-4 right-4 p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg">
-    Add Game
-  </button>
+<div>
+  <table border>
+    <tr>
+      <th>State</th>
+      <td>Not Interested</td>
+      <td>Want to play</td>
+      <td>Playing</td>
+      <td>Tried</td>
+      <td>Played</td>
+      <td>Completed</td>
+      <td>Retired</td>
+      <td>Archived</td>
+      <td>Abandoned</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <table border>
+    <tr>
+      <th>Platform</th>
+      <td>PC</td>
+      <td>PLayStation</td>
+      <td>Nintendo</td>
+      <td>Xbox</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <table border>
+    <tr>
+      <th>Storefront</th>
+      <td>Steam</td>
+      <td>Epic Games</td>
+      <td>Ubisoft Connect</td>
+      <td>EA Launcher</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  
+  <button (click)="addGame()">Add Game</button>
+</div>
 
+<div>
+  <table>
+    <tr>
+      <th>Games</th>
+    </tr>
+    <tr *ngFor="let game of gameList">
+      <td>{{game.title}}</td>
+      <td>{{game.released}}</td>
+      <td>{{game.developer}}</td>
+      <td>{{game.publisher}}</td>
+      <td>{{game.genre}}</td>
+      <td>{{game.franchise}}</td>
+      <td>{{game.platform}}</td>
+    </tr>
+  </table>
 </div>
