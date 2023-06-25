@@ -1,77 +1,92 @@
 name: Build Test Run Analyze Containerize Push
 
 on:
+  workflow_dispatch:
   push:
     branches: 
       - main
-      # main (replace with main to activate pipeline)
     paths-ignore:
       - '**/README.md'
 jobs:
   
-  build-run-frontend:
+  build-run-test-client:
        if: ${{github.repository == 'jaumoso/gamedb'}}
        runs-on: ubuntu-latest
        steps:
          - name: Checkout code
-           uses: actions/checkout@v2
-         - name: install
+           uses: actions/checkout@v3
+         - name: Cache Dependencies
+           id: yarn-cache
+           uses: actions/cache@v3
+           with:
+             path: client/node_modules
+             key: deps-node-modules-${{ hashFiles('client/yarn.lock') }}
+         - name: Install dependencies
+           if: steps.yarn-cache.outputs.cache-hit != 'true'
            run: |
-            cd frontend
+            cd client
             yarn install
-         - name: build
+         - name: Build
            run: |
-            cd frontend
+            cd client
             yarn build
-         #- name: test
-         # run: |
-         #  cd frontend
-         #  yarn test --no-watch --code-coverage
-         #- name: Upload coverage report
-         #  uses: actions/upload-artifact@master
-         #  with:
-         #     name: coveragefrontend
-         #     path: frontend/coverage/
+         - name: Test
+           continue-on-error: true
+           run: |
+            cd client
+            yarn test --no-watch --code-coverage
+         - name: Upload coverage report
+           uses: actions/upload-artifact@master
+           with:
+              name: coverageclient
+              path: client/coverage/
 
-  build-run-backend:
-       needs: build-run-frontend
+  build-run-test-server:
        if: ${{github.repository == 'jaumoso/gamedb'}}
        runs-on: ubuntu-latest
        steps:
          - name: Checkout code
-           uses: actions/checkout@v2
-         - name: install
+           uses: actions/checkout@v3
+         - name: Cache Dependencies
+           id: yarn-cache
+           uses: actions/cache@v3
+           with:
+             path: server/node_modules
+             key: deps-node-modules-${{ hashFiles('server/yarn.lock') }}
+         - name: Install dependencies
+           if: steps.yarn-cache.outputs.cache-hit != 'true'
            run: |
-            cd backend
-            yarn install
-         - name: build
+             cd server
+             yarn install
+         - name: Build
            run: |
-            cd backend
-            yarn build
-         #- name: test
-         #  run: |
-         #   cd backend
-         #   yarn test --watch=false --coverage
-         #- name: Upload coverage report
-         #  uses: actions/upload-artifact@master
-         #  with:
-         #     name: coveragebackend
-         #     path: backend/coverage/
+             cd server
+             yarn build
+         - name: Test
+           continue-on-error: true
+           run: |
+             cd server
+             yarn test --watch=false --coverage
+         - name: Upload coverage report
+           uses: actions/upload-artifact@master
+           with:
+              name: coverageserver
+              path: server/coverage/
             
-  sonar-frontend:
-    needs: build-run-backend
-    name: Sonar Analyze ANGULAR
+  sonar-client:
+    needs: build-run-test-client
+    name: Sonar Analyze Client
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      #- name: Download coverage report
-      #  uses: actions/download-artifact@master
-      #  with:
-      #    name: coveragefrontend
-      #    path: frontend/coverage/
+      - uses: actions/checkout@v3
+      - name: Download coverage report
+        uses: actions/download-artifact@master
+        with:
+          name: coverageclient
+          path: client/coverage/
       - name: go to folder
         run: |
-          cd frontend
+          cd client
           pwd
           ls
       - name: SonarCloud Scan
@@ -81,27 +96,27 @@ jobs:
         with:
           # Additional arguments to the sonarcloud scanner
           args: 
-            -Dsonar.projectKey=jaumoso_gamedb_frontend
+            -Dsonar.projectKey=jaumoso_gamedb-client
             -Dsonar.organization=jaumoso
           # Set the sonar.projectBaseDir analysis property
-          projectBaseDir: frontend/.
+          projectBaseDir: client/.
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_CLIENT }}
 
-  sonar-backend:
-    needs: sonar-frontend
-    name: Sonar Analyze NESTJS
+  sonar-server:
+    needs: build-run-test-server
+    name: Sonar Analyze Server
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      #- name: Download coverage report
-      #  uses: actions/download-artifact@master
-      #  with:
-      #    name: coveragebackend
-      #    path: backend/coverage/
+      - uses: actions/checkout@v3
+      - name: Download coverage report
+        uses: actions/download-artifact@master
+        with:
+          name: coverageserver
+          path: server/coverage/
       - name: go to folder
         run: |
-          cd backend
+          cd server
           pwd
           ls
       - name: SonarCloud Scan
@@ -111,41 +126,41 @@ jobs:
         with:
           # Additional arguments to the sonarcloud scanner
           args: 
-            -Dsonar.projectKey=jaumoso_gamedb_backend
+            -Dsonar.projectKey=jaumoso_gamedb-server
             -Dsonar.organization=jaumoso
           # Set the sonar.projectBaseDir analysis property
-          projectBaseDir: backend/.
+          projectBaseDir: server/.
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACKEND }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SERVER }}
 
-  # build-docker-images-and-publish:
-  #   needs: sonar-backend
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Docker Login
-  #     uses: docker/login-action@v1
-  #     with:
-  #       registry: ghcr.io
-  #       username: ${{ github.actor }}
-  #       password: ${{ secrets.GITHUB_TOKEN }}
-  #   - name: Build and Publish Docker FRONTEND
-  #     id: docker_build_frontend
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       context: frontend/.
-  #       push: true
-  #       tags: |
-  #         ghcr.io/jaumoso/gamedb/gamedb-frontend:${{ github.sha }}
-  #   - name: Build and Publish Docker BACKEND
-  #     id: docker_build_backend
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       context: backend/.
-  #       push: true
-  #       tags: |
-  #         ghcr.io/jaumoso/gamedb/gamedb-backend:${{ github.sha }}
-  #   - name: Print Image Digests
-  #     run: |
-  #       echo ${{ steps.docker_build_frontend.outputs.digests }}
-  #       echo ${{ steps.docker_build_backend.outputs.digests }}
+  build-docker-images-and-publish:
+    needs: [sonar-client, sonar-server]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Login
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and Publish Docker CLIENT
+      id: docker_build_client
+      uses: docker/build-push-action@v4
+      with:
+        context: client/.
+        push: true
+        tags: |
+          ghcr.io/jaumoso/cromoteca/cromoteca-client:${{ github.sha }}
+    - name: Build and Publish Docker SERVER
+      id: docker_build_server
+      uses: docker/build-push-action@v4
+      with:
+        context: server/.
+        push: true
+        tags: |
+          ghcr.io/jaumoso/cromoteca/cromoteca-server:${{ github.sha }}
+    - name: Print Image Digests
+      run: |
+        echo ${{ steps.docker_build_client.outputs.digests }}
+        echo ${{ steps.docker_build_server.outputs.digests }}
