@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-add-game',
@@ -18,12 +17,11 @@ export class AddGameComponent {
   genre = new FormControl('', [Validators.required]);
   franchise = new FormControl('', [Validators.required]);
   platform = new FormControl('', [Validators.required]);
-
+  decodedToken: string | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     public location: Location,
-    private userService: UserService
     ) { 
       this.form = this.formBuilder.group({
         title: this.title,
@@ -43,7 +41,7 @@ export class AddGameComponent {
   }
 
   onSubmit() {
-  
+
   }
 
 }

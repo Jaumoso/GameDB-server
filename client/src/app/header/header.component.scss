@@ -1,11 +1,32 @@
 .header {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
     background-color: #15182e;
+    font-size: x-large;
+  }
+  
+  .header a {
     color: white;
-
-    a {
-        text-decoration: none;
-        cursor: pointer;
-        color: inherit;
-    }
-}
-
+    text-decoration: none;
+  }
+  
+  .header a:hover {
+    text-decoration: underline;
+  }
+  
+  .header div {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+  }
+  
+  .header div a {
+    text-decoration: none;
+  }
+  
+  .header div a:hover {
+    text-decoration: underline;
+  }
