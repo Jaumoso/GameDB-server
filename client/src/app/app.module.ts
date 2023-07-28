@@ -22,6 +22,7 @@ import { baseURL } from './shared/baseurl';
 import { AuthInterceptorService } from './services/authInterceptor.service';
 import { AddGameComponent } from './add-game/add-game.component';
 import { CreateGameComponent } from './create-game/create-game.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CreateGameComponent } from './create-game/create-game.component';
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },
