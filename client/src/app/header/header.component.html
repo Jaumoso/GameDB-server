@@ -1,4 +1,4 @@
-<div class="header">
+<!-- <div class="header">
   <a [routerLink]="['/home']">Home</a>
   <a [routerLink]="['/games']">Games</a>
   <div *ngIf="loggedIn == false">
@@ -9,4 +9,69 @@
     <a [routerLink]="['/library']">My Library</a>
     <a (click)="logOut()">Log Out</a>
   </div>
+</div> -->
+
+<div class="navbar" [ngStyle]="{'display': isSmallScreen ? 'none' : 'block'}">
+  <mat-toolbar class="toolbar">
+      <span><img [routerLink]="['/home']" src="/assets/images/CromotecaLogo.png" class="logo" alt="logo"></span>
+      <a mat-button [routerLink]="['/home']" routerLinkActive="active" matTooltip="Página principal (noticias)"><span class="fa fa-home fa-lg"></span> Inicio</a>
+      <a mat-button [routerLink]="['/collections']" routerLinkActive="active" matTooltip="Lista de colecciones disponibles"><span class="fa fa-list fa-lg"></span> Colecciones</a>
+      <a mat-button [routerLink]="['/market']" routerLinkActive="active" matTooltip="Intercambio y venta de coleccionables"><span class="fa fa-shopping-cart fa-lg"></span> Mercado</a>
+      <a mat-button (click)="goToProfile()" routerLinkActive="active" matTooltip="Información de usuario y colecciones guardadas"><span class="fa fa-address-card fa-lg"></span> Perfil</a>
+      <a mat-button [routerLink]="['/about']" routerLinkActive="active" matTooltip="Preguntas, soporte y ayuda"><span class="fa fa-info fa-lg"></span> Más Información</a>
+      <span class="flex-spacer"></span>
+      <div *ngIf="loggedIn == false" fxLayoutAlign="center center">
+        <button class="account-buttons" (click)="openLoginForm()" matTooltip="Accede a tu cuenta"><span class="fa fa-sign-in fa-lg"></span> Iniciar Sesión</button>
+        <button class="account-buttons" [routerLink]="['/createaccount']" matTooltip="Accede al formulario de creación de cuenta"><span class="fa fa-sign-in fa-lg"></span> Crear Cuenta</button>
+      </div>
+      <a mat-button *ngIf="loggedIn == true" routerLinkActive="active" (click)="logOut()" matTooltip="Cerrar la sesión actual"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
+  </mat-toolbar>
+</div>
+
+<div class="navbar" [ngStyle]="{'display': isSmallScreen ? 'block' : 'none'}">
+  <mat-toolbar class="toolbar">
+    <span><img src="/assets/images/CromotecaLogo.png" class="logo" alt="logo"></span>
+    <span class="flex-spacer"></span>
+    <!-- Botón de menú -->
+    <button class="small-header-button" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Menú de navegación -->
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item [routerLink]="['/home']" routerLinkActive="active-compact">
+        <mat-icon>home</mat-icon>
+        <span>Inicio</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/collections']" routerLinkActive="active-compact">
+        <mat-icon>list</mat-icon>
+        <span>Colecciones</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/market']" routerLinkActive="active-compact">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Mercado</span>
+      </a>
+      <a mat-menu-item (click)="goToProfile()" routerLinkActive="active-compact">
+        <mat-icon>account_box</mat-icon>
+        <span>Perfil</span>
+      </a>
+      <a mat-menu-item [routerLink]="['/about']" routerLinkActive="active-compact">
+        <mat-icon>info</mat-icon>
+        <span>Más Información</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-menu-item *ngIf="loggedIn == false" routerLinkActive="active-compact" (click)="openLoginForm()">
+        <mat-icon>login</mat-icon>
+        <span>Iniciar Sesión</span>
+      </a>
+      <a mat-menu-item *ngIf="loggedIn == false" [routerLink]="['/createaccount']" routerLinkActive="active-compact">
+        <mat-icon>login</mat-icon>
+        <span>Crear Cuenta</span>
+      </a>
+      <a mat-menu-item *ngIf="loggedIn == true" routerLinkActive="active-compact" (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Cerrar Sesión</span>
+      </a>
+    </mat-menu>
+  </mat-toolbar>
 </div>

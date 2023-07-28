@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   loginSubscription: Subscription | undefined;
   username: string | undefined
+  isSmallScreen = false;
+
 
   constructor(
     private loginStatusService: LoginStatusService,
@@ -27,6 +29,14 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    // Detectar si la pantalla es pequeña 768
+    this.isSmallScreen = window.innerWidth < 600;
+
+    // Escuchar cambios en el tamaño de la pantalla
+    window.addEventListener('resize', () => {
+      this.isSmallScreen = window.innerWidth < 1200;
+    });
 
     if(localStorage.getItem('GameDB_token')){
       this.loggedIn = true;
@@ -55,6 +65,14 @@ export class HeaderComponent implements OnInit {
     }
     this.authService.closeSession();
     this.loggedIn = false;
+  }
+
+  goToProfile() {
+
+  }
+
+  openLoginForm(){
+
   }
 
 }
