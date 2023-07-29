@@ -5,6 +5,7 @@ import { GamesComponent } from './games/games.component';
 import { LoginComponent } from './login/login.component';
 import { LibraryComponent } from './library/library.component';
 import { RegisterComponent } from './register/register.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
+  { path: 'settings', component: SettingsComponent}
 ];
 
 @NgModule({

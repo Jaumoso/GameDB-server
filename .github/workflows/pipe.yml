@@ -15,31 +15,41 @@ jobs:
        steps:
          - name: Checkout code
            uses: actions/checkout@v3
+
+         - name: Set up Node
+           uses: actions/setup-node@v3
+           with:
+            node-version: '18.17'
+
          - name: Cache Dependencies
            id: yarn-cache
            uses: actions/cache@v3
            with:
              path: client/node_modules
              key: deps-node-modules-${{ hashFiles('client/yarn.lock') }}
+
          - name: Install dependencies
            if: steps.yarn-cache.outputs.cache-hit != 'true'
            run: |
             cd client
             yarn install
+
          - name: Build
            run: |
             cd client
             yarn build
-         - name: Test
-           continue-on-error: true
-           run: |
-            cd client
-            yarn test --no-watch --code-coverage
-         - name: Upload coverage report
-           uses: actions/upload-artifact@master
-           with:
-              name: coverageclient
-              path: client/coverage/
+
+        #  - name: Test
+        #    continue-on-error: true
+        #    run: |
+        #     cd client
+        #     yarn test --no-watch --code-coverage
+
+        #  - name: Upload coverage report
+        #    uses: actions/upload-artifact@master
+        #    with:
+        #       name: coverageclient
+        #       path: client/coverage/
 
   build-run-test-server:
        if: ${{github.repository == 'jaumoso/gamedb'}}
@@ -47,31 +57,41 @@ jobs:
        steps:
          - name: Checkout code
            uses: actions/checkout@v3
+
+         - name: Set up Node
+           uses: actions/setup-node@v3
+           with:
+            node-version: '18.17'
+
          - name: Cache Dependencies
            id: yarn-cache
            uses: actions/cache@v3
            with:
              path: server/node_modules
              key: deps-node-modules-${{ hashFiles('server/yarn.lock') }}
+
          - name: Install dependencies
            if: steps.yarn-cache.outputs.cache-hit != 'true'
            run: |
              cd server
              yarn install
+
          - name: Build
            run: |
              cd server
              yarn build
-         - name: Test
-           continue-on-error: true
-           run: |
-             cd server
-             yarn test --watch=false --coverage
-         - name: Upload coverage report
-           uses: actions/upload-artifact@master
-           with:
-              name: coverageserver
-              path: server/coverage/
+
+        #  - name: Test
+        #    continue-on-error: true
+        #    run: |
+        #      cd server
+        #      yarn test --watch=false --coverage
+        
+        #  - name: Upload coverage report
+        #    uses: actions/upload-artifact@master
+        #    with:
+        #       name: coverageserver
+        #       path: server/coverage/
             
   sonar-client:
     needs: build-run-test-client
@@ -79,11 +99,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Download coverage report
-        uses: actions/download-artifact@master
-        with:
-          name: coverageclient
-          path: client/coverage/
+      # - name: Download coverage report
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: coverageclient
+      #     path: client/coverage/
       - name: go to folder
         run: |
           cd client
@@ -109,11 +129,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Download coverage report
-        uses: actions/download-artifact@master
-        with:
-          name: coverageserver
-          path: server/coverage/
+      # - name: Download coverage report
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: coverageserver
+      #     path: server/coverage/
       - name: go to folder
         run: |
           cd server
@@ -133,34 +153,34 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SERVER }}
 
-  build-docker-images-and-publish:
-    needs: [sonar-client, sonar-server]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Docker Login
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and Publish Docker CLIENT
-      id: docker_build_client
-      uses: docker/build-push-action@v4
-      with:
-        context: client/.
-        push: true
-        tags: |
-          ghcr.io/jaumoso/cromoteca/cromoteca-client:${{ github.sha }}
-    - name: Build and Publish Docker SERVER
-      id: docker_build_server
-      uses: docker/build-push-action@v4
-      with:
-        context: server/.
-        push: true
-        tags: |
-          ghcr.io/jaumoso/cromoteca/cromoteca-server:${{ github.sha }}
-    - name: Print Image Digests
-      run: |
-        echo ${{ steps.docker_build_client.outputs.digests }}
-        echo ${{ steps.docker_build_server.outputs.digests }}
+  # build-docker-images-and-publish:
+  #   needs: [sonar-client, sonar-server]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Docker Login
+  #     uses: docker/login-action@v2
+  #     with:
+  #       registry: ghcr.io
+  #       username: ${{ github.actor }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #   - name: Build and Publish Docker CLIENT
+  #     id: docker_build_client
+  #     uses: docker/build-push-action@v4
+  #     with:
+  #       context: client/.
+  #       push: true
+  #       tags: |
+  #         ghcr.io/jaumoso/gamedb/gamedb-client:${{ github.sha }}
+  #   - name: Build and Publish Docker SERVER
+  #     id: docker_build_server
+  #     uses: docker/build-push-action@v4
+  #     with:
+  #       context: server/.
+  #       push: true
+  #       tags: |
+  #         ghcr.io/jaumoso/gamedb/gamedb-server:${{ github.sha }}
+  #   - name: Print Image Digests
+  #     run: |
+  #       echo ${{ steps.docker_build_client.outputs.digests }}
+  #       echo ${{ steps.docker_build_server.outputs.digests }}

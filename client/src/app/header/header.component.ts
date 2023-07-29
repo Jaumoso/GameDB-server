@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-header',
@@ -18,14 +19,15 @@ export class HeaderComponent implements OnInit {
   loginSubscription: Subscription | undefined;
   username: string | undefined
   isSmallScreen = false;
-  value = '';
+  value: string = '';
 
   constructor(
     private loginStatusService: LoginStatusService,
     private router: Router,
     private authService: AuthService,
     private jwtService: JwtService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +67,15 @@ export class HeaderComponent implements OnInit {
     }
     this.authService.closeSession();
     this.loggedIn = false;
+    this.snackBar.open(
+      "Session closed", 
+      "OK",
+      {
+        verticalPosition: 'top',
+        duration: 4000,
+        panelClass: ['snackbar']
+      }
+      );
   }
 
   goToProfile() {

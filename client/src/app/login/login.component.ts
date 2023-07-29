@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../services/auth.service';
 import { LoginStatusService } from '../services/loginStatus.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private loginStatusService: LoginStatusService,
     private router: Router,
+    private snackBar: MatSnackBar
   ) { 
     this.form = this.formBuilder.group({
       username: this.username,
@@ -36,6 +38,16 @@ export class LoginComponent implements OnInit {
         this.loginStatusService.loggedIn = true;
         this.authService.setSession(token);
         this.router.navigateByUrl('/home');
+
+        this.snackBar.open(
+          "Logged In", 
+          "OK",
+          {
+            verticalPosition: 'top',
+            duration: 4000,
+            panelClass: ['snackbar']
+          }
+          );
       });
     }
   }

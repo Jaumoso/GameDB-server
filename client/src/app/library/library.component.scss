@@ -7,3 +7,27 @@
 .page {
     min-height: 800px;
 }
+
+.add-game-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #353659;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border-style: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    transition: opacity 0.2s;
+    
+    &:hover {
+      background-color: mix(#353659, black, 80%);
+    }
+
+    &:active {
+        background-color: mix(#353659, black, 70%);
+    }
+}
