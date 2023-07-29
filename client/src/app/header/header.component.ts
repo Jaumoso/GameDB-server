@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   loginSubscription: Subscription | undefined;
   username: string | undefined
   isSmallScreen = false;
-
+  value = '';
 
   constructor(
     private loginStatusService: LoginStatusService,
