@@ -4,6 +4,9 @@ import { JwtService } from '../services/jwt.service';
 import { Router } from '@angular/router';
 import { GameService } from '../services/game.service';
 import { User } from '../shared/user';
+import { MatDialog } from '@angular/material/dialog';
+import { AddGameComponent } from '../dialogs/add-game/add-game.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-library',
@@ -13,14 +16,18 @@ import { User } from '../shared/user';
 export class LibraryComponent implements OnInit {
   gameList: any[] = [];
   platforms: any[] = [];
+  storefronts: any[] = [];
   states: any[] = [];
   private user: User | undefined;
+  isGridView: boolean = false;
 
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
     private gameService: GameService,
     private router: Router,
+    public addGameDialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +55,7 @@ export class LibraryComponent implements OnInit {
               genre: game.genre,
               own: libraryGame.own,
               platform: libraryGame.platform,
+              storefront: libraryGame.storefront,
               rating: libraryGame.rating,
               state: libraryGame.state
             });
@@ -58,6 +66,14 @@ export class LibraryComponent implements OnInit {
               this.platforms[platformIndex].counter++;
             } else {
               this.platforms.push({ platform: libraryGame.platform, counter: 1 });
+            }
+
+            // Save game in storefront counter
+            const storefrontIndex = this.storefronts.findIndex(item => item.storefront === libraryGame.storefront);
+            if (storefrontIndex !== -1) {
+              this.storefronts[storefrontIndex].counter++;
+            } else {
+              this.storefronts.push({ platform: libraryGame.storefront, counter: 1 });
             }
 
             // TODO: esto está raro
@@ -75,7 +91,29 @@ export class LibraryComponent implements OnInit {
   }
 
   addGame() {
-    
+    const dialogRef = this.addGameDialog.open(AddGameComponent, {
+      data: { user: this.user }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.game){
+        this.gameService.createGame(result.game)
+        .then(() => {
+          // if game is added
+          this.snackBar.open(
+            "Game added to your library", 
+            "OK",
+            {
+              verticalPosition: 'top',
+              duration: 6000,
+              panelClass: ['snackbar']
+            });
+        });
+      }
+    });
   }
 
+  toggleView(){
+    this.isGridView = !this.isGridView;
+  }
 }

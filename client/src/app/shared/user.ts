@@ -8,6 +8,7 @@ export class User{
         gameId: string | undefined;
         rating: Number | undefined;
         platform: string | undefined;
+        storefront: string | undefined;
         own: boolean;
         state: number | undefined;
     }[] | undefined;

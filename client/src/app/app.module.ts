@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,10 +29,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { baseURL } from './shared/baseurl';
 import { AuthInterceptorService } from './services/authInterceptor.service';
-import { AddGameComponent } from './add-game/add-game.component';
-import { CreateGameComponent } from './create-game/create-game.component';
+import { CreateGameComponent } from './dialogs/create-game/create-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
+import { AddGameComponent } from './dialogs/add-game/add-game.component';
 
 @NgModule({
   declarations: [
@@ -43,8 +45,8 @@ import { SettingsComponent } from './settings/settings.component';
     LibraryComponent,
     RegisterComponent,
     CreateGameComponent,
-    AddGameComponent,
     SettingsComponent,
+    AddGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,9 @@ import { SettingsComponent } from './settings/settings.component';
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule,
+    MatSidenavModule
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },
@@ -74,8 +78,4 @@ import { SettingsComponent } from './settings/settings.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  ngOnInit() {
-    // Empty
-  }
-}
+export class AppModule {}

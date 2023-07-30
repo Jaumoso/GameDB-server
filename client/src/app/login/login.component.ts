@@ -48,6 +48,16 @@ export class LoginComponent implements OnInit {
             panelClass: ['snackbar']
           }
           );
+      }).catch(() => {
+        this.snackBar.open(
+          "Wrong username or password", 
+          "OK",
+          {
+            verticalPosition: 'top',
+            duration: 6000,
+            panelClass: ['snackbar']
+          }
+          );
       });
     }
   }

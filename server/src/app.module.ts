@@ -12,6 +12,7 @@ import { FranchiseModule } from './franchise/franchise.module';
 import { PlatformModule } from './platform/platform.module';
 import { GenreModule } from './genre/genre.module';
 import { DlcModule } from './dlc/dlc.module';
+import { StorefrontModule } from './storefront/storefront.module';
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ require('dotenv').config();
     PublisherModule,
     FranchiseModule,
     PlatformModule,
+    StorefrontModule,
     GenreModule,
     DlcModule,
   ],

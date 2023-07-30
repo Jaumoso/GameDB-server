@@ -1,85 +1,90 @@
-<div>
-  <table border>
-    <tr>
-      <th>State</th>
-      <td>Not Interested</td>
-      <td>Want to play</td>
-      <td>Playing</td>
-      <td>Tried</td>
-      <td>Played</td>
-      <td>Completed</td>
-      <td>Retired</td>
-      <td>Archived</td>
-      <td>Abandoned</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
-  
-  <table border>
-    <tr>
-      <th>Platform</th>
-      <td>PC</td>
-      <td>PLayStation</td>
-      <td>Nintendo</td>
-      <td>Xbox</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
-  
-  <table border>
-    <tr>
-      <th>Storefront</th>
-      <td>Steam</td>
-      <td>Epic Games</td>
-      <td>Ubisoft Connect</td>
-      <td>EA Launcher</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table>
-  
-  <button (click)="addGame()">Add Game</button>
-</div>
+<div class="container">
 
-<div>
-  <table>
-    <tr>
-      <th>Games</th>
-    </tr>
-    <tr *ngFor="let game of gameList">
-      <td>{{game.title}}</td>
-      <td>{{game.released}}</td>
-      <td>{{game.developer}}</td>
-      <td>{{game.publisher}}</td>
-      <td>{{game.genre}}</td>
-      <td>{{game.franchise}}</td>
-      <td>{{game.platform}}</td>
-    </tr>
-  </table>
-</div>
+  <mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer #drawer [mode]="'side'">
+      <table class="stats-table">
+        <tr>
+          <th colspan="2">State</th>
+        </tr>
+        <tr>
+          <td>Not interested</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Want to play</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Playing</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tried</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Played</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Completed</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Retired</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Archived</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Abandoned</td>
+          <td></td>
+        </tr>
+      </table>
 
-<button class="add-game-button" (click)="addGame()">
-  Add Game <mat-icon class="material-symbols-outlined">add</mat-icon>
-</button>
+      <table class="stats-table">
+        <tr>
+          <th colspan="2">Platforms</th>
+        </tr>
+        <tr *ngFor="let platform of platforms">
+          <td>{{platform.name}}</td>
+          <td></td>
+        </tr>
+      </table>
+
+      <table class="stats-table">
+        <tr>
+          <th colspan="2">Storefronts</th>
+        </tr>
+        <tr *ngFor="let storefront of storefronts">
+          <td>{{storefront.name}}</td>
+          <td></td>
+        </tr>
+      </table>
+    </mat-drawer>
+    <mat-drawer-content>
+
+      <button mat-raised-button (click)="drawer.toggle()"><mat-icon class="material-symbols-outlined">chevron_right</mat-icon></button>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <div class="game-list">
+    <mat-button-toggle-group name="view_type" aria-label="View Type">
+      <mat-button-toggle value="list" matTooltip="List View"><mat-icon class="material-symbols-outlined">view_list</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="grid" matTooltip="Grid View"><mat-icon class="material-symbols-outlined">grid_view</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>    
+    <div class="game-list-content">
+      <!-- The list of games will be dynamically generated here based on the view mode -->
+      <!-- Use *ngFor to loop through the gameList and display it as a list or grid -->
+    </div>
+  </div>
+    
+  <button mat-raised-button class="add-game-button" (click)="addGame()">
+    Add Game <mat-icon class="material-symbols-outlined">add</mat-icon>
+  </button>
+</div>
+    
+
