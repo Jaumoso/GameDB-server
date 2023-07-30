@@ -22,7 +22,18 @@ export class AddGameComponent {
   library: any[] = [];
   game: Game | undefined;
   form: FormGroup;
-
+  gameOwn: boolean = false;
+  states: string[] = [
+    'Not Interested',
+    'Wishlist',
+    'Backlog',
+    'Tried',
+    'Playing',
+    'Played',
+    'Completed',
+    'Retired',
+    'Shelved',
+    'Abandoned'];
   constructor(
     public dialogRef: MatDialogRef<AddGameComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,

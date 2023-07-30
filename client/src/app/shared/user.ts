@@ -10,7 +10,7 @@ export class User{
         platform: string | undefined;
         storefront: string | undefined;
         own: boolean;
-        state: number | undefined;
+        state: string | undefined;
     }[] | undefined;
 }
 

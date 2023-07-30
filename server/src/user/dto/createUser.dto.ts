@@ -66,15 +66,7 @@ export class CreateUserDto {
         rating: Number;
         platform: mongoose.Types.ObjectId[];
         own: boolean;
-        state: Number;
-        // 0 Not interested
-        // 1 Want to play
-        // 2 Playing
-        // 3 Infinite
-        // 4 Abandoned
-        // 5 Played
-        // 6 Completed
-        // 7 Wishlist
+        state: string;
     }[];
     
 }
