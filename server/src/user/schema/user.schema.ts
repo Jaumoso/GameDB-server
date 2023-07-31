@@ -33,6 +33,9 @@ export class User {
         gameId: mongoose.Types.ObjectId; 
         rating: Number;
         platform: mongoose.Types.ObjectId[];
+        storefront: string;
+        acquisitionDate: Date;
+        acquisitionPrice: number;
         own: boolean;
         state: string;
     }[];

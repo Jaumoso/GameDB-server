@@ -17,6 +17,11 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -71,7 +76,11 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
     MatButtonToggleModule,
     MatSidenavModule,
     MatSlideToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSliderModule,
+    MomentDateModule
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },

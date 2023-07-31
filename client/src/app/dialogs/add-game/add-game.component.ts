@@ -7,22 +7,44 @@ import { Game } from 'src/app/shared/game';
 import { GameService } from 'src/app/services/game.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export interface DialogData {
   user: User;
 }
 
+const MY_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
+};
+
 @Component({
   selector: 'app-add-game',
   templateUrl: './add-game.component.html',
-  styleUrls: ['./add-game.component.scss']
+  styleUrls: ['./add-game.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
+  ]
 })
 export class AddGameComponent {
 
   library: any[] = [];
   game: Game | undefined;
   form: FormGroup;
+  maxDate: Date | undefined;
   gameOwn: boolean = false;
+  platforms: any[] = [];
+  storefronts: any[] = [];
   states: string[] = [
     'Not Interested',
     'Wishlist',
@@ -34,6 +56,7 @@ export class AddGameComponent {
     'Retired',
     'Shelved',
     'Abandoned'];
+
   constructor(
     public dialogRef: MatDialogRef<AddGameComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -48,18 +71,25 @@ export class AddGameComponent {
       rating: this.rating,
       platform: this.platform,
       storefront: this.storefront,
+      acquisitionDate: this.acquisitionDate,
+      acquisitionPrice: this.acquisitionPrice,
       own: this.own,
       state: this.state,
     })
+
+    const currentYear = new Date().getFullYear();
+    this.maxDate = new Date();
   }
 
   // FORM VALIDATION
-  gameId = new FormControl(null,[Validators.required]);
-  rating = new FormControl(0,[Validators.required]);
-  platform = new FormControl('',[Validators.required]);
-  storefront = new FormControl('',[Validators.required]);
-  own = new FormControl(true,[Validators.required]);
-  state = new FormControl('',[Validators.required]);
+  gameId = new FormControl(null, [Validators.required]);
+  rating = new FormControl(0, [Validators.required]);
+  platform = new FormControl('', [Validators.required]);
+  storefront = new FormControl('', [Validators.required]);
+  own = new FormControl(true, [Validators.required]);
+  state = new FormControl('', [Validators.required]);
+  acquisitionDate = new FormControl(null, [Validators.required]);
+  acquisitionPrice = new FormControl(null, [Validators.required]);
 
   ngOnInit(){
     this.library = this.data.user.library!;
@@ -67,6 +97,13 @@ export class AddGameComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  formatLabel(value: number): string {
+    if(value > 0){
+      return value + '☆';
+    }
+    return `${value}`;
   }
 
   onSubmit(){

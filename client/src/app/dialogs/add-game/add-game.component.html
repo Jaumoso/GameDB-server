@@ -1,42 +1,59 @@
 <mat-toolbar>
-    Add game to library
+    <span class="dialog-header">Add game to library</span>
     <span class="flex-spacer"></span>
-    <button class="cancel" mat-button mat-dialog-close>&times;</button>
+    <button class="cancel" mat-icon-button mat-dialog-close>
+        <mat-icon class="material-symbols-outlined">close</mat-icon>
+    </button>
 </mat-toolbar>
-  
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
-<mat-dialog-content>
-    <mat-form-field>
-        <input matInput [formControl]="gameId" required placeholder="Search for a game" type="text" name="gameId">
-        <mat-error *ngIf="this.form.get('gameId')?.errors?.['required']">Game is required.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Rating</mat-label>
-        <input matInput [formControl]="rating" required placeholder="Rating" type="number" name="rating">
-        <mat-error *ngIf="this.form.get('rating')?.errors?.['required']">Rating required</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput [formControl]="platform" name="platform" placeholder="Game platform">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput [formControl]="storefront" required placeholder="Game Storefront" type="text" name="storefront">
-        <mat-error *ngIf="this.form.get('storefront')?.errors?.['required']">Storefront required.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="outline" class="mat-search">
+            <mat-label>Search for a game</mat-label>
+            <input matInput placeholder="Game search" type="text">
+            <mat-icon matSuffix class="material-symbols-outlined">search</mat-icon>
+        </mat-form-field>
+            <mat-label>Rating</mat-label>
+            <mat-slider min="0" max="10" step="1" showTickMarks discrete [displayWith]="formatLabel">
+            <input matSliderThumb>
+        </mat-slider>
+        <mat-form-field appearance="outline">
+            <mat-label>Select a platform</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let platform of platforms" [value]="state">{{state}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Select a storefront</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let storefront of storefronts" [value]="state">{{state}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-slide-toggle>I own the game</mat-slide-toggle>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-select [formControl]="state" name="state">
-            <mat-option value="" disabled selected>Select state</mat-option>
-            <mat-option *ngFor="let state of states" [value]="state">
-            {{state}}
-            </mat-option>
-        </mat-select>
-        <mat-error *ngIf="this.form.get('state')?.errors?.['required']">State required.</mat-error>
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <span class="flex-spacer"></span>
-    <button mat-button type="submit" [disabled]="form.invalid">Add</button>
-</mat-dialog-actions>
+        <mat-form-field appearance="outline">
+            <mat-label>Select a state</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Acquisition date</mat-label>
+            <input matInput [max]="maxDate" [matDatepicker]="picker">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Acquisition price</mat-label>
+            <input matInput placeholder="price" type="number">
+            <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <span class="flex-spacer"></span>
+        <button mat-raised-button type="submit" [disabled]="form.invalid">Añadir</button>
+    </mat-dialog-actions>
 </form>

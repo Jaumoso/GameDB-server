@@ -9,6 +9,8 @@ export class User{
         rating: Number | undefined;
         platform: string | undefined;
         storefront: string | undefined;
+        acquisitionDate: Date | undefined;
+        acquisitionPrice: number | undefined;
         own: boolean;
         state: string | undefined;
     }[] | undefined;
