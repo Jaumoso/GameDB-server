@@ -14,15 +14,7 @@ protect routes
 
 forgotten password
 
-state:
-// 0 Not interested
-// 1 Want to play
-// 2 Playing
-// 3 Infinite
-// 4 Abandoned
-// 5 Played
-// 6 Completed
-// 7 Wishlist
+CONSIDERING igdb.com SERIOUSLY AS DATABASE
 
 Useful links:
 https://fonts.google.com/icons?hl=es-419&icon.platform=web
