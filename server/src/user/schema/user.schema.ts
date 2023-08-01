@@ -25,8 +25,11 @@ export class User {
         gameId: mongoose.Types.ObjectId, 
         rating: Number,
         platform: [{type: mongoose.Types.ObjectId, ref: 'Platform'}],
+        storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
+        acquisitionDate: Date,
+        acquisitionPrice: Number,
         own: Boolean,
-        state: Number,
+        state: String
     }], 
     ref: 'Game'})
     library: { 

@@ -7,43 +7,43 @@
           <th colspan="2">State</th>
         </tr>
         <tr>
-          <td>Not interested</td>
+          <td matTooltip="Games in your possession that you are not interested in">Not interested</td>
           <td></td>
         </tr>
         <tr>
-          <td>Wishlist</td>
+          <td matTooltip="Games that you want to buy">Wishlist</td>
           <td></td>
         </tr>
         <tr>
-          <td>Backlog</td>
+          <td matTooltip="Games in your library which you want to play">Backlog</td>
           <td></td>
         </tr>
         <tr>
-          <td>Tried</td>
+          <td matTooltip="Games you tried but didn't catch you">Tried</td>
           <td></td>
         </tr>
         <tr>
-          <td>Playing</td>
+          <td matTooltip="Games that you are playing currently">Playing</td>
           <td></td>
         </tr>
         <tr>
-          <td>Played</td>
+          <td matTooltip="Finished games">Played</td>
           <td></td>
         </tr>
         <tr>
-          <td>Completed</td>
+          <td matTooltip="100% no scoped these games">Completed</td>
           <td></td>
         </tr>
         <tr>
-          <td>Retired</td>
+          <td matTooltip="Infinite games that you don't want to play anymore">Retired</td>
           <td></td>
         </tr>
         <tr>
-          <td>Shelved</td>
+          <td matTooltip="Maybe one day you will play again... maybe">Shelved</td>
           <td></td>
         </tr>
         <tr>
-          <td>Abandoned</td>
+          <td matTooltip="This shit bad">Abandoned</td>
           <td></td>
         </tr>
       </table>
@@ -81,6 +81,10 @@
       <mat-button-toggle value="grid" matTooltip="Grid View"><mat-icon class="material-symbols-outlined">grid_view</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>    
     <div class="game-list-content">
+      <!-- TODO: Game list -->
+      <div *ngFor="let game of gameList">
+        {{game.name}}
+      </div>
       <!-- The list of games will be dynamically generated here based on the view mode -->
       <!-- Use *ngFor to loop through the gameList and display it as a list or grid -->
     </div>

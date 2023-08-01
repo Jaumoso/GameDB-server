@@ -8,5 +8,6 @@ export class Game {
     publisher: string | undefined;
     genre: string[] | undefined;
     franchise: string | undefined;
-    platform: string | undefined;
+    platform: string[] | undefined;
+    storefront: string[] | undefined;
 }

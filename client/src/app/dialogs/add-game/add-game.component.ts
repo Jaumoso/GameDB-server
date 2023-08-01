@@ -41,6 +41,8 @@ export class AddGameComponent {
   library: any[] = [];
   game: Game | undefined;
   form: FormGroup;
+  searchText: string = '';
+  loadedGames: Game[] = [];
   maxDate: Date | undefined;
   gameOwn: boolean = false;
   platforms: any[] = [];
@@ -77,8 +79,12 @@ export class AddGameComponent {
       state: this.state,
     })
 
+    // GET CURRENT DATE
     const currentYear = new Date().getFullYear();
     this.maxDate = new Date();
+
+    // LOAD USER LIBRARY
+    this.library = this.data.user.library!;
   }
 
   // FORM VALIDATION
@@ -90,10 +96,6 @@ export class AddGameComponent {
   state = new FormControl('', [Validators.required]);
   acquisitionDate = new FormControl(null, [Validators.required]);
   acquisitionPrice = new FormControl(null, [Validators.required]);
-
-  ngOnInit(){
-    this.library = this.data.user.library!;
-  }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -107,7 +109,8 @@ export class AddGameComponent {
   }
 
   onSubmit(){
-      this.data.user.library
+    // TODO: save game info in user library
+    // this.data.user.library?.push()
     this.userService.updateUserContent(this.data.user._id!, this.data.user)
     .then(() => {
       this.closeDialog()
@@ -140,4 +143,12 @@ export class AddGameComponent {
     });
   }
 
+  // TODO: Game Search
+  // private gameSearch(): Game[] {
+  //   return this.gameService.getGames()
+  //   return this.loadedGames.filter(game => game.name.toLowerCase().includes(filterValue));
+  // }
+
+
+  
 }

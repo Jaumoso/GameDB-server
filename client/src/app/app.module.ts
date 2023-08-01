@@ -21,7 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MomentDateModule } from '@angular/material-moment-adapter';
-
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -80,7 +80,8 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSliderModule,
-    MomentDateModule
+    MomentDateModule,
+    MatTabsModule
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },

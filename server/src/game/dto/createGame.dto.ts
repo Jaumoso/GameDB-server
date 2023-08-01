@@ -76,4 +76,11 @@ export class CreateGameDto {
         example: [new mongoose.Types.ObjectId()]
     })
     platform: mongoose.Types.ObjectId[];
+
+    @ApiProperty({
+        type: mongoose.Types.ObjectId,
+        description: 'Tienda del juego.',
+        example: [new mongoose.Types.ObjectId()]
+    })
+    storefront: mongoose.Types.ObjectId[];
 }

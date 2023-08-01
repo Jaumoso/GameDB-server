@@ -58,7 +58,11 @@ export class CreateUserDto {
             gameId: new mongoose.Types.ObjectId(), 
             rating: 8,
             platform: [new mongoose.Types.ObjectId()],
-            state: 0
+            storefront: [new mongoose.Types.ObjectId()],
+            acquisitionDate: new Date(2023, 8, 1).toISOString(),
+            acquisitionPrice: 0,
+            own: true,
+            state: 'Not Interested'
         }],
     })
     library: {

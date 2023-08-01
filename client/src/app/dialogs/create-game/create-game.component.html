@@ -1,1 +1,33 @@
-<p>create-game works!</p>
+<mat-toolbar>
+    <span class="dialog-header">Add game to the database</span>
+    <span class="flex-spacer"></span>
+    <button class="cancel" mat-icon-button mat-dialog-close>
+        <mat-icon class="material-symbols-outlined">close</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Game Information">
+        <form novalidate [formGroup]="createGameForm" (ngSubmit)="createGameSubmit()">
+            <mat-dialog-content class="dialog-content">
+            </mat-dialog-content>
+        </form>
+    </mat-tab>
+    <mat-tab label="Create Developer">
+        Create Developer
+    </mat-tab>
+    <mat-tab label="Create Publisher">
+        Create Publisher
+    </mat-tab>
+    <mat-tab label="Create Genre">
+        Create genre
+    </mat-tab>
+    <mat-tab label="Create Franchise">
+        Create Franchise
+    </mat-tab>
+    <mat-tab label="Create Platform">
+        Create Platform
+    </mat-tab>
+    <mat-tab label="Create Storefront">
+        Create Storefront
+    </mat-tab>
+</mat-tab-group>
