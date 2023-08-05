@@ -7,6 +7,7 @@ import { User } from '../shared/user';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGameComponent } from '../dialogs/add-game/add-game.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Game } from '../shared/game';
 
 @Component({
   selector: 'app-library',
@@ -26,8 +27,8 @@ export class LibraryComponent implements OnInit {
     private jwtService: JwtService,
     private gameService: GameService,
     private router: Router,
-    public addGameDialog: MatDialog,
-    private snackBar: MatSnackBar
+    private addGameDialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -38,56 +39,62 @@ export class LibraryComponent implements OnInit {
       return;
     }
 
-    const decodedToken = this.jwtService.decodeToken(token!);
+    // this.gameService.searchGames('Outer')
+    // .subscribe((result) => {
+    //   this.gamesTest = result;
+    //   console.log(result[0])
+    // })
 
-      this.userService.getUser(decodedToken._id)
-      .then((user) => {
-        this.user = user;
-        this.user.library?.forEach((libraryGame) => {
-          this.gameService.getGame(libraryGame.gameId!)
-          .then((game) => {
+    // const decodedToken = this.jwtService.decodeToken(token!);
 
-            // Save game in the game List
-            this.gameList.push({
-              gameId: game._id,
-              title: game.title,
-              image: game.image,
-              genre: game.genre,
-              own: libraryGame.own,
-              platform: libraryGame.platform,
-              storefront: libraryGame.storefront,
-              rating: libraryGame.rating,
-              state: libraryGame.state
-            });
+    //   this.userService.getUser(decodedToken._id)
+    //   .then((user) => {
+    //     this.user = user;
+    //     this.user.library?.forEach((libraryGame) => {
+    //       this.gameService.getGame(libraryGame.gameId!)
+    //       .then((game) => {
 
-            // Save game in platform counter
-            const platformIndex = this.platforms.findIndex(item => item.platform === libraryGame.platform);
-            if (platformIndex !== -1) {
-              this.platforms[platformIndex].counter++;
-            } else {
-              this.platforms.push({ platform: libraryGame.platform, counter: 1 });
-            }
+    //         // Save game in the game List
+    //         this.gameList.push({
+    //           gameId: game._id,
+    //           title: game.title,
+    //           image: game.image,
+    //           genre: game.genre,
+    //           own: libraryGame.own,
+    //           platform: libraryGame.platform,
+    //           storefront: libraryGame.storefront,
+    //           rating: libraryGame.rating,
+    //           state: libraryGame.state
+    //         });
 
-            // Save game in storefront counter
-            const storefrontIndex = this.storefronts.findIndex(item => item.storefront === libraryGame.storefront);
-            if (storefrontIndex !== -1) {
-              this.storefronts[storefrontIndex].counter++;
-            } else {
-              this.storefronts.push({ platform: libraryGame.storefront, counter: 1 });
-            }
+    //         // Save game in platform counter
+    //         const platformIndex = this.platforms.findIndex(item => item.platform === libraryGame.platform);
+    //         if (platformIndex !== -1) {
+    //           this.platforms[platformIndex].counter++;
+    //         } else {
+    //           this.platforms.push({ platform: libraryGame.platform, counter: 1 });
+    //         }
 
-            // TODO: esto está raro
-            // Save game in State counter
-            const stateIndex = this.platforms.findIndex(item => item.state === libraryGame.state);
-            if (stateIndex !== -1) {
-              this.states[stateIndex].counter++;
-            } else {
-              this.states.push({ states: libraryGame.state, counter: 1 });
-            }
+    //         // Save game in storefront counter
+    //         const storefrontIndex = this.storefronts.findIndex(item => item.storefront === libraryGame.storefront);
+    //         if (storefrontIndex !== -1) {
+    //           this.storefronts[storefrontIndex].counter++;
+    //         } else {
+    //           this.storefronts.push({ platform: libraryGame.storefront, counter: 1 });
+    //         }
 
-          });
-        })
-      })
+    //         // TODO: esto está raro
+    //         // Save game in State counter
+    //         const stateIndex = this.platforms.findIndex(item => item.state === libraryGame.state);
+    //         if (stateIndex !== -1) {
+    //           this.states[stateIndex].counter++;
+    //         } else {
+    //           this.states.push({ states: libraryGame.state, counter: 1 });
+    //         }
+
+    //       });
+    //     })
+    //   })
   }
 
   addGame() {

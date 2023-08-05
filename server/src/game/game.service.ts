@@ -1,9 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GameDocument } from './schema/game.schema';
+import { Game, GameDocument } from './schema/game.schema';
 import { CreateGameDto } from './dto/createGame.dto';
 import { UpdateGameDto } from './dto/updateGame.dto';
+import axios from 'axios';
+import { IgdbService } from 'src/igdb/igdb.service';
+
+export const apiAuth = {
+    useFactory: async (igdbService: IgdbService) => {
+      return await igdbService.getIgdbToken();
+    },
+    inject: [IgdbService]
+}
 
 @Injectable()
 export class GameService {
@@ -23,6 +32,44 @@ export class GameService {
             throw new NotFoundException('Game data not found!');
         }
         return gameData;
+    }
+
+    async searchGames(searchGameTitle: string): Promise<any[]> {
+        let searchResult = null;
+        let games: any[] = [];
+        try {
+            const igdbService = new IgdbService();
+            const accessToken = await apiAuth.useFactory(igdbService);
+            const response = await axios({
+                method: 'post',
+                url: 'https://api.igdb.com/v4/games',
+                headers: {
+                   'Client-ID': process.env.IGDB_CLIENT_ID,
+                   Authorization: 'Bearer ' + accessToken,
+                   Accept: 'application/json'
+                }, 
+                data: `search "${searchGameTitle}"; fields name,first_release_date,cover.url,platforms.name;`
+              });
+              console.log(response.data)
+              searchResult = response.data;
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            searchResult.forEach((game) => {
+                games.push({
+                    id: game.id,
+                    name: game.name,
+                    first_release_date: game.first_release_date * 1000,
+                    cover: game.cover?.url,
+                    platforms: game.platforms
+                });
+            })
+            console.log(games);
+        } catch (error) {
+            console.log(error);
+        }
+        return games;
     }
 
     async createGame(gameDto: CreateGameDto ): Promise<GameDocument> {

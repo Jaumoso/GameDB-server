@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../shared/user';
 import { baseURL } from '../shared/baseurl';
 import { Observable, map } from 'rxjs';
-import { Game } from '../shared/game';
 
 @Injectable({
   providedIn: 'root'

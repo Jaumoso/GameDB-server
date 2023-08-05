@@ -9,6 +9,20 @@ import { UpdateGameDto } from './dto/updateGame.dto';
 export class GameController {
     constructor(private readonly gameService: GameService) { }
     
+    @Get('/search/:gameTitleSearch')
+    @ApiCreatedResponse({ description: 'Información de un juego en concreto.' })
+    async searchGames(@Res() response, @Param('gameTitleSearch') gameTitleSearch: string) {
+        try {
+            const gameData = await this.gameService.searchGames(gameTitleSearch);
+            return response.status(HttpStatus.OK).json({
+                message: 'Game data found successfully', gameData,
+            });
+        }
+        catch (err) {
+            return response.status(err.status).json(err.response);
+        }
+    }
+
     @Get()
     @ApiCreatedResponse({ description: 'Toda la información de los juegos.' })
     async getAllGames(@Res() response) {

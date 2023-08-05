@@ -1,5 +1,5 @@
 <mat-toolbar>
-    <span>Add game to your library</span>
+    <span>Add a game to your library</span>
     <span class="flex-spacer"></span>
     <button class="cancel" mat-icon-button mat-dialog-close>
         <mat-icon class="material-symbols-outlined">close</mat-icon>
@@ -7,33 +7,39 @@
 </mat-toolbar>
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="dialog-content">
-        <mat-form-field appearance="outline" class="mat-search">
+        {{gameId.value}} {{rating.value}} {{platform.value}} {{storefront.value}} {{own.value}} {{state.value}} {{acquisitionDate.value}} {{acquisitionPrice.value}}
+        <mat-form-field appearance="outline" class="mat-search full-width">
             <mat-label>Search for a game</mat-label>
-            <input matInput placeholder="Game search" type="text" (formControlName)="searchText">
+            <input matInput
+                   placeholder="Game search"
+                   type="text"
+                   [formControl]="gameId"
+                   [(ngModel)]="searchText"
+                   (ngModelChange)="gameSearch()"
+                   aria-label="Game Search"
+                   [matAutocomplete]="auto">
             <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
-        </mat-form-field>
-
-        <!-- TODO: Game search -->
-    <!-- <mat-form-field>
-        <mat-label>Search for a game</mat-label>
-        <input matInput
-                aria-label="Game Search"
-                [matAutocomplete]="auto"
-                [formControl]="gameId" [(ngModel)]="searchText" (ngModelChange)="gameSearch()">
-        <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let game of loadedGames | async" [value]="game.name">
-            <img alt="{{game.name}}" [src]="game.image" height="25">
-            <span>{{game.name}}</span> |
-            <small>{{game.developer}} | {{ game.publisher}} | {{ game.releaseDate}}</small>
-        </mat-option>
-        </mat-autocomplete>
-    </mat-form-field> -->
-
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let game of loadedGames" [value]="game.id">
+                <div class="option-container">
+                  <div class="option-image">
+                    <img *ngIf="game.cover" class="option-img" alt="{{game.name}}" [src]="game.cover">
+                    <img *ngIf="!game.cover" class="option-img" alt="{{game.name}}" src="/assets/images/cover_not_available.jpeg">
+                  </div>
+                  <div class="option-details">
+                    <div class="option-title"><span class="option-title">{{game.name}}</span></div>
+                    <div class="option-platforms"><small class="option-platforms">{{game.first_release_date | date}} <span *ngFor="let platform of game.platforms"> | {{platform.name}}</span></small></div>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
 
         <mat-label>Rating</mat-label>
         <mat-slider min="0" max="10" step="1" showTickMarks discrete [displayWith]="formatLabel">
-            <input matSliderThumb>
+            <input matSliderThumb [formControl]="rating">
         </mat-slider>
+        
         <mat-form-field appearance="outline" class="input-spacing-right">
             <mat-label>Select a platform</mat-label>
             <mat-select>
@@ -71,8 +77,6 @@
         </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-raised-button type="submit" (click)="createGame()">Add new game to database</button>
-        <button mat-raised-button type="submit">Edit game information</button>
         <span class="flex-spacer"></span>
         <button mat-raised-button type="submit" [disabled]="form.invalid">Add</button>
     </mat-dialog-actions>

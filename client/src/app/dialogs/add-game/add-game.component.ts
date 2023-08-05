@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/shared/user';
 import { CreateGameComponent } from '../create-game/create-game.component';
-import { Game } from 'src/app/shared/game';
 import { GameService } from 'src/app/services/game.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -38,11 +37,12 @@ const MY_DATE_FORMAT = {
 })
 export class AddGameComponent {
 
-  library: any[] = [];
-  game: Game | undefined;
+  // library: Object[] | undefined;
   form: FormGroup;
   searchText: string = '';
-  loadedGames: Game[] = [];
+  loadedGames: any[] = [];
+  covers: any[] = [];
+
   maxDate: Date | undefined;
   gameOwn: boolean = false;
   platforms: any[] = [];
@@ -84,7 +84,7 @@ export class AddGameComponent {
     this.maxDate = new Date();
 
     // LOAD USER LIBRARY
-    this.library = this.data.user.library!;
+    // this.library = this.data.user.library! || undefined;
   }
 
   // FORM VALIDATION
@@ -120,35 +120,40 @@ export class AddGameComponent {
     });
   }
 
-  createGame(){
-    const dialogRef = this.createGameDialog.open(CreateGameComponent, {
-      data: { game: this.game }
-    });
+  // createGame(){
+  //   const dialogRef = this.createGameDialog.open(CreateGameComponent, {
+  //     data: { game: this.game }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result.game){
-        this.gameService.createGame(result.game)
-        .then(() => {
-          // if game is created
-          this.snackBar.open(
-            "Game created and added to the database", 
-            "OK",
-            {
-              verticalPosition: 'top',
-              duration: 6000,
-              panelClass: ['snackbar']
-            });
-        });
-      }
-    });
-  }
-
-  // TODO: Game Search
-  // private gameSearch(): Game[] {
-  //   return this.gameService.getGames()
-  //   return this.loadedGames.filter(game => game.name.toLowerCase().includes(filterValue));
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if(result.game){
+  //       this.gameService.createGame(result.game)
+  //       .then(() => {
+  //         // if game is created
+  //         this.snackBar.open(
+  //           "Game created and added to the database", 
+  //           "OK",
+  //           {
+  //             verticalPosition: 'top',
+  //             duration: 6000,
+  //             panelClass: ['snackbar']
+  //           });
+  //       });
+  //     }
+  //   });
   // }
 
-
-  
+  gameSearch(): void {
+    if (this.searchText !== '') {
+      this.gameService.searchGames(this.searchText).subscribe((games: any[]) => {
+        this.loadedGames = games.map(game => ({
+          id: game.id,
+          name: game.name,
+          first_release_date: game.first_release_date,
+          cover: game.cover?.url,
+          platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
+        }));
+      });
+    }
+  }
 }

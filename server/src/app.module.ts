@@ -13,7 +13,7 @@ import { PlatformModule } from './platform/platform.module';
 import { GenreModule } from './genre/genre.module';
 import { DlcModule } from './dlc/dlc.module';
 import { StorefrontModule } from './storefront/storefront.module';
-
+import { IgdbModule } from './igdb/igdb.module';
 require('dotenv').config();
 
 @Module({
@@ -33,6 +33,7 @@ require('dotenv').config();
     StorefrontModule,
     GenreModule,
     DlcModule,
+    IgdbModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,4 @@
 <div class="container">
-
   <mat-drawer-container [hasBackdrop]="false">
     <mat-drawer #drawer [mode]="'side'">
       <table class="stats-table">
@@ -63,7 +62,7 @@
           <th colspan="2">Storefronts</th>
         </tr>
         <tr *ngFor="let storefront of storefronts">
-          <td>{{storefront.name}}</td>
+          <td>{{storefront.name | async}}</td>
           <td></td>
         </tr>
       </table>
@@ -82,9 +81,6 @@
     </mat-button-toggle-group>    
     <div class="game-list-content">
       <!-- TODO: Game list -->
-      <div *ngFor="let game of gameList">
-        {{game.name}}
-      </div>
       <!-- The list of games will be dynamically generated here based on the view mode -->
       <!-- Use *ngFor to loop through the gameList and display it as a list or grid -->
     </div>
