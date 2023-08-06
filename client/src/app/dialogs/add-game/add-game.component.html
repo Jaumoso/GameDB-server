@@ -20,7 +20,7 @@
                    [matAutocomplete]="auto">
             <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let game of loadedGames" [value]="game.id">
+              <mat-option *ngFor="let game of loadedGames" [value]="game.id" (onSelectionChange)="selectedGame(game.id)">
                 <div class="option-container">
                   <div class="option-image">
                     <img *ngIf="game.cover" class="option-img" alt="{{game.name}}" [src]="game.cover">
@@ -39,27 +39,29 @@
         <mat-slider min="0" max="10" step="1" showTickMarks discrete [displayWith]="formatLabel">
             <input matSliderThumb [formControl]="rating">
         </mat-slider>
-        
+
         <mat-form-field appearance="outline" class="input-spacing-right">
             <mat-label>Select a platform</mat-label>
-            <mat-select>
+            <mat-select multiple formControlName="platform">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let platform of platforms" [value]="state">{{state}}</mat-option>
+                <mat-option *ngFor="let platform of selectedGamePlatforms" [formControl]="platform" [value]="platform.name">{{platform.name}}</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Select a storefront</mat-label>
-            <mat-select>
+            <mat-select multiple formControlName="storefront">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let storefront of storefronts" [value]="state">{{state}}</mat-option>
+                <mat-option *ngFor="let storefront of storefronts" [formControl]="storefront" [value]="storefront">{{storefront}}</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-slide-toggle class="input-spacing-right">I own the game</mat-slide-toggle>
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Select a state</mat-label>
-            <mat-select>
+            <mat-select formControlName="state">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+                <mat-option *ngFor="let gameState of gameStates" [value]="gameState">{{state}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -70,11 +72,13 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Acquisition price</mat-label>
             <input matInput placeholder="price" type="number">
             <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
         </mat-form-field>
+        
     </mat-dialog-content>
     <mat-dialog-actions>
         <span class="flex-spacer"></span>

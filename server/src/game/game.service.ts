@@ -48,13 +48,14 @@ export class GameService {
                    Authorization: 'Bearer ' + accessToken,
                    Accept: 'application/json'
                 }, 
-                data: `search "${searchGameTitle}"; fields name,first_release_date,cover.url,platforms.name;`
+                data: `search "${searchGameTitle}"; limit 20; fields name,first_release_date,cover.url,platforms.name;`
               });
               console.log(response.data)
               searchResult = response.data;
         } catch (error) {
             console.log(error);
         }
+
         try {
             searchResult.forEach((game) => {
                 games.push({

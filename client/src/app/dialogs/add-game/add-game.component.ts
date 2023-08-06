@@ -1,13 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/shared/user';
-import { CreateGameComponent } from '../create-game/create-game.component';
 import { GameService } from 'src/app/services/game.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export interface DialogData {
@@ -37,17 +34,28 @@ const MY_DATE_FORMAT = {
 })
 export class AddGameComponent {
 
-  // library: Object[] | undefined;
   form: FormGroup;
+  // FORM VALIDATION
+  gameId = new FormControl(null, [Validators.required]);
+  rating = new FormControl(0, [Validators.required]);
+  platform = new FormControl(null, [Validators.required]);
+  storefront = new FormControl('', [Validators.required]);
+  own = new FormControl(true, [Validators.required]);
+  state = new FormControl('', [Validators.required]);
+  acquisitionDate = new FormControl(null, [Validators.required]);
+  acquisitionPrice = new FormControl(null, [Validators.required]);
+
+  // library: Object[] | undefined;
   searchText: string = '';
   loadedGames: any[] = [];
   covers: any[] = [];
+  selectedGamePlatforms: any[] = [];
 
   maxDate: Date | undefined;
   gameOwn: boolean = false;
   platforms: any[] = [];
   storefronts: any[] = [];
-  states: string[] = [
+  gameStates: string[] = [
     'Not Interested',
     'Wishlist',
     'Backlog',
@@ -62,10 +70,8 @@ export class AddGameComponent {
   constructor(
     public dialogRef: MatDialogRef<AddGameComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private createGameDialog: MatDialog,
     private userService: UserService,
     private gameService: GameService,
-    private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
   ){
     this.form = this.formBuilder.group({
@@ -84,18 +90,11 @@ export class AddGameComponent {
     this.maxDate = new Date();
 
     // LOAD USER LIBRARY
+    // TODO: compare to user library
     // this.library = this.data.user.library! || undefined;
   }
 
-  // FORM VALIDATION
-  gameId = new FormControl(null, [Validators.required]);
-  rating = new FormControl(0, [Validators.required]);
-  platform = new FormControl('', [Validators.required]);
-  storefront = new FormControl('', [Validators.required]);
-  own = new FormControl(true, [Validators.required]);
-  state = new FormControl('', [Validators.required]);
-  acquisitionDate = new FormControl(null, [Validators.required]);
-  acquisitionPrice = new FormControl(null, [Validators.required]);
+
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -120,29 +119,6 @@ export class AddGameComponent {
     });
   }
 
-  // createGame(){
-  //   const dialogRef = this.createGameDialog.open(CreateGameComponent, {
-  //     data: { game: this.game }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if(result.game){
-  //       this.gameService.createGame(result.game)
-  //       .then(() => {
-  //         // if game is created
-  //         this.snackBar.open(
-  //           "Game created and added to the database", 
-  //           "OK",
-  //           {
-  //             verticalPosition: 'top',
-  //             duration: 6000,
-  //             panelClass: ['snackbar']
-  //           });
-  //       });
-  //     }
-  //   });
-  // }
-
   gameSearch(): void {
     if (this.searchText !== '') {
       this.gameService.searchGames(this.searchText).subscribe((games: any[]) => {
@@ -153,7 +129,14 @@ export class AddGameComponent {
           cover: game.cover?.url,
           platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
         }));
+        console.log(this.loadedGames)
       });
     }
   }
+
+  selectedGame(gameId: number) {
+    const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
+    this.selectedGamePlatforms = targetGame?.platforms;
+  }
+
 }
