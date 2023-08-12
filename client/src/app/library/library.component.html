@@ -85,38 +85,24 @@
     </mat-button-toggle-group>
     <div class="game-container">
       <ng-container *ngIf="viewType === 'grid'; else listView">
-        <div class="game-card" *ngFor="let game of gameList">
-          <h3>{{ game.name }}</h3>
-          <img src="{{ game.cover }}" alt="{{ game.name }}">
-          <p>Release Date: {{ game.releaseDate }}</p>
-          <p>Own: {{ game.own }}</p>
-          <p>State: {{ game.state }}</p>
-          <p>Platforms: {{ game.platforms }}</p>
-          <p>Storefronts: {{ game.storefronts }}</p>
-          <p>Acquisition Date: {{ game.acquisitionDate }}</p>
-          <p>Acquisition Price: {{ game.acquisitionPrice }}</p>
-          <p>Rating: {{ game.rating }}</p>
-        </div>
+        <app-game-card *ngFor="let game of gameList"
+        [name]="game.name"
+        [cover]="game.cover"
+        [platforms]="game.platforms"
+        [storefronts]="game.storefronts"
+        [rating]="game.rating"
+        [acquisitionPrice]="game.acquisitionPrice">
+        </app-game-card>
       </ng-container>
       <ng-template #listView>
-        <div class="game-list-container">
-          <ul class="game-list-ul">
-            <li class="game-list-li" *ngFor="let game of gameList">
-              <div class="game-list-item">
-                <h3>{{ game.name }}</h3>
-                <img src="{{ game.cover }}" alt="{{ game.name }}">
-                <p>Release Date: {{ game.releaseDate }}</p>
-                <p>Own: {{ game.own }}</p>
-                <p>State: {{ game.state }}</p>
-                <p>Platforms: {{ game.platforms }}</p>
-                <p>Storefronts: {{ game.storefronts }}</p>
-                <p>Acquisition Date: {{ game.acquisitionDate }}</p>
-                <p>Acquisition Price: {{ game.acquisitionPrice }}</p>
-                <p>Rating: {{ game.rating }}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
+          <app-game-list *ngFor="let game of gameList"
+            [name]="game.name"
+            [cover]="game.cover"
+            [platforms]="game.platforms"
+            [storefronts]="game.storefronts"
+            [rating]="game.rating"
+            [acquisitionPrice]="game.acquisitionPrice">
+          </app-game-list>
       </ng-template>
     </div>
   </div>

@@ -24,7 +24,7 @@ export class User {
     @Prop({type: [{ 
         gameId: Number, 
         rating: Number,
-        platform: [{type: mongoose.Types.ObjectId, ref: 'Platform'}],
+        platform: [{type: String}],
         storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
         acquisitionDate: Date,
         acquisitionPrice: Number,

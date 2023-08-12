@@ -40,7 +40,6 @@ export class AddGameComponent {
   library: Object[] | undefined;
   searchText: string = '';
   loadedGames: any[] = [];
-  covers: any[] = [];
   selectedGamePlatforms: any[] = [];
 
   maxDate: Date | undefined;

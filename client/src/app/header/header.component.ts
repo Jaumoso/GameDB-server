@@ -14,12 +14,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HeaderComponent implements OnInit {
 
-  isProfileDropdownOpen: boolean = false;
-  loggedIn: boolean = false;
+  isProfileDropdownOpen: Boolean = false;
+  loggedIn: Boolean = false;
   loginSubscription: Subscription | undefined;
-  username: string | undefined
+  username: String | undefined
   isSmallScreen = false;
-  value: string = '';
+  value: String = '';
 
   constructor(
     private loginStatusService: LoginStatusService,

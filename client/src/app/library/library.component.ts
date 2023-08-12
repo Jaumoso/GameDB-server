@@ -19,8 +19,8 @@ export class LibraryComponent implements OnInit {
   storefronts: any[] = [];
   states: any[] = [];
   private user: User | undefined;
-  isGridView: boolean = false;
-  viewType: string = 'list';
+  isGridView: Boolean = false;
+  viewType: String = 'list';
 
   constructor(
     private userService: UserService,

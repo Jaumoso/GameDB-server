@@ -36,10 +36,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { baseURL } from './shared/baseurl';
 import { AuthInterceptorService } from './services/authInterceptor.service';
-import { CreateGameComponent } from './dialogs/create-game/create-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
 import { AddGameComponent } from './dialogs/add-game/add-game.component';
+import { GameCardComponent } from './game-card/game-card.component';
+import { GameListComponent } from './game-list/game-list.component';
 
 @NgModule({
   declarations: [
@@ -51,9 +52,10 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
     LoginComponent,
     LibraryComponent,
     RegisterComponent,
-    CreateGameComponent,
     SettingsComponent,
     AddGameComponent,
+    GameCardComponent,
+    GameListComponent,
   ],
   imports: [
     BrowserModule,
