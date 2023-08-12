@@ -55,7 +55,7 @@ export class CreateUserDto {
         enum: () => [{ gameId: mongoose.Types.ObjectId, rating: Number }],
         description: 'Array de juegos y sus ratings',
         example: [{ 
-            gameId: new mongoose.Types.ObjectId(), 
+            gameId: 12345,
             rating: 8,
             platform: [new mongoose.Types.ObjectId()],
             storefront: [new mongoose.Types.ObjectId()],
@@ -66,12 +66,12 @@ export class CreateUserDto {
         }],
     })
     library: {
-        gameId: mongoose.Types.ObjectId; 
-        rating: Number;
-        platform: mongoose.Types.ObjectId[];
-        storefront: string;
-        acquisitionDate: Date;
-        acquisitionPrice: number;
+        gameId: Number;
+        rating?: Number;
+        platform?: mongoose.Types.ObjectId[];
+        storefront?: string[];
+        acquisitionDate?: Date;
+        acquisitionPrice?: Number;
         own: boolean;
         state: string;
     }[];

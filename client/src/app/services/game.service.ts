@@ -27,28 +27,36 @@ import { Game } from '../shared/game';
     //     });
     // }
 
-    searchGames(gameTitleSearch: string): Observable<any[]> {
-      const game =  this.http.get<{gameData: any[]}>(baseURL + 'game/search/' + gameTitleSearch)
+    gameSearch(gameTitleSearch: string): Observable<any[]> {
+      return this.http.get<{gameData: any[]}>(baseURL + 'game/search/' + gameTitleSearch)
       .pipe(map(games => games.gameData));
-      console.log(game);
-      return game;
     }
 
-    async createGame(game: Game): Promise<Game> {
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          })
-        };
-        return new Promise((resolve, reject) => {
-          this.http.post<{newGame: Game}>(baseURL + 'game/new/', game, httpOptions)
-          .subscribe(game => {
-            resolve(game.newGame);
-          }, err => {
-            reject(err);
-          });
-        });
+    getGamesById(gameIds: Number[]): Observable<any[]> {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
+      return this.http.post<{gameList: any[]}>(baseURL + 'game/getByIds/', gameIds, httpOptions)
+      .pipe(map(games => games.gameList));
     }
+
+    // async createGame(game: Game): Promise<Game> {
+    //     const httpOptions = {
+    //       headers: new HttpHeaders({
+    //         'Content-Type': 'application/json',
+    //       })
+    //     };
+    //     return new Promise((resolve, reject) => {
+    //       this.http.post<{newGame: Game}>(baseURL + 'game/new/', game, httpOptions)
+    //       .subscribe(game => {
+    //         resolve(game.newGame);
+    //       }, err => {
+    //         reject(err);
+    //       });
+    //     });
+    // }
 
     // updateGame(game: Game): Observable<Game> {
     //     const httpOptions = {

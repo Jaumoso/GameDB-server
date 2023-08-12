@@ -22,7 +22,7 @@ export class User {
     lastSeen: Date;
 
     @Prop({type: [{ 
-        gameId: mongoose.Types.ObjectId, 
+        gameId: Number, 
         rating: Number,
         platform: [{type: mongoose.Types.ObjectId, ref: 'Platform'}],
         storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
@@ -30,15 +30,14 @@ export class User {
         acquisitionPrice: Number,
         own: Boolean,
         state: String
-    }], 
-    ref: 'Game'})
+    }]})
     library: { 
-        gameId: mongoose.Types.ObjectId; 
+        gameId: Number,
         rating: Number;
-        platform: mongoose.Types.ObjectId[];
-        storefront: string;
-        acquisitionDate: Date;
-        acquisitionPrice: number;
+        platform?: mongoose.Types.ObjectId[];
+        storefront?: string[];
+        acquisitionDate?: Date;
+        acquisitionPrice?: Number;
         own: boolean;
         state: string;
     }[];

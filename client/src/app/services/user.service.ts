@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/user';
 import { baseURL } from '../shared/baseurl';
-import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -60,8 +59,8 @@ export class UserService {
         'Content-Type': 'application/json'
       })
     };
+    const { _id, password, username, joined, lastSeen,... rest } = user
     return new Promise((resolve, reject) => {
-      const { _id, username, password, joined, lastSeen, ... rest} = user
       this.http.put<{updatedUser: User}>(baseURL + 'user/update/content/' + userId, rest, httpOptions)
       .subscribe(user => {
         resolve(user.updatedUser);

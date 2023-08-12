@@ -1,22 +1,24 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/shared/user';
 import { GameService } from 'src/app/services/game.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Storefront } from 'src/app/shared/storefront';
+import { StorefrontService } from 'src/app/services/storefront.service';
+import { debounceTime, of, startWith, switchMap } from 'rxjs';
 
 export interface DialogData {
-  user: User;
+  library: User["library"];
 }
 
 const MY_DATE_FORMAT = {
   parse: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+    dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
+    dateInput: 'DD/MM/YYYY',
     monthYearLabel: 'MMMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY'
@@ -35,17 +37,7 @@ const MY_DATE_FORMAT = {
 export class AddGameComponent {
 
   form: FormGroup;
-  // FORM VALIDATION
-  gameId = new FormControl(null, [Validators.required]);
-  rating = new FormControl(0, [Validators.required]);
-  platform = new FormControl(null, [Validators.required]);
-  storefront = new FormControl('', [Validators.required]);
-  own = new FormControl(true, [Validators.required]);
-  state = new FormControl('', [Validators.required]);
-  acquisitionDate = new FormControl(null, [Validators.required]);
-  acquisitionPrice = new FormControl(null, [Validators.required]);
-
-  // library: Object[] | undefined;
+  library: Object[] | undefined;
   searchText: string = '';
   loadedGames: any[] = [];
   covers: any[] = [];
@@ -55,6 +47,7 @@ export class AddGameComponent {
   gameOwn: boolean = false;
   platforms: any[] = [];
   storefronts: any[] = [];
+  gameStorefronts: Storefront[] = [];
   gameStates: string[] = [
     'Not Interested',
     'Wishlist',
@@ -70,9 +63,9 @@ export class AddGameComponent {
   constructor(
     public dialogRef: MatDialogRef<AddGameComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private userService: UserService,
     private gameService: GameService,
     private formBuilder: FormBuilder,
+    private storefrontService: StorefrontService
   ){
     this.form = this.formBuilder.group({
       gameId: this.gameId,
@@ -83,21 +76,116 @@ export class AddGameComponent {
       acquisitionPrice: this.acquisitionPrice,
       own: this.own,
       state: this.state,
-    })
-
-    // GET CURRENT DATE
-    const currentYear = new Date().getFullYear();
-    this.maxDate = new Date();
-
-    // LOAD USER LIBRARY
-    // TODO: compare to user library
-    // this.library = this.data.user.library! || undefined;
+    });
   }
 
+  // FORM VALIDATION
+  gameId = new FormControl(null, [Validators.required]);
+  rating = new FormControl(0);
+  platform = new FormControl(null);
+  storefront = new FormControl('');
+  own = new FormControl(true, [Validators.required]);
+  state = new FormControl('', [Validators.required]);
+  acquisitionDate = new FormControl(null);
+  acquisitionPrice = new FormControl(null);
 
+  ngOnInit(){
+    this.setupSearchObserver();
+    
+    this.own.valueChanges.subscribe((value: boolean | null) => {
+      if (value !== null && value) {
+        this.platform!.enable();
+        this.storefront!.enable();
+        this.acquisitionDate!.enable();
+        this.acquisitionPrice!.enable();
+      } else {
+        this.platform!.disable();
+        this.platform!.reset();
+        this.storefront!.disable();
+        this.storefront!.reset();
+        this.acquisitionDate!.disable();
+        this.acquisitionDate!.reset();
+        this.acquisitionPrice!.disable();
+        this.acquisitionPrice!.reset();
+      }
+    });
 
-  closeDialog(): void {
-    this.dialogRef.close();
+    // BLOCK FUTURE DATES
+    this.maxDate = new Date();
+
+    // GET LIST OF STOREFRONTS
+    this.storefrontService.getStorefronts().subscribe((storefronts) => {
+      this.gameStorefronts = storefronts;
+    });
+  }
+
+  private setupSearchObserver(): void {
+    this.form
+    .get('gameId')
+    ?.valueChanges.pipe(
+      startWith(''), // Emit initial value
+      debounceTime(300), // Delay to avoid rapid searches
+      // distinctUntilChanged(), // Ignore same consecutive values
+      switchMap(searchText => {
+        if (searchText === '') {
+          // If search text is empty, return an empty array
+          return of([]);
+        } else {
+          // Otherwise, perform the actual search
+          return this.gameService.gameSearch(searchText);
+        }
+      })
+    ).subscribe((games: any[]) => {
+        this.loadedGames = games.map(game => ({
+          id: game.id,
+          name: game.name,
+          first_release_date: game.first_release_date,
+          cover: game.cover,
+          platforms: game.platforms?.map((platform: { id: any; name: any }) => ({
+            id: platform.id,
+            name: platform.name
+          }))
+        }));
+      });
+  }
+
+  onSubmit() {
+    // TODO: save game info in user library
+    const game = {
+      gameId: this.gameId!.value || undefined,
+      rating: this.rating!.value || undefined,
+      platform: this.platform!.value || undefined,
+      storefront: this.storefront!.value || undefined,
+      acquisitionDate: this.acquisitionDate!.value || undefined,
+      acquisitionPrice: this.acquisitionPrice!.value || undefined,
+      own: this.own!.value || false,
+      state: this.state!.value || undefined,
+    };
+    this.closeDialog(game);
+  }
+
+  // gameSearch(): void {
+  //   if (this.searchText !== '') {
+  //     this.gameService.gameSearch(this.searchText).subscribe((games: any[]) => {
+  //       this.loadedGames = games.map(game => ({
+  //         id: game.id,
+  //         name: game.name,
+  //         first_release_date: game.first_release_date,
+  //         cover: game.cover?.url,
+  //         platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
+  //       }));
+  //       console.log(this.loadedGames)
+  //     });
+  //   }
+  // }
+
+  selectedGame(gameId: number) {
+    const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
+    this.selectedGamePlatforms = targetGame?.platforms;
+  }
+
+  closeDialog(game: any): void {
+    this.dialogRef.close(game);
   }
 
   formatLabel(value: number): string {
@@ -105,38 +193,6 @@ export class AddGameComponent {
       return value + '☆';
     }
     return `${value}`;
-  }
-
-  onSubmit(){
-    // TODO: save game info in user library
-    // this.data.user.library?.push()
-    this.userService.updateUserContent(this.data.user._id!, this.data.user)
-    .then(() => {
-      this.closeDialog()
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-
-  gameSearch(): void {
-    if (this.searchText !== '') {
-      this.gameService.searchGames(this.searchText).subscribe((games: any[]) => {
-        this.loadedGames = games.map(game => ({
-          id: game.id,
-          name: game.name,
-          first_release_date: game.first_release_date,
-          cover: game.cover?.url,
-          platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
-        }));
-        console.log(this.loadedGames)
-      });
-    }
-  }
-
-  selectedGame(gameId: number) {
-    const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
-    this.selectedGamePlatforms = targetGame?.platforms;
   }
 
 }

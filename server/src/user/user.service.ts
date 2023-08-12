@@ -75,7 +75,7 @@ export class UserService {
     }
 
     async updateUserContent(userId: string, updateUserContentDto: UpdateUserContentDto) {
-        const updatedUser = await this.userModel.findByIdAndUpdate(userId, {library: updateUserContentDto.library},  { new: true });
+        const updatedUser = await this.userModel.findByIdAndUpdate(userId, { library: updateUserContentDto.library }, { new: true });
         if (!updatedUser) {
             throw new NotFoundException('User data not found!');
         }

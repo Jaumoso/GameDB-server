@@ -7,15 +7,12 @@
 </mat-toolbar>
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="dialog-content">
-        {{gameId.value}} {{rating.value}} {{platform.value}} {{storefront.value}} {{own.value}} {{state.value}} {{acquisitionDate.value}} {{acquisitionPrice.value}}
         <mat-form-field appearance="outline" class="mat-search full-width">
             <mat-label>Search for a game</mat-label>
             <input matInput
                    placeholder="Game search"
                    type="text"
-                   [formControl]="gameId"
-                   [(ngModel)]="searchText"
-                   (ngModelChange)="gameSearch()"
+                   formControlName="gameId"
                    aria-label="Game Search"
                    [matAutocomplete]="auto">
             <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
@@ -33,41 +30,46 @@
                 </div>
               </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="this.form.get('gameId')?.errors?.['required']">Required.</mat-error>
           </mat-form-field>
 
         <mat-label>Rating</mat-label>
         <mat-slider min="0" max="10" step="1" showTickMarks discrete [displayWith]="formatLabel">
-            <input matSliderThumb [formControl]="rating">
+            <input matSliderThumb formControlName="rating">
         </mat-slider>
+
+        <mat-slide-toggle formControlName="own" class="input-spacing-right">I own the game</mat-slide-toggle>
+
+        <mat-form-field appearance="outline" class="input-spacing-left">
+          <mat-label>Select a state</mat-label>
+          <mat-select formControlName="state">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let gameState of gameStates" [value]="gameState">{{gameState}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.form.get('state')?.errors?.['required']">Required.</mat-error>
+        </mat-form-field>
 
         <mat-form-field appearance="outline" class="input-spacing-right">
             <mat-label>Select a platform</mat-label>
             <mat-select multiple formControlName="platform">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let platform of selectedGamePlatforms" [formControl]="platform" [value]="platform.name">{{platform.name}}</mat-option>
+                <mat-option *ngFor="let platform of selectedGamePlatforms" [value]="platform.name">{{platform.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Select a storefront</mat-label>
             <mat-select multiple formControlName="storefront">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let storefront of storefronts" [formControl]="storefront" [value]="storefront">{{storefront}}</mat-option>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let storefront of gameStorefronts" [value]="storefront._id">
+                {{ storefront.name }}
+              </mat-option>
             </mat-select>
-        </mat-form-field>
-
-        <mat-slide-toggle class="input-spacing-right">I own the game</mat-slide-toggle>
-        <mat-form-field appearance="outline" class="input-spacing-left">
-            <mat-label>Select a state</mat-label>
-            <mat-select formControlName="state">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let gameState of gameStates" [value]="gameState">{{state}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+          </mat-form-field>
 
         <mat-form-field appearance="outline" class="input-spacing-right">
             <mat-label>Acquisition date</mat-label>
-            <input matInput [max]="maxDate" [matDatepicker]="picker">
+            <input matInput [max]="maxDate" formControlName="acquisitionDate" [matDatepicker]="picker">
             <mat-hint>DD/MM/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -75,7 +77,7 @@
 
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Acquisition price</mat-label>
-            <input matInput placeholder="price" type="number">
+            <input matInput placeholder="price" formControlName="acquisitionPrice" type="number">
             <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
         </mat-form-field>
         

@@ -75,14 +75,49 @@
   </mat-drawer-container>
 
   <div class="game-list">
-    <mat-button-toggle-group name="view_type" aria-label="View Type">
-      <mat-button-toggle value="list" matTooltip="List View"><mat-icon class="material-symbols-outlined">view_list</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="grid" matTooltip="Grid View"><mat-icon class="material-symbols-outlined">grid_view</mat-icon></mat-button-toggle>
-    </mat-button-toggle-group>    
-    <div class="game-list-content">
-      <!-- TODO: Game list -->
-      <!-- The list of games will be dynamically generated here based on the view mode -->
-      <!-- Use *ngFor to loop through the gameList and display it as a list or grid -->
+    <mat-button-toggle-group name="view_type" [(ngModel)]="viewType" aria-label="View Type">
+      <mat-button-toggle value="list" matTooltip="List View">
+        <mat-icon class="material-symbols-outlined">view_list</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="grid" matTooltip="Grid View">
+        <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="game-container">
+      <ng-container *ngIf="viewType === 'grid'; else listView">
+        <div class="game-card" *ngFor="let game of gameList">
+          <h3>{{ game.name }}</h3>
+          <img src="{{ game.cover }}" alt="{{ game.name }}">
+          <p>Release Date: {{ game.releaseDate }}</p>
+          <p>Own: {{ game.own }}</p>
+          <p>State: {{ game.state }}</p>
+          <p>Platforms: {{ game.platforms }}</p>
+          <p>Storefronts: {{ game.storefronts }}</p>
+          <p>Acquisition Date: {{ game.acquisitionDate }}</p>
+          <p>Acquisition Price: {{ game.acquisitionPrice }}</p>
+          <p>Rating: {{ game.rating }}</p>
+        </div>
+      </ng-container>
+      <ng-template #listView>
+        <div class="game-list-container">
+          <ul class="game-list-ul">
+            <li class="game-list-li" *ngFor="let game of gameList">
+              <div class="game-list-item">
+                <h3>{{ game.name }}</h3>
+                <img src="{{ game.cover }}" alt="{{ game.name }}">
+                <p>Release Date: {{ game.releaseDate }}</p>
+                <p>Own: {{ game.own }}</p>
+                <p>State: {{ game.state }}</p>
+                <p>Platforms: {{ game.platforms }}</p>
+                <p>Storefronts: {{ game.storefronts }}</p>
+                <p>Acquisition Date: {{ game.acquisitionDate }}</p>
+                <p>Acquisition Price: {{ game.acquisitionPrice }}</p>
+                <p>Rating: {{ game.rating }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
     </div>
   </div>
   <button mat-raised-button class="add-game-button" (click)="addGame()">
