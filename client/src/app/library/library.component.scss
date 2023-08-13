@@ -72,14 +72,122 @@
 // Game List
 
 .game-list {
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.flex-container-list {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: normal;
+  align-content: stretch;
+}
+
+.list-item {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #353659;
+  display: grid;
+  grid-template-columns: auto 1fr; /* Adjust as needed */
+  grid-gap: 20px; /* Adjust spacing between items */
+  
+
+  .list-item-cover{
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 20px;
   align-items: center;
 }
 
-.game-container {
+.game-info {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.info-column {
+  flex: 1;
+  margin: 5px;
+}
+
+.actions-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+img {
+  max-width: 100%;
+  max-width: 120px;
+  height: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Additional styling */
+.grid-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.game-info {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.modify-button:hover {
+  color: white;
+  background-color: #353659;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.delete-button:hover {
+  color: white;
+  background-color: #d33030;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.game-title {
+  padding: 2px;
+  border: 1px solid rgb(145, 145, 145);
+  border-radius: 5px;
+  background-color: #e0e0e0;
+}
+
+.game-owned {
+  padding: 3px;
+  color: rgb(0, 126, 0);
+  background-color: rgb(166, 219, 166);
+  border: 1px solid rgb(85, 114, 85);
+  border-radius: 5px;
 }

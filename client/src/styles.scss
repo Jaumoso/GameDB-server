@@ -63,6 +63,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // GLOBAL CSS
 
+@import 'css-star-rating/scss/star-rating';
+
 .snackbar{
   font-weight: bolder;
 }

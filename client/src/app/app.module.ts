@@ -22,6 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
+import { StarRatingModule } from 'angular-star-rating';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,7 +84,8 @@ import { GameListComponent } from './game-list/game-list.component';
     MatNativeDateModule,
     MatSliderModule,
     MomentDateModule,
-    MatTabsModule
+    MatTabsModule,
+    StarRatingModule.forRoot()
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },

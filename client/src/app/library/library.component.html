@@ -83,26 +83,55 @@
         <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="game-container">
+    <div class="flex-container-list">
       <ng-container *ngIf="viewType === 'grid'; else listView">
-        <app-game-card *ngFor="let game of gameList"
-        [name]="game.name"
-        [cover]="game.cover"
-        [platforms]="game.platforms"
-        [storefronts]="game.storefronts"
-        [rating]="game.rating"
-        [acquisitionPrice]="game.acquisitionPrice">
-        </app-game-card>
+        <div *ngFor="let game of gameList" class="flex-container">
+          <div class="card">
+            <h1>text</h1>
+          </div>
+        </div>
       </ng-container>
       <ng-template #listView>
-          <app-game-list *ngFor="let game of gameList"
-            [name]="game.name"
-            [cover]="game.cover"
-            [platforms]="game.platforms"
-            [storefronts]="game.storefronts"
-            [rating]="game.rating"
-            [acquisitionPrice]="game.acquisitionPrice">
-          </app-game-list>
+        <div *ngFor="let game of gameList" >
+          <div class="grid-container">
+            <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}">
+            <img *ngIf="!game.cover" src="/assets/images/cover_not_available.jpeg" alt="{{game.name}}">
+            <div class="game-info">
+              <div class="info-column">
+                <h2 class="game-title">{{game.name}}</h2>
+                <p *ngIf="game.own" class="game-owned">Game Owned</p>
+                <p *ngIf="!game.own" class="game-not-owned">Game Not Owned</p>
+                <p>Status: {{game.state}}</p>
+                <star-rating [rating]="game.rating" [readOnly]="true" [starType]="'svg'"></star-rating>
+                <p *ngIf="game.rating">Rating: {{game.rating}}</p>
+              </div>
+              <div class="info-column">
+                <p><b><u>Platforms:</u></b></p>
+                <p *ngIf="game.platforms[0]">Platforms: {{game.platforms.join(', ')}}</p>
+              </div>
+              <div class="info-column">
+                <p><b><u>Storefronts:</u></b></p>
+                <p *ngIf="game.storefronts[0]">{{game.storefronts.join(', ')}}</p>
+              </div>
+              <div class="info-column">
+                <p>Release Date: {{game.releaseDate | date}}</p>
+                <p *ngIf="game.acquisitionDate">Acquisition Date: {{game.acquisitionDate | date}}</p>
+                <p *ngIf="game.acquisitionPrice">Acquisition Price: {{game.acquisitionPrice}}€</p>
+                <p *ngIf="game.acquisitionPrice == 0 || game.acquisitionPrice == undefined">Acquisition Price: For Free</p>
+              </div>
+              <div class="actions-column">
+                <mat-button-toggle-group aria-label="Action Buttons" vertical="true">
+                  <mat-button-toggle class="modify-button">
+                    <span class="material-symbols-outlined">edit</span> Modify
+                  </mat-button-toggle>
+                  <mat-button-toggle class="delete-button">
+                    <span class="material-symbols-outlined">delete</span> Delete
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </div>
+        </div>
       </ng-template>
     </div>
   </div>

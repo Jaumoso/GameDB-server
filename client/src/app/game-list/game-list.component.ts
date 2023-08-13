@@ -8,8 +8,12 @@ import { Component, Input } from '@angular/core';
 export class GameListComponent {
   @Input() name: string | undefined;
   @Input() cover: string | undefined;
-  @Input() platforms: string | undefined;
-  @Input() storefronts: string | undefined;
+  @Input() releaseDate: Date | undefined;
+  @Input() own: boolean | undefined;
+  @Input() state: string | undefined;
+  @Input() platforms: string[] = [];
+  @Input() storefronts: string[] = [];
   @Input() rating: number | undefined;
   @Input() acquisitionPrice: number | undefined;
+  @Input() acquisitionDate: Date | undefined;
 }
