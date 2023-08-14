@@ -152,11 +152,11 @@ export class AddGameComponent {
     // TODO: save game info in user library
     const game = {
       gameId: this.gameId!.value || undefined,
-      rating: this.rating!.value || undefined,
+      rating: this.rating!.value || 0,
       platform: this.platform!.value || undefined,
       storefront: this.storefront!.value || undefined,
       acquisitionDate: this.acquisitionDate!.value || undefined,
-      acquisitionPrice: this.acquisitionPrice!.value || undefined,
+      acquisitionPrice: this.acquisitionPrice!.value || 0,
       own: this.own!.value || false,
       state: this.state!.value || undefined,
     };

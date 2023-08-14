@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, SimpleChanges } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { JwtService } from '../services/jwt.service';
 import { Router } from '@angular/router';
@@ -7,17 +7,19 @@ import { User } from '../shared/user';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGameComponent } from '../dialogs/add-game/add-game.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteGameComponent } from '../dialogs/delete-game/delete-game.component';
+import { StorefrontService } from '../services/storefront.service';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
-  styleUrls: ['./library.component.scss']
+  styleUrls: ['./library.component.scss'],
 })
 export class LibraryComponent implements OnInit {
   gameList: any[] = [];
   platforms: any[] = [];
   storefronts: any[] = [];
-  states: any[] = [];
+  states: number[] = [0,0,0,0,0,0,0,0,0,0];
   private user: User | undefined;
   isGridView: Boolean = false;
   viewType: String = 'list';
@@ -28,6 +30,8 @@ export class LibraryComponent implements OnInit {
     private gameService: GameService,
     private router: Router,
     private addGameDialog: MatDialog,
+    private deleteGameDialog: MatDialog,
+    private storefrontService: StorefrontService,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -44,7 +48,6 @@ export class LibraryComponent implements OnInit {
       this.userService.getUser(decodedToken._id)
       .then((user) => {
         this.user = user;
-        console.log(user);
         let gameIds: Number[] = [];
 
         // Get all the IDs from the games in the library
@@ -59,7 +62,17 @@ export class LibraryComponent implements OnInit {
             const retrievedGame = retrievedGames.find(
               (retrieved) => retrieved.id === game.gameId
             );
-              console.log(retrievedGame)
+            
+            // let storefrontNames: string[] = [];
+            // game.storefront?.forEach((storefront) => {
+            //   this.storefrontService.getStorefront(storefront).then((storefront) => {
+            //     storefrontNames.push(storefront.name!);
+            //   })
+            // })
+
+            // console.log(retrievedGame.storefront)
+            // console.log(storefrontNames)
+
             if (retrievedGame) {
               const combinedGame = {
                 gameId: game.gameId,
@@ -77,58 +90,56 @@ export class LibraryComponent implements OnInit {
 
               // Step 4: Store the combined objects in the new array
               this.gameList.push(combinedGame);
+
+              // Save game in platform counter
+              this.processPlatforms(combinedGame);
+
+              // Save game in storefront counter
+              this.processStorefronts(combinedGame);
+
+              // Save game in State counter
+              this.processStates(combinedGame);
             }
           });
         });
-
-        console.log(this.gameList)
-
-        // this.user.library?.forEach((libraryGame) => {
-          // TODO: STORE GAMES AND FILTER THEM
-          // this.gameService.getGame(libraryGame.gameId!)
-          // .then((game) => {
-
-          //   // Save game in the game List
-          //   this.gameList.push({
-          //     gameId: game._id,
-          //     title: game.title,
-          //     image: game.image,
-          //     genre: game.genre,
-          //     own: libraryGame.own,
-          //     platform: libraryGame.platform,
-          //     storefront: libraryGame.storefront,
-          //     rating: libraryGame.rating,
-          //     state: libraryGame.state
-          //   });
-
-          //   // Save game in platform counter
-          //   const platformIndex = this.platforms.findIndex(item => item.platform === libraryGame.platform);
-          //   if (platformIndex !== -1) {
-          //     this.platforms[platformIndex].counter++;
-          //   } else {
-          //     this.platforms.push({ platform: libraryGame.platform, counter: 1 });
-          //   }
-
-          //   // Save game in storefront counter
-          //   const storefrontIndex = this.storefronts.findIndex(item => item.storefront === libraryGame.storefront);
-          //   if (storefrontIndex !== -1) {
-          //     this.storefronts[storefrontIndex].counter++;
-          //   } else {
-          //     this.storefronts.push({ platform: libraryGame.storefront, counter: 1 });
-          //   }
-
-          //   // TODO: esto está raro
-          //   // Save game in State counter
-          //   const stateIndex = this.platforms.findIndex(item => item.state === libraryGame.state);
-          //   if (stateIndex !== -1) {
-          //     this.states[stateIndex].counter++;
-          //   } else {
-          //     this.states.push({ states: libraryGame.state, counter: 1 });
-          //   }
-
-          // });
-        // })
       })
+  }
+
+  processPlatforms(combinedGame: any) {
+    combinedGame.platforms.forEach((platformName: any) => {
+      const index = this.platforms.findIndex(p => p.name === platformName);
+
+      if (index !== -1) {
+        this.platforms[index].counter++;
+      } else {
+        this.platforms.push({ name: platformName, counter: 1});
+      }
+    });
+  }
+
+  processStorefronts(combinedGame: any) {
+    combinedGame.storefronts.forEach((storefrontName: string) => {
+      const index = this.storefronts.findIndex(s => s.name === storefrontName);
+      console.log(index)
+      if (index !== -1) {
+        this.storefronts[index].counter++;
+      } else {
+        this.storefronts.push({name: storefrontName, counter: 1});
+      }
+    });
+  }
+
+  processStates(combinedGame: any) {
+    if(combinedGame.state == 'Not Interested') { this.states[0] = this.states[0]+1}
+    if(combinedGame.state == 'Wishlist') { this.states[1] = this.states[1]+1}
+    if(combinedGame.state == 'Backlog') { this.states[2] = this.states[2]+1}
+    if(combinedGame.state == 'Tried') { this.states[3] = this.states[3]+1}
+    if(combinedGame.state == 'Playing') { this.states[4] = this.states[4]+1}
+    if(combinedGame.state == 'Played') { this.states[5] = this.states[5]+1}
+    if(combinedGame.state == 'Completed') { this.states[6] = this.states[6]+1}
+    if(combinedGame.state == 'Retired') { this.states[7] = this.states[7]+1}
+    if(combinedGame.state == 'Shelved') { this.states[8] = this.states[8]+1}
+    if(combinedGame.state == 'Abandoned') { this.states[9] = this.states[9]+1}
   }
 
   addGame() {
@@ -139,13 +150,76 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.user?.library.push(result)
+          this.user?.library.push(result);
           this.userService.updateUserContent(this.user?._id!, this.user!)
+          .then(() => {
+
+            this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
+              const combinedGame = {
+                gameId: result.gameId,
+                name: retrievedGame[0].name,
+                releaseDate: retrievedGame[0].first_release_date,
+                cover: retrievedGame[0].cover,
+                own: result.own,
+                state: result.state,
+                platforms: result.platform,
+                storefronts: result.storefront,
+                acquisitionDate: result.acquisitionDate,
+                acquisitionPrice: result.acquisitionPrice,
+                rating: result.rating,
+              };
+              this.gameList.push(combinedGame);
+            });
+
+            this.snackBar.open(
+              "Game added to the library.", 
+              "OK",
+              {
+                verticalPosition: 'top',
+                duration: 4000,
+                panelClass: ['snackbar']
+              }
+            );
+          })
           .catch(error => {
             console.error("Error updating user content:", error);
           });
         }
       });
+    }
+  }
+
+  deleteGame(gameId: number, gameName: string) {
+    if(this.user && this.user.library){
+      const dialogRef = this.deleteGameDialog.open(DeleteGameComponent, {
+        data: { gameId: gameId, gameName: gameName, deleteGame: false }
+      });
+
+      dialogRef.afterClosed().subscribe((result => {
+        if(result) {
+          const index = this.user?.library.findIndex(game => game.gameId === gameId);
+          if (index !== -1) {
+            this.user?.library.splice(index!, 1);
+            this.userService.updateUserContent(this.user?._id!,this.user!)
+            .then(() => {
+              this.gameList.splice(index!, 1);
+
+              this.snackBar.open(
+                "Game deleted from library.", 
+                "OK",
+                {
+                  verticalPosition: 'top',
+                  duration: 4000,
+                  panelClass: ['snackbar']
+                }
+                );
+            })
+            .catch(error => {
+              console.error("Error updating user content:", error);
+            });
+          }
+        }
+      }))
     }
   }
 }
