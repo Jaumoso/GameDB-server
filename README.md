@@ -1,5 +1,5 @@
 # GameDB Web Application
-Currently in pause.
+
 ### TO-DO:
 
 searchbar
@@ -9,20 +9,8 @@ games
 login
 profile
 settings
-
 protect routes
-
 forgotten password
-
-state:
-// 0 Not interested
-// 1 Want to play
-// 2 Playing
-// 3 Infinite
-// 4 Abandoned
-// 5 Played
-// 6 Completed
-// 7 Wishlist
 
 Useful links:
 https://fonts.google.com/icons?hl=es-419&icon.platform=web
@@ -30,7 +18,7 @@ https://material.angular.io/
 https://www.w3schools.com/
 
 
-<!-- Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.
+Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.
 
 ## Features (Work in Progress)
 While the project is still under development, here are some exciting features that i want to build:
@@ -58,8 +46,3 @@ Contributions to this project are highly encouraged and appreciated. Whether you
 
 Installation and Usage
 Once the initial development stage is complete, comprehensive installation and usage instructions will be provided in the project's documentation. This will guide you through setting up the development environment, installing dependencies, and running the application locally.
-
-## License
-The GameDB Web Application is released under the MIT License. You are free to use, modify, and distribute this software as per the terms and conditions specified in the license.
-
-Thank you for your interest in the GameDB Web Application! Together, let's build a fantastic platform for tracking and managing our gaming adventures. -->
