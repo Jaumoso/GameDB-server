@@ -87,7 +87,7 @@ export class LibraryComponent implements OnInit {
                 acquisitionPrice: game.acquisitionPrice,
                 rating: game.rating,
               };
-
+              
               // Step 4: Store the combined objects in the new array
               this.gameList.push(combinedGame);
 
@@ -120,7 +120,6 @@ export class LibraryComponent implements OnInit {
   processStorefronts(combinedGame: any) {
     combinedGame.storefronts.forEach((storefrontName: string) => {
       const index = this.storefronts.findIndex(s => s.name === storefrontName);
-      console.log(index)
       if (index !== -1) {
         this.storefronts[index].counter++;
       } else {

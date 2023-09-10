@@ -1,95 +1,123 @@
-<div class="container">
-  <div class="left-column">
-    <table class="stats-table">
-      <tr>
-        <th colspan="2">State</th>
-      </tr>
-      <tr>
-        <td matTooltip="Games in your possession that you are not interested in">Not interested</td>
-        <td>{{states[0]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Games that you want to buy">Wishlist</td>
-        <td>{{states[1]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Games in your library which you want to play">Backlog</td>
-        <td>{{states[2]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Games you tried but didn't catch you">Tried</td>
-        <td>{{states[3]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Games that you are playing currently">Playing</td>
-        <td>{{states[4]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Finished games">Played</td>
-        <td>{{states[5]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="100% no scoped these games">Completed</td>
-        <td>{{states[6]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Infinite games that you don't want to play anymore">Retired</td>
-        <td>{{states[7]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="Maybe one day you will play again... maybe">Shelved</td>
-        <td>{{states[8]}}</td>
-      </tr>
-      <tr>
-        <td matTooltip="This shit bad">Abandoned</td>
-        <td>{{states[9]}}</td>
-      </tr>
-      <tr>
-        <th colspan="2">Platforms</th>
-      </tr>
-      <tr *ngFor="let platform of platforms">
-        <td>{{platform.name}}</td>
-        <td>{{platform.counter}}</td>
-      </tr>
-      <tr>
-        <th colspan="2">Storefronts</th>
-      </tr>
-      <tr *ngFor="let storefront of storefronts">
-        <td>{{storefront.name}}</td>
-        <td>{{storefront.counter}}</td>
-      </tr>
-    </table>
-  </div>
-  <div class="right column">
-    <div class="game-list">
-      <mat-button-toggle-group name="view_type" [(ngModel)]="viewType" aria-label="View Type">
-        <mat-button-toggle value="list" matTooltip="List View">
-          <mat-icon class="material-symbols-outlined">view_list</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="grid" matTooltip="Grid View">
-          <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-      <div class="flex-container-list">
-        <ng-container *ngIf="viewType === 'grid'; else listView">
-          <div *ngFor="let game of gameList" class="flex-container">
-            <div class="card">
-              <h1>text</h1>
+  <div class="container">
+    <div class="left-column">
+      <div class="stats-table">
+        <h2>State</h2>
+        <table>
+          <tr>
+            <td matTooltip="Games in your possession that you are not interested in">Not interested</td>
+            <td>{{states[0]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Games that you want to buy">Wishlist</td>
+            <td>{{states[1]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Games in your library which you want to play">Backlog</td>
+            <td>{{states[2]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Games you tried but didn't catch you">Tried</td>
+            <td>{{states[3]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Games that you are playing currently">Playing</td>
+            <td>{{states[4]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Finished games">Played</td>
+            <td>{{states[5]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="100% no scoped these games">Completed</td>
+            <td>{{states[6]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Infinite games that you don't want to play anymore">Retired</td>
+            <td>{{states[7]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="Maybe one day you will play again... maybe">Shelved</td>
+            <td>{{states[8]}}</td>
+          </tr>
+          <tr>
+            <td matTooltip="This shit bad">Abandoned</td>
+            <td>{{states[9]}}</td>
+          </tr>
+          <!-- Add more state rows here -->
+        </table>
+        
+        <h2>Platforms</h2>
+        <table>
+          <tr *ngFor="let platform of platforms">
+            <td>{{platform.name}}</td>
+            <td>{{platform.counter}}</td>
+          </tr>
+        </table>
+        
+        <h2>Storefronts</h2>
+        <table>
+          <tr *ngFor="let storefront of storefronts">
+            <td>{{storefront.name}}</td>
+            <td>{{storefront.counter}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="right-column">
+      <div class="game-list">
+        <mat-button-toggle-group name="view_type" [(ngModel)]="viewType" aria-label="View Type">
+          <mat-button-toggle value="list" matTooltip="List View">
+            <mat-icon class="material-symbols-outlined">view_list</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle value="grid" matTooltip="Grid View">
+            <mat-icon class="material-symbols-outlined">grid_view</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        
+        <div>
+          <ng-container *ngIf="viewType === 'grid'; else listView">
+            <!-- Grid View Content -->
+            <div *ngFor="let game of gameList" class="grid-container">
+              <!-- Your grid item content here -->
+              <div class="grid-item">
+                <div class="grid-item-cover">
+                  <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}">
+                  <div class="grid-item-info">
+                    <h2 class="game-title">{{game.name}}</h2>
+                    <p *ngIf="game.own" class="game-owned">Game Owned</p>
+                    <p *ngIf="!game.own" class="game-not-owned">Game Not Owned</p>
+                    <p>Status: {{game.state}}</p>
+                    <star-rating [rating]="game.rating" [showHalfStars]="true" [numOfStars]="10" [readOnly]="true"></star-rating>
+                  </div>
+                  <div class="grid-item-actions">
+                    <mat-button-toggle-group aria-label="Action Buttons" vertical="true">
+                      <mat-button-toggle class="modify-button">
+                        <span class="material-symbols-outlined">edit</span> Modify
+                      </mat-button-toggle>
+                      <mat-button-toggle class="delete-button" (click)="deleteGame(game.gameId, game.name)">
+                        <span class="material-symbols-outlined">delete</span> Delete
+                      </mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </ng-container>
-        <ng-template #listView>
-          <div *ngFor="let game of gameList" >
-            <div class="grid-container">
-              <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}">
-              <img *ngIf="!game.cover" src="/assets/images/cover_not_available.jpeg" alt="{{game.name}}">
-              <div class="game-info">
-                <div class="info-column">
+          </ng-container>
+          <ng-template #listView>
+            <!-- List View Content -->
+            <div *ngFor="let game of gameList" class="list">
+              <!-- Your list item content here -->
+              <div class="list-item">
+                <div class="list-item-cover">
+                  <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}">
+                  <img *ngIf="!game.cover" src="/assets/images/cover_not_available.jpeg" alt="{{game.name}}">
+                </div>
+                <div class="text-container">
                   <h2 class="game-title">{{game.name}}</h2>
                   <p *ngIf="game.own" class="game-owned">Game Owned</p>
                   <p *ngIf="!game.own" class="game-not-owned">Game Not Owned</p>
                   <p>Status: {{game.state}}</p>
-                  <star-rating [rating]="game.rating" [showHalfStars]="true" [numOfStars]="10" [readOnly]="true" [starType]="'svg'"></star-rating>
+                  <star-rating [rating]="game.rating" [showHalfStars]="true" [numOfStars]="10" [readOnly]="true"></star-rating>
                 </div>
                 <div class="info-column">
                   <p><b><u>Platforms:</u></b></p>
@@ -117,16 +145,12 @@
                 </div>
               </div>
             </div>
-          </div>
-        </ng-template>
+          </ng-template>
+        </div>
       </div>
     </div>
   </div>
 
-
-  <button mat-raised-button class="add-game-button" (click)="addGame()">
-    Add Game <mat-icon class="material-symbols-outlined">add</mat-icon>
-  </button>
-</div>
-    
-
+<button mat-raised-button class="add-game-button" (click)="addGame()">
+  Add Game <mat-icon class="material-symbols-outlined">add</mat-icon>
+</button>

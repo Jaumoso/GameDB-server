@@ -23,6 +23,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StarRatingModule } from 'angular-star-rating';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -87,6 +88,7 @@ import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component
     MatSliderModule,
     MomentDateModule,
     MatTabsModule,
+    ScrollingModule,
     StarRatingModule.forRoot()
   ],
   providers: [
