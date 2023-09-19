@@ -63,15 +63,14 @@ export class LibraryComponent implements OnInit {
               (retrieved) => retrieved.id === game.gameId
             );
             
-            // let storefrontNames: string[] = [];
-            // game.storefront?.forEach((storefront) => {
-            //   this.storefrontService.getStorefront(storefront).then((storefront) => {
-            //     storefrontNames.push(storefront.name!);
-            //   })
-            // })
-
-            // console.log(retrievedGame.storefront)
-            // console.log(storefrontNames)
+            // Get storefronts and save them
+            let storefrontNames: string[] = [];
+            game.storefront?.forEach((storefront) => {
+              this.storefrontService.getStorefront(storefront).then((storefront) => {
+                storefrontNames.push(storefront.name!);
+              })
+            })
+            game.storefront = storefrontNames;
 
             if (retrievedGame) {
               const combinedGame = {
@@ -87,6 +86,9 @@ export class LibraryComponent implements OnInit {
                 acquisitionPrice: game.acquisitionPrice,
                 rating: game.rating,
               };
+
+              console.log(combinedGame.storefronts)
+              console.log(combinedGame.platforms)
               
               // Step 4: Store the combined objects in the new array
               this.gameList.push(combinedGame);
@@ -106,9 +108,8 @@ export class LibraryComponent implements OnInit {
   }
 
   processPlatforms(combinedGame: any) {
-    combinedGame.platforms.forEach((platformName: any) => {
+    combinedGame.platforms.forEach((platformName: string) => {
       const index = this.platforms.findIndex(p => p.name === platformName);
-
       if (index !== -1) {
         this.platforms[index].counter++;
       } else {
