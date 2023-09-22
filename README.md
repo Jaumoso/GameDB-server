@@ -12,6 +12,8 @@ settings
 protect routes
 forgotten password
 
+CONSIDERING igdb.com SERIOUSLY AS DATABASE
+
 Useful links:
 https://fonts.google.com/icons?hl=es-419&icon.platform=web
 https://material.angular.io/

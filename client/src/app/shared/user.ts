@@ -5,20 +5,13 @@ export class User{
     joined: Date | undefined;
     lastSeen: Date | undefined;
     library: {
-        gameId: string | undefined;
-        rating: Number | undefined;
-        platform: string | undefined;
-        storefront: string | undefined;
+        gameId: number | undefined;
+        rating: number | undefined;
+        platform: string[] | undefined;
+        storefront: string[] | undefined;
+        acquisitionDate: Date | undefined;
+        acquisitionPrice: number | undefined;
         own: boolean;
-        state: number | undefined;
-    }[] | undefined;
+        state: string | undefined;
+    }[] = [];
 }
-
-// 0 Not interested
-// 1 Want to play
-// 2 Playing
-// 3 Infinite
-// 4 Abandoned
-// 5 Played
-// 6 Completed
-// 7 Wishlist

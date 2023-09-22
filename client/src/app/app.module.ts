@@ -15,6 +15,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+import { MatTabsModule } from '@angular/material/tabs';
+import { StarRatingModule } from 'angular-star-rating';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,10 +38,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { baseURL } from './shared/baseurl';
 import { AuthInterceptorService } from './services/authInterceptor.service';
-import { CreateGameComponent } from './dialogs/create-game/create-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
 import { AddGameComponent } from './dialogs/add-game/add-game.component';
+import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +53,9 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
     LoginComponent,
     LibraryComponent,
     RegisterComponent,
-    CreateGameComponent,
     SettingsComponent,
     AddGameComponent,
+    DeleteGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +76,16 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
     MatDialogModule,
     MatSnackBarModule,
     MatButtonToggleModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSliderModule,
+    MomentDateModule,
+    MatTabsModule,
+    ScrollingModule,
+    StarRatingModule.forRoot()
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },

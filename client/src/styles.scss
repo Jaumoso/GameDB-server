@@ -55,7 +55,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // #393b6e;
 // #8f92d9;
 
-// General classes
+// template testing
+
+.border{
+  border: 1px solid black;
+}
+
+// GLOBAL CSS
+
+@import 'css-star-rating/scss/star-rating';
 
 .snackbar{
   font-weight: bolder;

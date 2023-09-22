@@ -22,27 +22,24 @@ export class User {
     lastSeen: Date;
 
     @Prop({type: [{ 
-        gameId: mongoose.Types.ObjectId, 
+        gameId: Number, 
         rating: Number,
-        platform: [{type: mongoose.Types.ObjectId, ref: 'Platform'}],
+        platform: [{type: String}],
+        storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
+        acquisitionDate: Date,
+        acquisitionPrice: Number,
         own: Boolean,
-        state: Number,
-    }], 
-    ref: 'Game'})
+        state: String
+    }]})
     library: { 
-        gameId: mongoose.Types.ObjectId; 
-        rating: Number;
-        platform: mongoose.Types.ObjectId[];
-        own: boolean;
-        state: Number;
-        // 0 Not interested
-        // 1 Want to play
-        // 2 Playing
-        // 3 Infinite
-        // 4 Abandoned
-        // 5 Played
-        // 6 Completed
-        // 7 Wishlist
+        gameId: number,
+        rating: number,
+        platform: String[],
+        storefront: mongoose.Types.ObjectId[],
+        acquisitionDate: Date,
+        acquisitionPrice: number,
+        own: boolean,
+        state: string,
     }[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

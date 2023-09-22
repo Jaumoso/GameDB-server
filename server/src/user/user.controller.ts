@@ -4,6 +4,7 @@ import { UpdateUserDto } from "./dto/updateUser.dto";
 import { UserService } from "./user.service";
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateUserContentDto } from './dto/updateUserContent.dto';
+import { sanitizeFilter } from 'mongoose';
 
 @ApiTags('User')
 @Controller('user')
@@ -74,7 +75,7 @@ export class UserController {
     @ApiCreatedResponse({ description: 'Actualiza un usuario.' })
     async updateUser(@Res() response, @Param('id') userId: string, @Body() updateUserDto: UpdateUserDto) {
         try {
-            const existingUser = await this.userService.updateUser(userId, updateUserDto);
+            const existingUser = await this.userService.updateUser(userId, sanitizeFilter(updateUserDto));
             return response.status(HttpStatus.OK).json({
                 message: 'User has been successfully updated',
                 existingUser,
@@ -88,11 +89,12 @@ export class UserController {
     @Put('update/content/:id')
     @ApiCreatedResponse({ description: 'Actualiza el contenido de la libreria del usuario.' })
     async updateUserContent(@Res() response, @Param('id') userId: string, @Body() updateUserContent: UpdateUserContentDto) {
+        console.log(updateUserContent);
         try {
-            const existingUser = await this.userService.updateUserContent(userId, updateUserContent);
+            const updatedUser = await this.userService.updateUserContent(userId, sanitizeFilter(updateUserContent));
             return response.status(HttpStatus.OK).json({
                 message: 'User has been successfully updated',
-                existingUser,
+                updatedUser,
             });
         }
         catch (err) {

@@ -32,5 +32,8 @@ export class Game {
 
     @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Platform'}]})
     platform: mongoose.Schema.Types.ObjectId[];
+
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Storefront'}]})
+    storefront: mongoose.Schema.Types.ObjectId[];
 }
 export const GameSchema = SchemaFactory.createForClass(Game);
