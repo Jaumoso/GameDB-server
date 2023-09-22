@@ -38,7 +38,6 @@ export class CreateUserDto {
         description: 'Fecha de entrada del usuario en la página.',
         example: new Date(2023, 5, 27).toISOString()
     })
-    @IsString()
     @IsNotEmpty()
     joined: Date;
 
@@ -47,7 +46,6 @@ export class CreateUserDto {
         description: 'Última fecha en la que el usuario se ha conectado.',
         example: new Date(2023, 5, 27).toISOString()
     })
-    @IsString()
     @IsNotEmpty()
     lastSeen: Date;
 
@@ -57,7 +55,7 @@ export class CreateUserDto {
         example: [{ 
             gameId: 12345,
             rating: 8,
-            platform: [new mongoose.Types.ObjectId()],
+            platform: ['Steam'],
             storefront: [new mongoose.Types.ObjectId()],
             acquisitionDate: new Date(2023, 8, 1).toISOString(),
             acquisitionPrice: 0,
@@ -66,14 +64,14 @@ export class CreateUserDto {
         }],
     })
     library: {
-        gameId: Number;
-        rating?: Number;
-        platform?: mongoose.Types.ObjectId[];
-        storefront?: string[];
-        acquisitionDate?: Date;
-        acquisitionPrice?: Number;
-        own: boolean;
-        state: string;
+        gameId: number,
+        rating: number,
+        platform: string[],
+        storefront: mongoose.Types.ObjectId[],
+        acquisitionDate: Date,
+        acquisitionPrice: number,
+        own: boolean,
+        state: string,
     }[];
     
 }

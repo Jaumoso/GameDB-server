@@ -89,6 +89,7 @@ export class UserController {
     @Put('update/content/:id')
     @ApiCreatedResponse({ description: 'Actualiza el contenido de la libreria del usuario.' })
     async updateUserContent(@Res() response, @Param('id') userId: string, @Body() updateUserContent: UpdateUserContentDto) {
+        console.log(updateUserContent);
         try {
             const updatedUser = await this.userService.updateUserContent(userId, sanitizeFilter(updateUserContent));
             return response.status(HttpStatus.OK).json({

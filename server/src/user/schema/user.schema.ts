@@ -32,14 +32,14 @@ export class User {
         state: String
     }]})
     library: { 
-        gameId: Number,
-        rating: Number;
-        platform?: mongoose.Types.ObjectId[];
-        storefront?: string[];
-        acquisitionDate?: Date;
-        acquisitionPrice?: Number;
-        own: boolean;
-        state: string;
+        gameId: number,
+        rating: number,
+        platform: String[],
+        storefront: mongoose.Types.ObjectId[],
+        acquisitionDate: Date,
+        acquisitionPrice: number,
+        own: boolean,
+        state: string,
     }[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

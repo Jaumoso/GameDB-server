@@ -50,7 +50,7 @@ export class GameService {
                 }, 
                 data: `search "${searchGameTitle}"; limit 20; fields name,first_release_date,cover.image_id,platforms.name;`
               });
-              console.log(response.data)
+            //   console.log(response.data)
               searchResult = response.data;
         } catch (error) {
             console.log(error);
@@ -66,7 +66,7 @@ export class GameService {
                     platforms: game.platforms
                 });
             })
-            console.log(games);
+            // console.log(games);
         } catch (error) {
             console.log(error);
         }
@@ -105,7 +105,7 @@ export class GameService {
                     cover: `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover?.image_id}.jpg`,
                 });
             })
-            console.log(games);
+            // console.log(games);
         } catch (error) {
             console.log(error);
         }
