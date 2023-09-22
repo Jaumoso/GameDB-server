@@ -84,6 +84,7 @@
         margin-right: 2%;
         max-height: 100px;
         margin-bottom: 5px;
+        margin-top: 5px;
 
         .list-item-cover img {
           border-radius: 5px;
@@ -109,231 +110,36 @@
             font-size: 15px;
           }
           .game-rating {
-            margin-top: 0;
-            font-size: 15px;
-            margin: 0;
-            scale: 5;
+            margin-top: 10px;
+            display: inline-block; /* Ensure it only takes up the space of the stars */
+            font-size: 0; /* Remove any extra space around the stars */
           }
         }
+
+        /* Button Styles */
+        .modify-button:hover {
+          color: white;
+          background-color: #353659;
+          transition: color 0.3s, background-color 0.3s;
+          cursor: pointer;
+        }
+
+        .delete-button:hover {
+          color: white;
+          background-color: #d33030;
+          transition: color 0.3s, background-color 0.3s;
+          cursor: pointer;
+        }
+
+        .game-owned {
+          color: rgba(24, 177, 10, 0.993);
+        }
+
+        .game-not-owned {
+          color: #d33030;
+        }
+
       }
     }
   }
 }
-
-// /* Right Column */
-// .right-column {
-//   flex: 2;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
-
-// .game-list {
-//   padding: 20px;
-//   width: 100%;
-// }
-
-// /* Grid and List View Styles */
-// .flex-container-list {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
-
-// .grid-container {
-//   display: grid;
-//   // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-//   grid-template-columns: 1fr 1fr 1fr;
-//   grid-gap: 20px;
-//   align-items: center;
-// }
-
-
-
-// .text-container {
-//   display: flex;
-//   flex-direction: column;
-//   margin-top: 10px;
-// }
-
-// /* Game Info Styles */
-// .game-info {
-//   background-color: #fff;
-//   border-radius: 5px;
-//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-//   // padding: 20px;
-//   margin-top: 20px;
-//   width: 100%;
-// }
-
-// .info-column {
-//   flex: 1;
-//   margin: 5px;
-// }
-
-// .actions-column {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-end;
-//   justify-content: flex-start;
-// }
-
-
-
-// /* Additional Styling */
-// .game-title {
-//   // padding: 2px;
-//   // border: 1px solid rgb(145, 145, 145);
-//   border-radius: 5px;
-//   // background-color: #e0e0e0;
-//   font-size: 18px;
-//   margin: 0;
-//   // margin-bottom: 10px;
-// }
-
-// .game-owned {
-//   font-weight: bolder;
-//   color: rgb(0, 126, 0);
-//   // padding: 3px;
-//   // color: rgb(0, 126, 0);
-//   // background-color: rgb(166, 219, 166);
-//   // border: 1px solid rgb(85, 114, 85);
-//   // border-radius: 5px;
-//   // font-size: 14px;
-//   // margin-bottom: 10px;
-// }
-
-// /* Button Styles */
-// .modify-button:hover {
-//   color: white;
-//   background-color: #353659;
-//   transition: color 0.3s, background-color 0.3s;
-//   cursor: pointer;
-// }
-
-// .delete-button:hover {
-//   color: white;
-//   background-color: #d33030;
-//   transition: color 0.3s, background-color 0.3s;
-//   cursor: pointer;
-// }
-
-// // LIST ITEMS
-
-// .list {
-//   width: 100%;
-
-//   .list-item {
-//     border: 1px solid #ccc;
-//     border-radius: 10px;
-//     display: flex;
-//     flex-direction: row;
-//     align-items: flex-start;
-//     padding: 20px;
-//     text-align: left;
-//     margin-bottom: 20px;
-//     width: 100%;
-//     box-sizing: border-box;
-//   }
-// }
-
-// .list-item-cover {
-//   border-radius: 10px;
-//   overflow: hidden;
-//   max-width: 120px;
-//   max-height: 120px;
-//   margin-right: 20px;
-// }
-
-// .text-container {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .game-not-owned {
-//   padding: 3px;
-//   color: rgb(255, 0, 0);
-//   background-color: rgb(255, 173, 173);
-//   border: 1px solid rgb(204, 0, 0);
-//   border-radius: 5px;
-//   font-size: 14px;
-//   margin: 0;
-//   margin-bottom: 10px;
-// }
-
-// .actions-column {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-end;
-//   justify-content: flex-start;
-// }
-
-
-// // GRID ITEMS
-// .grid-container {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-//   grid-auto-rows: minmax(200px, auto); /* Set a minimum row height */
-//   grid-gap: 20px;
-//   align-items: flex-start;
-// }
-
-// .grid-item {
-//   border-radius: 10px;
-//   display: flex;
-//   flex-direction: column;
-//   overflow: hidden;
-//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   transition: transform 0.2s ease, box-shadow 0.2s ease;
-//   cursor: pointer;
-//   position: relative; /* Added for positioning of button group */
-// }
-
-// .grid-item-cover {
-//   position: relative;
-// }
-
-// .grid-item-cover img {
-//   width: 100%;
-//   height: 100%; /* Maintain aspect ratio by using height as 100% */
-//   object-fit: cover; /* Preserve aspect ratio and cover entire container */
-//   overflow: hidden;
-// }
-
-// .grid-item-info {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0, 0, 0, 0.8);
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   opacity: 0;
-//   transition: opacity 0.2s ease;
-// }
-
-// .grid-item-actions {
-//   position: absolute;
-//   top: 50%; /* Adjust to position the button group as needed */
-//   left: 50%; /* Adjust to position the button group as needed */
-//   transform: translate(-50%, -50%); /* Center the button group */
-//   opacity: 0;
-//   transition: opacity 0.2s ease;
-// }
-
-// .grid-item:hover {
-//   transform: scale(1.05);
-//   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-// }
-
-// .grid-item:hover .grid-item-info {
-//   opacity: 1;
-// }
-
-// .grid-item:hover .grid-item-actions {
-//   opacity: 1;
-// }

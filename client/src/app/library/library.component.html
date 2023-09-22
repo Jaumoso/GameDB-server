@@ -105,19 +105,19 @@
 
           <ng-template #listView>
             <!-- List View Content -->
-            <div *ngFor="let game of gameList" class="list-container border">
+            <div *ngFor="let game of gameList" class="list-container">
               <!-- Your list item content here -->
-              <div class="list-item border">
-                <div class="list-item-cover border">
+              <div class="list-item">
+                <div class="list-item-cover">
                   <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}">
                   <img *ngIf="!game.cover" src="/assets/images/cover_not_available.jpeg" alt="{{game.name}}">
                 </div>
-                <div class="info-column border">
+                <div class="info-column">
                   <h2 class="game-title">{{game.name}}</h2>
                   <p class="game-text" *ngIf="game.own" class="game-owned game-text">Game Owned</p>
                   <p class="game-text" *ngIf="!game.own" class="game-not-owned game-text">Game Not Owned</p>
                   <p class="game-text">Status: {{game.state}}</p>
-                  <star-rating class="game-rating" size="medium" [rating]="game.rating" [showHalfStars]="true" [numOfStars]="10" [readOnly]="true"></star-rating>
+                  <star-rating class="game-rating" size="medium" [rating]="game.rating" [showHalfStars]="true" [step]="0.5" [numOfStars]="5" [readOnly]="true"></star-rating>
                 </div>
                 <div class="info-column">
                   <p class="game-text"><b><u>Platforms:</u></b></p>
@@ -144,6 +144,7 @@
                   </mat-button-toggle-group>
                 </div>
               </div>
+              <mat-divider style="margin-right: 2%;"></mat-divider>
             </div>
           </ng-template>
 

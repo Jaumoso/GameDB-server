@@ -23,7 +23,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StarRatingModule } from 'angular-star-rating';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,8 +41,6 @@ import { AuthInterceptorService } from './services/authInterceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
 import { AddGameComponent } from './dialogs/add-game/add-game.component';
-import { GameCardComponent } from './game-card/game-card.component';
-import { GameListComponent } from './game-list/game-list.component';
 import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component';
 
 @NgModule({
@@ -57,8 +55,6 @@ import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component
     RegisterComponent,
     SettingsComponent,
     AddGameComponent,
-    GameCardComponent,
-    GameListComponent,
     DeleteGameComponent,
   ],
   imports: [

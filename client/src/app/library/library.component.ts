@@ -87,8 +87,8 @@ export class LibraryComponent implements OnInit {
                 rating: game.rating,
               };
 
-              console.log(combinedGame.storefronts)
-              console.log(combinedGame.platforms)
+              // console.log(combinedGame.storefronts) //! TODO: esto necesita revisión
+              // console.log(combinedGame.platforms) //! TODO: esto necesita revisión
               
               // Step 4: Store the combined objects in the new array
               this.gameList.push(combinedGame);
@@ -150,10 +150,10 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
+          console.log(result)
           this.user?.library.push(result);
           this.userService.updateUserContent(this.user?._id!, this.user!)
           .then(() => {
-
             this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
               const combinedGame = {
                 gameId: result.gameId,

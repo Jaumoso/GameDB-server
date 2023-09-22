@@ -5,12 +5,12 @@ export class User{
     joined: Date | undefined;
     lastSeen: Date | undefined;
     library: {
-        gameId: Number | undefined;
-        rating?: Number | undefined;
-        platform?: string[] | undefined;
-        storefront?: string[] | undefined;
-        acquisitionDate?: Date | undefined;
-        acquisitionPrice?: Number | undefined;
+        gameId: number | undefined;
+        rating: number | undefined;
+        platform: string[] | undefined;
+        storefront: string[] | undefined;
+        acquisitionDate: Date | undefined;
+        acquisitionPrice: number | undefined;
         own: boolean;
         state: string | undefined;
     }[] = [];
