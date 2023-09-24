@@ -23,6 +23,7 @@ export class LibraryComponent implements OnInit {
   private user: User | undefined;
   isGridView: Boolean = false;
   viewType: String = 'list';
+  totalCost: number = 0;
 
   constructor(
     private userService: UserService,
@@ -50,9 +51,12 @@ export class LibraryComponent implements OnInit {
         this.user = user;
         let gameIds: Number[] = [];
 
-        // Get all the IDs from the games in the library
         this.user.library?.forEach((libraryGame) => {
+          // Get all the IDs from the games in the library
           gameIds.push(libraryGame.gameId!)
+          // Save the total cost for all the games
+          this.totalCost += libraryGame.acquisitionPrice!;
+
         });
 
         // Search for the games in IGDB
@@ -63,14 +67,15 @@ export class LibraryComponent implements OnInit {
               (retrieved) => retrieved.id === game.gameId
             );
             
-            // Get storefronts and save them
-            let storefrontNames: string[] = [];
-            game.storefront?.forEach((storefront) => {
-              this.storefrontService.getStorefront(storefront).then((storefront) => {
-                storefrontNames.push(storefront.name!);
-              })
-            })
-            game.storefront = storefrontNames;
+            //! this breaks things TODO: fix
+            // // Get storefronts and save them 
+            // let storefrontNames: string[] = [];
+            // game.storefront?.forEach((storefront) => {
+            //   this.storefrontService.getStorefront(storefront).then((storefront) => {
+            //     storefrontNames.push(storefront.name!);
+            //   })
+            // })
+            // game.storefront = storefrontNames;
 
             if (retrievedGame) {
               const combinedGame = {
@@ -79,6 +84,7 @@ export class LibraryComponent implements OnInit {
                 releaseDate: retrievedGame.first_release_date,
                 cover: retrievedGame.cover,
                 own: game.own,
+                format: game.format,
                 state: game.state,
                 platforms: game.platform,
                 storefronts: game.storefront,
@@ -150,8 +156,8 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log(result)
           this.user?.library.push(result);
+          // console.log(this.user);
           this.userService.updateUserContent(this.user?._id!, this.user!)
           .then(() => {
             this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
@@ -161,6 +167,7 @@ export class LibraryComponent implements OnInit {
                 releaseDate: retrievedGame[0].first_release_date,
                 cover: retrievedGame[0].cover,
                 own: result.own,
+                format: result.format,
                 state: result.state,
                 platforms: result.platform,
                 storefronts: result.storefront,

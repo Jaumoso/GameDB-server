@@ -3,6 +3,7 @@ import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { StorefrontService } from './storefront.service';
 import { CreateStorefrontDto } from './dto/createStorefront.dto';
 import { UpdateStorefrontDto } from './dto/updateStorefront.dto';
+import { sanitizeFilter } from 'mongoose';
 
 @ApiTags('Storefront')
 @Controller('storefront')
@@ -59,7 +60,7 @@ export class StorefrontController {
     @ApiCreatedResponse({ description: 'Actualiza una tienda.' })
     async updateStorefront(@Res() response, @Param('id') storefrontId: string, @Body() updateStorefrontDto: UpdateStorefrontDto) {
         try {
-            const updatedStorefront = await this.storefrontService.updateStorefront(storefrontId, updateStorefrontDto);
+            const updatedStorefront = await this.storefrontService.updateStorefront(storefrontId, sanitizeFilter(updateStorefrontDto));
             return response.status(HttpStatus.OK).json({
                 message: 'Storefront has been successfully updated',
                 updatedStorefront,

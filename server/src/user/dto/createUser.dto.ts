@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 import mongoose from "mongoose";
 
 export class CreateUserDto {
@@ -60,17 +60,19 @@ export class CreateUserDto {
             acquisitionDate: new Date(2023, 8, 1).toISOString(),
             acquisitionPrice: 0,
             own: true,
+            format: 'digital',
             state: 'Not Interested'
         }],
     })
     library: {
         gameId: number,
         rating: number,
-        platform: string[],
-        storefront: mongoose.Types.ObjectId[],
-        acquisitionDate: Date,
-        acquisitionPrice: number,
+        platform?: string[],
+        storefront?: mongoose.Types.ObjectId[],
+        acquisitionDate?: Date,
+        acquisitionPrice?: number,
         own: boolean,
+        format: string,
         state: string,
     }[];
     

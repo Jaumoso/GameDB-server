@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/createUser.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { UpdateUserContentDto } from './dto/updateUserContent.dto';
+import { escapeRegExp } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -36,8 +37,9 @@ export class UserService {
         return userData;
     }
 
-    async checkExistingUser(username: string): Promise<UserDocument[]> {
-        const usernameRegex = new RegExp('^' + username + '$','i');
+    async checkExistingUser(username: string): Promise<UserDocument[]> {;
+        const sanitizedUsername = escapeRegExp(username);
+        const usernameRegex = new RegExp('^' + sanitizedUsername + '$','i');
         const userData = await this.userModel
         .find({ $or: 
             [ 
@@ -75,11 +77,16 @@ export class UserService {
     }
 
     async updateUserContent(userId: string, updateUserContentDto: UpdateUserContentDto) {
-        const updatedUser = await this.userModel.findByIdAndUpdate(userId, { library: updateUserContentDto.library }, { new: true });
-        if (!updatedUser) {
-            throw new NotFoundException('User data not found!');
+        console.log(updateUserContentDto.library)
+        try {
+            const updatedUser = await this.userModel.findByIdAndUpdate(userId, updateUserContentDto, { new: true });
+            if (!updatedUser) {
+                throw new NotFoundException('User data not found!');
+            }
+            return updatedUser;
+        } catch(error) {
+            console.log(error);
         }
-        return updatedUser;
     }
 
     async deleteUser(userId: string): Promise<UserDocument> {

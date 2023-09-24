@@ -24,21 +24,23 @@ export class User {
     @Prop({type: [{ 
         gameId: Number, 
         rating: Number,
-        platform: [{type: String}],
+        platform: [String],
         storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
         acquisitionDate: Date,
         acquisitionPrice: Number,
         own: Boolean,
+        format: String,
         state: String
     }]})
     library: { 
         gameId: number,
         rating: number,
-        platform: String[],
-        storefront: mongoose.Types.ObjectId[],
-        acquisitionDate: Date,
-        acquisitionPrice: number,
+        platform?: String[],
+        storefront?: mongoose.Types.ObjectId[],
+        acquisitionDate?: Date,
+        acquisitionPrice?: number,
         own: boolean,
+        format: string,
         state: string,
     }[];
 }
