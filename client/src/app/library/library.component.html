@@ -74,7 +74,7 @@
           </tr>
           <tr>
             <th>Total Hours</th>
-            <td></td>
+            <td>{{ totalHours }}h</td>
           </tr>
         </table>
       </div>
@@ -131,12 +131,13 @@
                   <img *ngIf="!game.cover" src="/assets/images/cover_not_available.jpeg" alt="{{game.name}}">
                 </div>
                 <div class="info-column">
-                  <h2 class="game-title">{{game.name}}</h2>
+                  <h2 class="game-title">{{ game.name }}</h2>
                   <p class="game-text" *ngIf="game.own" class="game-owned game-text">Game Owned</p>
                   <p class="game-text" *ngIf="!game.own" class="game-not-owned game-text">Game Not Owned</p>
                   <p class="game-text" *ngIf="game.format == 'digital'">Format: Digital</p>
                   <p class="game-text" *ngIf="game.format == 'phisical'">Format: Phisical</p>
-                  <p class="game-text">Status: {{game.state}}</p>
+                  <p class="game-text">Status: {{ game.state }}</p>
+                  <p class="game-text" *ngIf="game.time > 0">{{ game.time }}h</p>
                 </div>
                 <div class="info-column">
                   <star-rating class="game-rating" size="medium" labelPosition="top" labelText="{{game.rating}}" labelPosition="bottom" [rating]="game.rating / 2" [showHalfStars]="true" [numOfStars]="5" [readOnly]="true"></star-rating>
@@ -144,20 +145,24 @@
                 <div class="info-column">
                   <div *ngIf="game.platforms != undefined">
                     <p class="game-text"><b><u>Platforms:</u></b></p>
-                    <p class="game-text">{{game.platforms.join(', ')}}</p>
+                    <p class="game-text">{{ game.platforms.join(', ') }}</p>
                   </div>
                 </div>
                 <div class="info-column">
                   <div *ngIf="game.storefronts != undefined">
                     <p class="game-text"><b><u>Storefronts:</u></b></p>
-                    <p class="game-text">{{game.storefrontNames.join(', ')}}</p>
+                    <p class="game-text">{{ game.storefrontNames.join(', ') }}</p>
                   </div>
                 </div>
                 <div class="info-column">
-                  <p class="game-text">Release Date: {{game.releaseDate | date}}</p>
+                  <p class="game-text">Release Date: {{ game.releaseDate | date }}</p>
                   <p class="game-text" *ngIf="game.acquisitionDate">Acquisition Date: {{game.acquisitionDate | date}}</p>
                   <p class="game-text" *ngIf="game.acquisitionPrice">Acquisition Price: {{game.acquisitionPrice}}€</p>
                   <p class="game-text" *ngIf="game.acquisitionPrice == 0 || game.acquisitionPrice == undefined">Acquisition Price: For Free</p>
+                </div>
+                <div class="info-column">
+                  <p class="game-text" *ngIf="game.comment != ''"><b><u>Notes:</u></b></p>
+                  <p class="game-text">{{ game.comment }}</p>
                 </div>
                 <div class="actions-column">
                   <mat-button-toggle-group aria-label="Action Buttons" vertical="true">

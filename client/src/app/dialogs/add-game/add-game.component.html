@@ -7,7 +7,7 @@
 </mat-toolbar>
 <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="dialog-content">
-        <mat-form-field appearance="outline" class="mat-search full-width">
+        <mat-form-field appearance="outline" class="mat-search">
             <mat-label>Search for a game</mat-label>
             <input matInput
                    placeholder="Game search"
@@ -88,10 +88,20 @@
             <input matInput placeholder="price" formControlName="acquisitionPrice" type="number">
             <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mat-time">
+          <mat-label>Time</mat-label>
+          <input matInput aria-label="time" type="number" formControlName="time">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mat-textarea">
+          <mat-label>Comments</mat-label>
+          <textarea aria-label="comments" matInput formControlName="comment"></textarea>
+        </mat-form-field>
         
     </mat-dialog-content>
     <mat-dialog-actions>
         <span class="flex-spacer"></span>
-        <button mat-raised-button type="submit" [disabled]="form.invalid">Add</button>
+        <button mat-raised-button type="submit" matRipple [disabled]="form.invalid">Add</button>
     </mat-dialog-actions>
 </form>

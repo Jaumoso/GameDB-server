@@ -25,6 +25,7 @@ export class LibraryComponent implements OnInit {
   isGridView: Boolean = false;
   viewType: String = 'list';
   totalCost: number = 0;
+  totalHours: number = 0;
   storefrontInfo: Storefront[] | undefined;
 
   constructor(
@@ -56,9 +57,10 @@ export class LibraryComponent implements OnInit {
         this.user.library?.forEach((libraryGame) => {
           // Get all the IDs from the games in the library
           gameIds.push(libraryGame.gameId!)
-          // Save the total cost for all the games
+          // Save total cost for all the games
           this.totalCost += libraryGame.acquisitionPrice!;
-
+          // Save total hours for all the games
+          this.totalHours += libraryGame.time!;
         });
 
         // Search for the games in IGDB
@@ -79,7 +81,7 @@ export class LibraryComponent implements OnInit {
                 })
               })
             }
-
+            
             if (retrievedGame) {
               const combinedGame = {
                 gameId: game.gameId,
@@ -95,6 +97,8 @@ export class LibraryComponent implements OnInit {
                 acquisitionDate: game.acquisitionDate,
                 acquisitionPrice: game.acquisitionPrice,
                 rating: game.rating,
+                time: game.time,
+                comment: game.comment
               };
 
               // console.log(combinedGame.storefronts) //! TODO: esto necesita revisión
@@ -194,6 +198,8 @@ export class LibraryComponent implements OnInit {
                 acquisitionDate: result.acquisitionDate,
                 acquisitionPrice: result.acquisitionPrice,
                 rating: result.rating,
+                time: result.time,
+                comment: result.comment
               };
               this.gameList.push(combinedGame);
             });

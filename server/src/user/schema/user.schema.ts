@@ -30,7 +30,9 @@ export class User {
         acquisitionPrice: Number,
         own: Boolean,
         format: String,
-        state: String
+        state: String,
+        time: Number,
+        comment: String
     }]})
     library: { 
         gameId: number,
@@ -42,6 +44,8 @@ export class User {
         own: boolean,
         format: string,
         state: string,
+        time: Number,
+        comment: String
     }[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

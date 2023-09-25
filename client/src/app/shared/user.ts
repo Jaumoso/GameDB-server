@@ -14,5 +14,7 @@ export class User{
         own: boolean | undefined;
         format: string | undefined;
         state: string | undefined;
+        time: number | undefined;
+        comment: string | undefined;
     }[] = [];
 }

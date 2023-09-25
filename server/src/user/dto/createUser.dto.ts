@@ -61,7 +61,9 @@ export class CreateUserDto {
             acquisitionPrice: 0,
             own: true,
             format: 'digital',
-            state: 'Not Interested'
+            state: 'Not Interested',
+            time: 152.5,
+            comment: 'Default comment.'
         }],
     })
     library: {
@@ -74,6 +76,8 @@ export class CreateUserDto {
         own: boolean,
         format: string,
         state: string,
+        time: number,
+        comment: string
     }[];
     
 }
