@@ -74,42 +74,47 @@ export class GameService {
     }
 
     async getGamesByIds(gameIds: Number[]): Promise<any[]> {
-        let searchResult = null;
-        let games: any[] = [];
-        let gameIdsArray = gameIds.join(',');
-        try {
-            const igdbService = new IgdbService();
-            const accessToken = await apiAuth.useFactory(igdbService);
-            const response = await axios({
-                method: 'post',
-                url: 'https://api.igdb.com/v4/games',
-                headers: {
-                   'Client-ID': process.env.IGDB_CLIENT_ID,
-                   Authorization: 'Bearer ' + accessToken,
-                   Accept: 'application/json'
-                }, 
-                data: `fields name,first_release_date,cover.image_id; where id = (${gameIdsArray});`
-              });
-              console.log(response.data)
-              searchResult = response.data;
-        } catch (error) {
-            console.log(error);
+        if(gameIds.length > 0){
+            let searchResult = null;
+            let games: any[] = [];
+            let gameIdsArray = gameIds.join(',');
+            try {
+                const igdbService = new IgdbService();
+                const accessToken = await apiAuth.useFactory(igdbService);
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://api.igdb.com/v4/games',
+                    headers: {
+                       'Client-ID': process.env.IGDB_CLIENT_ID,
+                       Authorization: 'Bearer ' + accessToken,
+                       Accept: 'application/json'
+                    }, 
+                    data: `fields name,first_release_date,cover.image_id; where id = (${gameIdsArray});`
+                  });
+                  console.log(response.data)
+                  searchResult = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+    
+            try {
+                searchResult.forEach((game) => {
+                    games.push({
+                        id: game.id,
+                        name: game.name,
+                        first_release_date: game.first_release_date * 1000,
+                        cover: `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover?.image_id}.jpg`,
+                    });
+                })
+                // console.log(games);
+            } catch (error) {
+                console.log(error);
+            }
+            return games;
         }
-
-        try {
-            searchResult.forEach((game) => {
-                games.push({
-                    id: game.id,
-                    name: game.name,
-                    first_release_date: game.first_release_date * 1000,
-                    cover: `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover?.image_id}.jpg`,
-                });
-            })
-            // console.log(games);
-        } catch (error) {
-            console.log(error);
+        else {
+            console.log("No games in the user library")
         }
-        return games;
     }
 
     // async createGame(gameDto: CreateGameDto ): Promise<GameDocument> {

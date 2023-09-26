@@ -9,6 +9,7 @@ import { AddGameComponent } from '../dialogs/add-game/add-game.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteGameComponent } from '../dialogs/delete-game/delete-game.component';
 import { StorefrontService } from '../services/storefront.service';
+import { Storefront } from '../shared/storefront';
 
 @Component({
   selector: 'app-library',
@@ -23,6 +24,9 @@ export class LibraryComponent implements OnInit {
   private user: User | undefined;
   isGridView: Boolean = false;
   viewType: String = 'list';
+  totalCost: number = 0;
+  totalHours: number = 0;
+  storefrontInfo: Storefront[] | undefined;
 
   constructor(
     private userService: UserService,
@@ -50,9 +54,13 @@ export class LibraryComponent implements OnInit {
         this.user = user;
         let gameIds: Number[] = [];
 
-        // Get all the IDs from the games in the library
         this.user.library?.forEach((libraryGame) => {
+          // Get all the IDs from the games in the library
           gameIds.push(libraryGame.gameId!)
+          // Save total cost for all the games
+          this.totalCost += libraryGame.acquisitionPrice!;
+          // Save total hours for all the games
+          this.totalHours += libraryGame.time!;
         });
 
         // Search for the games in IGDB
@@ -65,13 +73,15 @@ export class LibraryComponent implements OnInit {
             
             // Get storefronts and save them
             let storefrontNames: string[] = [];
-            game.storefront?.forEach((storefront) => {
-              this.storefrontService.getStorefront(storefront).then((storefront) => {
-                storefrontNames.push(storefront.name!);
+            if(game.storefront){
+              game.storefront?.forEach((storefront) => {
+                this.storefrontService.getStorefront(storefront).then((storefront) => {
+                  storefrontNames.push(storefront.name!);
+                  this.storefrontInfo?.push(storefront); //! just saved all storefront data. I need a refactor
+                })
               })
-            })
-            game.storefront = storefrontNames;
-
+            }
+            
             if (retrievedGame) {
               const combinedGame = {
                 gameId: game.gameId,
@@ -79,12 +89,16 @@ export class LibraryComponent implements OnInit {
                 releaseDate: retrievedGame.first_release_date,
                 cover: retrievedGame.cover,
                 own: game.own,
+                format: game.format,
                 state: game.state,
                 platforms: game.platform,
                 storefronts: game.storefront,
+                storefrontNames: storefrontNames, //! this field should not be saved into DB
                 acquisitionDate: game.acquisitionDate,
                 acquisitionPrice: game.acquisitionPrice,
                 rating: game.rating,
+                time: game.time,
+                comment: game.comment
               };
 
               // console.log(combinedGame.storefronts) //! TODO: esto necesita revisión
@@ -94,10 +108,14 @@ export class LibraryComponent implements OnInit {
               this.gameList.push(combinedGame);
 
               // Save game in platform counter
-              this.processPlatforms(combinedGame);
+              if(combinedGame.platforms){
+                this.processPlatforms(combinedGame);
+              }
 
               // Save game in storefront counter
-              this.processStorefronts(combinedGame);
+              if(combinedGame.storefronts){
+                this.processStorefronts(combinedGame);
+              }
 
               // Save game in State counter
               this.processStates(combinedGame);
@@ -150,23 +168,38 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log(result)
           this.user?.library.push(result);
+          // console.log(this.user);
           this.userService.updateUserContent(this.user?._id!, this.user!)
           .then(() => {
             this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
+
+              // Get storefronts and save them
+              let storefrontNames: string[] = [];
+              if(result.storefront){
+                result.storefront?.forEach((storefront: string) => {
+                  this.storefrontService.getStorefront(storefront).then((storefront) => {
+                    storefrontNames.push(storefront.name!);
+                  })
+                })
+              }
+
               const combinedGame = {
                 gameId: result.gameId,
                 name: retrievedGame[0].name,
                 releaseDate: retrievedGame[0].first_release_date,
                 cover: retrievedGame[0].cover,
                 own: result.own,
+                format: result.format,
                 state: result.state,
                 platforms: result.platform,
                 storefronts: result.storefront,
+                storefrontNames: storefrontNames, //! this field should not be saved into DB
                 acquisitionDate: result.acquisitionDate,
                 acquisitionPrice: result.acquisitionPrice,
                 rating: result.rating,
+                time: result.time,
+                comment: result.comment
               };
               this.gameList.push(combinedGame);
             });

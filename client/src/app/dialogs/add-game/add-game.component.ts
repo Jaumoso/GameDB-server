@@ -74,7 +74,10 @@ export class AddGameComponent {
       acquisitionDate: this.acquisitionDate,
       acquisitionPrice: this.acquisitionPrice,
       own: this.own,
+      format: this.format,
       state: this.state,
+      time: this.time,
+      comment: this.comment
     });
   }
 
@@ -84,28 +87,37 @@ export class AddGameComponent {
   platform = new FormControl(null);
   storefront = new FormControl('');
   own = new FormControl(true, [Validators.required]);
+  format = new FormControl('digital');
   state = new FormControl('', [Validators.required]);
   acquisitionDate = new FormControl(null);
   acquisitionPrice = new FormControl(null);
+  time = new FormControl(null);
+  comment = new FormControl('');
 
   ngOnInit(){
     this.setupSearchObserver();
     
     this.own.valueChanges.subscribe((value: boolean | null) => {
       if (value !== null && value) {
-        this.platform!.enable();
-        this.storefront!.enable();
-        this.acquisitionDate!.enable();
-        this.acquisitionPrice!.enable();
+        this.platform.enable();
+        this.storefront.enable();
+        this.acquisitionDate.enable();
+        this.acquisitionPrice.enable();
+        this.format.enable();
+        this.time.enable();
       } else {
-        this.platform!.disable();
-        this.platform!.reset();
-        this.storefront!.disable();
-        this.storefront!.reset();
-        this.acquisitionDate!.disable();
-        this.acquisitionDate!.reset();
-        this.acquisitionPrice!.disable();
-        this.acquisitionPrice!.reset();
+        this.platform.disable();
+        this.platform.reset();
+        this.storefront.disable();
+        this.storefront.reset();
+        this.acquisitionDate.disable();
+        this.acquisitionDate.reset();
+        this.acquisitionPrice.disable();
+        this.acquisitionPrice.reset();
+        this.format.disable();
+        this.format.reset();
+        this.time.disable();
+        this.time.reset();
       }
     });
 
@@ -151,14 +163,17 @@ export class AddGameComponent {
   onSubmit() {
     // TODO: save game info in user library
     const game = {
-      gameId: this.gameId!.value || undefined,
-      rating: this.rating!.value || 0,
-      platform: this.platform!.value || undefined,
-      storefront: this.storefront!.value || undefined,
-      acquisitionDate: this.acquisitionDate!.value || undefined,
-      acquisitionPrice: this.acquisitionPrice!.value || 0,
-      own: this.own!.value || false,
-      state: this.state!.value || undefined,
+      gameId: this.gameId.value,
+      rating: this.rating.value || 0,
+      platform: this.platform.value,
+      storefront: this.storefront.value,
+      acquisitionDate: this.acquisitionDate.value,
+      acquisitionPrice: this.acquisitionPrice.value || 0,
+      own: this.own.value,
+      format: this.format.value,
+      state: this.state.value,
+      time: this.time.value || 0,
+      comment: this.comment.value
     };
     this.closeDialog(game);
   }
@@ -184,6 +199,7 @@ export class AddGameComponent {
   }
 
   closeDialog(game: any): void {
+    console.log(game);
     this.dialogRef.close(game);
   }
 

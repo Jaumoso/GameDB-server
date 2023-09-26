@@ -11,7 +11,10 @@ export class User{
         storefront: string[] | undefined;
         acquisitionDate: Date | undefined;
         acquisitionPrice: number | undefined;
-        own: boolean;
+        own: boolean | undefined;
+        format: string | undefined;
         state: string | undefined;
+        time: number | undefined;
+        comment: string | undefined;
     }[] = [];
 }

@@ -60,7 +60,6 @@ export class UserService {
       })
     };
     const { _id, password, username, joined, lastSeen,... rest } = user;
-    console.log(rest);
     return new Promise((resolve, reject) => {
       this.http.put<{updatedUser: User}>(baseURL + 'user/update/content/' + userId, rest, httpOptions)
       .subscribe(user => {

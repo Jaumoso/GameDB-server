@@ -24,6 +24,7 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StarRatingModule } from 'angular-star-rating';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -85,6 +86,7 @@ import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component
     MomentDateModule,
     MatTabsModule,
     ScrollingModule,
+    MatProgressSpinnerModule,
     StarRatingModule.forRoot()
   ],
   providers: [

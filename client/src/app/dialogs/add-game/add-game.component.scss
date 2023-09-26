@@ -58,6 +58,16 @@ mat-form-field.mat-search {
   grid-column: 1 / -1; /* Span the whole row */
 }
 
+mat-form-field.mat-textarea {
+  // min-width: 800px;
+  margin-left: -138px;
+}
+
+mat-form-field.mat-time {
+  max-width: 100px;
+  max-height: 55px;
+}
+
 /* Dialog actions row */
 mat-dialog-actions {
   grid-column: 1 / -1; /* Span the whole row */
@@ -126,17 +136,29 @@ mat-form-field.input-spacing-left {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-  }
+}
   
-  /* Estilos para el título */
-  .option-title {
-    font-size: 20px; /* Tamaño del título */
-    font-weight: bold;
-    margin-bottom: 4px; /* Espacio entre el título y las fechas/plataformas */
-  }
+/* Estilos para el título */
+.option-title {
+  font-size: 20px; /* Tamaño del título */
+  font-weight: bold;
+  margin-bottom: 4px; /* Espacio entre el título y las fechas/plataformas */
+}
   
-  /* Estilos para las fechas y plataformas */
-  .option-platforms {
-    color: #777;
-    font-size: 14px;
-  }
+/* Estilos para las fechas y plataformas */
+.option-platforms {
+  color: #777;
+  font-size: 14px;
+}
+
+mat-button-toggle-group {
+  margin-right: 10px;
+  height: 55px;
+}
+
+// digital phisical toggle
+mat-button-toggle.format-toggle{
+  flex: 1;
+  text-align: center;
+}
+
