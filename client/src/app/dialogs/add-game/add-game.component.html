@@ -60,7 +60,7 @@
         <mat-form-field appearance="outline" class="input-spacing-right">
             <mat-label>Select a platform</mat-label>
             <mat-select multiple formControlName="platform">
-                <mat-option>None</mat-option>
+                <!-- <mat-option>None</mat-option> -->
                 <mat-option *ngFor="let platform of selectedGamePlatforms" [value]="platform.name">{{platform.name}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -68,8 +68,8 @@
         <mat-form-field appearance="outline" class="input-spacing-left">
             <mat-label>Select a storefront</mat-label>
             <mat-select multiple formControlName="storefront">
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let storefront of gameStorefronts" [value]="storefront._id">
+              <!-- <mat-option>None</mat-option> -->
+              <mat-option *ngFor="let storefront of gameStorefronts" [value]="storefront.name">
                 {{ storefront.name }}
               </mat-option>
             </mat-select>
@@ -87,11 +87,13 @@
             <mat-label>Acquisition price</mat-label>
             <input matInput placeholder="price" formControlName="acquisitionPrice" type="number">
             <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
+            <mat-error *ngIf="acquisitionPrice.hasError('negativeNumberValidator')">Only positive values.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="mat-time">
           <mat-label>Hours</mat-label>
           <input matInput aria-label="Hours put into the game" type="number" formControlName="time">
+          <mat-error *ngIf="time.hasError('negativeNumberValidator')">Only positive values.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="mat-textarea">

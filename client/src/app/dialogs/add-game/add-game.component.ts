@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/shared/user';
 import { GameService } from 'src/app/services/game.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Storefront } from 'src/app/shared/storefront';
@@ -90,9 +90,16 @@ export class AddGameComponent {
   format = new FormControl('digital');
   state = new FormControl('', [Validators.required]);
   acquisitionDate = new FormControl(null);
-  acquisitionPrice = new FormControl(null);
-  time = new FormControl(null);
+  acquisitionPrice = new FormControl(null, [this.negativeNumberValidator.bind(this)]);
+  time = new FormControl(null, [this.negativeNumberValidator.bind(this)]);
   comment = new FormControl('');
+
+  negativeNumberValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value < 0) {
+      return { isNegative: true };
+    }
+    return null;
+  }
 
   ngOnInit(){
     this.setupSearchObserver();

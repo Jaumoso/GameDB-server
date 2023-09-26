@@ -71,17 +71,6 @@ export class LibraryComponent implements OnInit {
               (retrieved) => retrieved.id === game.gameId
             );
             
-            // Get storefronts and save them
-            let storefrontNames: string[] = [];
-            if(game.storefront){
-              game.storefront?.forEach((storefront) => {
-                this.storefrontService.getStorefront(storefront).then((storefront) => {
-                  storefrontNames.push(storefront.name!);
-                  this.storefrontInfo?.push(storefront); //! just saved all storefront data. I need a refactor
-                })
-              })
-            }
-            
             if (retrievedGame) {
               const combinedGame = {
                 gameId: game.gameId,
@@ -93,7 +82,6 @@ export class LibraryComponent implements OnInit {
                 state: game.state,
                 platforms: game.platform,
                 storefronts: game.storefront,
-                storefrontNames: storefrontNames, //! this field should not be saved into DB
                 acquisitionDate: game.acquisitionDate,
                 acquisitionPrice: game.acquisitionPrice,
                 rating: game.rating,
@@ -174,16 +162,6 @@ export class LibraryComponent implements OnInit {
           .then(() => {
             this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
 
-              // Get storefronts and save them
-              let storefrontNames: string[] = [];
-              if(result.storefront){
-                result.storefront?.forEach((storefront: string) => {
-                  this.storefrontService.getStorefront(storefront).then((storefront) => {
-                    storefrontNames.push(storefront.name!);
-                  })
-                })
-              }
-
               const combinedGame = {
                 gameId: result.gameId,
                 name: retrievedGame[0].name,
@@ -194,7 +172,6 @@ export class LibraryComponent implements OnInit {
                 state: result.state,
                 platforms: result.platform,
                 storefronts: result.storefront,
-                storefrontNames: storefrontNames, //! this field should not be saved into DB
                 acquisitionDate: result.acquisitionDate,
                 acquisitionPrice: result.acquisitionPrice,
                 rating: result.rating,
