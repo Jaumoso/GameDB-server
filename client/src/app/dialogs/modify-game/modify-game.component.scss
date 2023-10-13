@@ -1,0 +1,163 @@
+mat-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #292a45;
+    color: white;
+
+    button {
+        border: none;
+        background-color: #3c3d5f;
+        color: white;
+    }
+
+    .cancel:hover {
+        background-color: #3c3d5f;
+    }
+    .cancel:active{
+        background-color: #23243b;
+    }
+}
+
+form {
+    padding: 15px;
+}
+
+mat-dialog-actions {
+    button {
+        border: none;
+        padding: 10px 20px 10px 20px;
+        color: black;
+        font-weight: bold;
+        margin: 5px;
+    }
+
+    .accept {
+        padding: 20px;
+        margin-bottom: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+        &:hover {
+            background-color: #23243b;
+        }
+        &:active {
+            background-color: mix(#23243b, black, $weight: 80%);
+        }
+    }
+}
+
+// CSS GRID
+.dialog-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Divide the container into two columns */
+  grid-row-gap: 10px; /* Adjust this value as needed for spacing between rows */
+}
+
+/* Game search row - occupies the whole row */
+mat-form-field.mat-search {
+  grid-column: 1 / -1; /* Span the whole row */
+}
+
+mat-form-field.mat-textarea {
+  margin-left: -138px;
+}
+
+mat-form-field.mat-time {
+  max-width: 100px;
+  max-height: 55px;
+}
+
+/* Dialog actions row */
+mat-dialog-actions {
+  grid-column: 1 / -1; /* Span the whole row */
+}
+
+// SPACE BETWEEN COLUMNS
+mat-form-field.input-spacing-right {
+    margin-right: 10px;
+}
+
+mat-form-field.input-spacing-left {
+    margin-left: 10px;
+}
+
+// VERTICAL CENTERING
+.vertical-centering{
+    display: flex;
+    align-items: center;
+}
+
+/* Add custom styles to the mat-option container */
+.option-container {
+    display: grid;
+    grid-template-columns: 120px 1fr; /* Adjust the image width and title width as needed */
+    grid-column-gap: 16px;
+    align-items: center;
+    padding: 8px;
+  }
+  
+  /* Style the game cover image */
+  .option-image {
+    width: 100%; /* Ensure the image takes the full width of the container */
+  }
+  
+  .option-img {
+    width: 100%; /* Adjust the image size as needed */
+    height: 100%; /* Adjust the image size as needed */
+    border-radius: 10px; /* Add rounded corners */
+  }
+  
+  /* Style the game title */
+  .option-title {
+    font-size: 20px; /* Increase the title font size */
+    font-weight: bold;
+  }
+  
+  /* Style the release date and platform names */
+  .option-platforms {
+    color: #777;
+    font-size: 14px; /* Decrease the platform font size */
+  }
+  
+  /* Add margin between platform names */
+  .option-platforms span {
+    margin-right: 4px;
+  }
+  
+  /* Add hover effect */
+  .mat-option:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  /* Agregar salto de línea entre el título y las plataformas */
+.option-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+  
+/* Estilos para el título */
+.option-title {
+  font-size: 20px; /* Tamaño del título */
+  font-weight: bold;
+  margin-bottom: 4px; /* Espacio entre el título y las fechas/plataformas */
+}
+  
+/* Estilos para las fechas y plataformas */
+.option-platforms {
+  color: #777;
+  font-size: 14px;
+}
+
+mat-button-toggle-group {
+  margin-right: 10px;
+  height: 55px;
+}
+
+// digital phisical toggle
+mat-button-toggle.format-toggle{
+  flex: 1;
+  text-align: center;
+}
+

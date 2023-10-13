@@ -114,6 +114,22 @@
             display: inline-block; /* Ensure it only takes up the space of the stars */
             font-size: 0; /* Remove any extra space around the stars */
           }
+          .game-status {
+            border-radius: 5px;
+            padding: 1px;
+            width:fit-content;
+          }
+          
+          #not-interested {background-color: #e6e6e6;}
+          #wishlist {background-color: #a7008b; color: white;}
+          #backlog {background-color: #0a53a8; color: white;}
+          #tried {background-color: #e6cff2;}
+          #playing {background-color: #ffe5a0;}
+          #played {background-color: #d4edbc;}
+          #completed {background-color: #11734b; color: white;}
+          #retired {background-color: #bfe1f6;}
+          #shelved {background-color: #ffc8aa;}
+          #abandoned {background-color: #b10202; color: white;}
         }
 
         /* Button Styles */

@@ -43,6 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
 import { AddGameComponent } from './dialogs/add-game/add-game.component';
 import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component';
+import { ModifyGameComponent } from './dialogs/modify-game/modify-game.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component
     SettingsComponent,
     AddGameComponent,
     DeleteGameComponent,
+    ModifyGameComponent,
   ],
   imports: [
     BrowserModule,

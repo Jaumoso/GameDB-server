@@ -10,7 +10,7 @@ import { StorefrontService } from 'src/app/services/storefront.service';
 import { debounceTime, of, startWith, switchMap } from 'rxjs';
 
 export interface DialogData {
-  library: User["library"];
+  game: any;
 }
 
 const MY_DATE_FORMAT = {
@@ -26,22 +26,21 @@ const MY_DATE_FORMAT = {
 };
 
 @Component({
-  selector: 'app-add-game',
-  templateUrl: './add-game.component.html',
-  styleUrls: ['./add-game.component.scss'],
+  selector: 'app-modify-game',
+  templateUrl: './modify-game.component.html',
+  styleUrls: ['./modify-game.component.scss'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
   ]
 })
-export class AddGameComponent {
+export class ModifyGameComponent {
 
   form: FormGroup;
   library: Object[] | undefined;
   searchText: string = '';
   loadedGames: any[] = [];
   selectedGamePlatforms: any[] = [];
-  dlcTrigger: boolean = true;
 
   maxDate: Date | undefined;
   gameOwn: boolean = false;
@@ -61,7 +60,7 @@ export class AddGameComponent {
     'Abandoned'];
 
   constructor(
-    public dialogRef: MatDialogRef<AddGameComponent>, 
+    public dialogRef: MatDialogRef<ModifyGameComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private gameService: GameService,
     private formBuilder: FormBuilder,
@@ -83,17 +82,17 @@ export class AddGameComponent {
   }
 
   // FORM VALIDATION
-  gameId = new FormControl(null, [Validators.required]);
-  rating = new FormControl(0);
-  platform = new FormControl(null);
-  storefront = new FormControl('');
-  own = new FormControl(true, [Validators.required]);
-  format = new FormControl('digital');
-  state = new FormControl('', [Validators.required]);
-  acquisitionDate = new FormControl(null);
-  acquisitionPrice = new FormControl(null, [this.negativeNumberValidator.bind(this)]);
-  time = new FormControl(null, [this.negativeNumberValidator.bind(this)]);
-  comment = new FormControl('');
+  gameId = new FormControl({value: this.data.game.gameId || null, disabled: true}, [Validators.required]);
+  rating = new FormControl(this.data.game.rating);
+  platform = new FormControl(this.data.game.platform || null);
+  storefront = new FormControl(this.data.game.storefront || '');
+  own = new FormControl(this.data.game.own, [Validators.required]);
+  format = new FormControl(this.data.game.format);
+  state = new FormControl(this.data.game.state || '', [Validators.required]);
+  acquisitionDate = new FormControl(this.data.game.acquisitionDate || null);
+  acquisitionPrice = new FormControl(this.data.game.acquisitionPrice || null, [this.negativeNumberValidator.bind(this)]);
+  time = new FormControl(this.data.game.time || null, [this.negativeNumberValidator.bind(this)]);
+  comment = new FormControl(this.data.game.comment || '');
 
   negativeNumberValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value < 0) {
@@ -128,12 +127,6 @@ export class AddGameComponent {
         this.time.reset();
       }
     });
-
-    //! this.gameId.valueChanges.subscribe(() => {
-    //!   if(this.gameId.value != null) {
-    //!     this.dlcTriggerFunction();
-    //!   }
-    //! })
 
     // BLOCK FUTURE DATES
     this.maxDate = new Date();
@@ -191,20 +184,6 @@ export class AddGameComponent {
     this.closeDialog(game);
   }
 
-  // gameSearch(): void {
-  //   if (this.searchText !== '') {
-  //     this.gameService.gameSearch(this.searchText).subscribe((games: any[]) => {
-  //       this.loadedGames = games.map(game => ({
-  //         id: game.id,
-  //         name: game.name,
-  //         first_release_date: game.first_release_date,
-  //         cover: game.cover?.url,
-  //         platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
-  //       }));
-  //       console.log(this.loadedGames)
-  //     });
-  //   }
-  // }
 
   selectedGame(gameId: number) {
     const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
@@ -221,10 +200,6 @@ export class AddGameComponent {
       return value + '☆';
     }
     return `${value}`;
-  }
-
-  dlcTriggerFunction() {
-    this.dlcTrigger = !this.dlcTrigger;
   }
 
 }

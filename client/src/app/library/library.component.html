@@ -111,7 +111,7 @@
                       <mat-button-toggle class="modify-button">
                         <span class="material-symbols-outlined">edit</span> Modify
                       </mat-button-toggle>
-                      <mat-button-toggle class="delete-button" (click)="deleteGame(game.gameId, game.name)">
+                      <mat-button-toggle class="delete-button" (click)="deleteGame(game)">
                         <span class="material-symbols-outlined">delete</span> Delete
                       </mat-button-toggle>
                     </mat-button-toggle-group>
@@ -136,7 +136,16 @@
                   <p class="game-text" *ngIf="!game.own" class="game-not-owned game-text">Game Not Owned</p>
                   <p class="game-text" *ngIf="game.format == 'digital'">Format: Digital</p>
                   <p class="game-text" *ngIf="game.format == 'phisical'">Format: Phisical</p>
-                  <p class="game-text">Status: {{ game.state }}</p>
+                  <p class="game-text" *ngIf="game.state == 'Not Interested'">Status: <span class="game-status" id="not-interested">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Wishlist'">Status: <span class="game-status" id="wishlist">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Backlog'">Status: <span class="game-status" id="backlog">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Tried'">Status: <span class="game-status" id="tried">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Playing'">Status: <span class="game-status" id="playing">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Played'">Status: <span class="game-status" id="played">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Completed'">Status: <span class="game-status" id="completed">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Retired'">Status: <span class="game-status" id="retired">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Shelved'">Status: <span class="game-status" id="shelved">{{ game.state }}</span></p>
+                  <p class="game-text" *ngIf="game.state == 'Abandoned'">Status: <span class="game-status" id="abandoned">{{ game.state }}</span></p>
                   <p class="game-text" *ngIf="game.time > 0">{{ game.time }}h</p>
                 </div>
                 <div class="info-column">
@@ -166,10 +175,10 @@
                 </div>
                 <div class="actions-column">
                   <mat-button-toggle-group aria-label="Action Buttons" vertical="true">
-                    <mat-button-toggle class="modify-button">
+                    <mat-button-toggle class="modify-button" (click)="modifyGame(game)">
                       <span class="material-symbols-outlined">edit</span> Modify
                     </mat-button-toggle>
-                    <mat-button-toggle class="delete-button" (click)="deleteGame(game.gameId, game.name)">
+                    <mat-button-toggle class="delete-button" (click)="deleteGame(game)">
                       <span class="material-symbols-outlined">delete</span> Delete
                     </mat-button-toggle>
                   </mat-button-toggle-group>

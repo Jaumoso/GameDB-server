@@ -1,0 +1,109 @@
+<mat-toolbar>
+    <span>Modify game info</span>
+    <span class="flex-spacer"></span>
+    <button class="cancel" mat-icon-button mat-dialog-close>
+        <mat-icon class="material-symbols-outlined">close</mat-icon>
+    </button>
+</mat-toolbar>
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="outline" class="mat-search">
+            <mat-label>Search for a game</mat-label>
+            <input matInput
+                   placeholder="Game search"
+                   type="text"
+                   formControlName="gameId"
+                   aria-label="Game Search"
+                   [matAutocomplete]="auto">
+            <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let game of loadedGames" [value]="game.id" (onSelectionChange)="selectedGame(game.id)">
+                <div class="option-container">
+                  <div class="option-image">
+                    <img *ngIf="game.cover" class="option-img" alt="{{game.name}}" [src]="game.cover">
+                    <img *ngIf="!game.cover" class="option-img" alt="{{game.name}}" src="/assets/images/cover_not_available.jpeg">
+                  </div>
+                  <div class="option-details">
+                    <div class="option-title"><span class="option-title">{{game.name}}</span></div>
+                    <div class="option-platforms"><small class="option-platforms">{{game.first_release_date | date}} <span *ngFor="let platform of game.platforms"> | {{platform.name}}</span></small></div>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="this.form.get('gameId')?.errors?.['required']">Required.</mat-error>
+          </mat-form-field>
+
+        <mat-slide-toggle formControlName="own">I own the game</mat-slide-toggle>
+
+        <mat-slider min="0" max="10" step="0.5" showTickMarks discrete [displayWith]="formatLabel">
+            <input matSliderThumb formControlName="rating">
+        </mat-slider>
+
+        <mat-button-toggle-group name="format" formControlName="format" aria-label="Format" value="digital">
+          <mat-button-toggle value="digital" class="format-toggle">
+            Digital
+          </mat-button-toggle>
+          <mat-button-toggle value="phisical" class="format-toggle">
+            Phisical
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-form-field appearance="outline" class="input-spacing-left">
+          <mat-label>Select a state</mat-label>
+          <mat-select formControlName="state">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let gameState of gameStates" [value]="gameState">{{gameState}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.form.get('state')?.errors?.['required']">Required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-spacing-right">
+            <mat-label>Select a platform</mat-label>
+            <mat-select multiple formControlName="platform">
+                <!-- <mat-option>None</mat-option> -->
+                <mat-option *ngFor="let platform of selectedGamePlatforms" [value]="platform.name">{{platform.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-spacing-left">
+            <mat-label>Select a storefront</mat-label>
+            <mat-select multiple formControlName="storefront">
+              <!-- <mat-option>None</mat-option> -->
+              <mat-option *ngFor="let storefront of gameStorefronts" [value]="storefront.name">
+                {{ storefront.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-spacing-right">
+            <mat-label>Acquisition date</mat-label>
+            <input matInput [max]="maxDate" formControlName="acquisitionDate" [matDatepicker]="picker">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-spacing-left">
+            <mat-label>Acquisition price</mat-label>
+            <input matInput placeholder="price" formControlName="acquisitionPrice" type="number">
+            <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
+            <mat-error *ngIf="acquisitionPrice.hasError('negativeNumberValidator')">Only positive values.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mat-time">
+          <mat-label>Hours</mat-label>
+          <input matInput aria-label="Hours put into the game" type="number" formControlName="time">
+          <mat-error *ngIf="time.hasError('negativeNumberValidator')">Only positive values.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="mat-textarea">
+          <mat-label>Comments</mat-label>
+          <textarea aria-label="Comments on the game." matInput formControlName="comment"></textarea>
+        </mat-form-field>
+        
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <span class="flex-spacer"></span>
+        <button mat-raised-button type="submit" matRipple [disabled]="form.invalid">Modify</button>
+    </mat-dialog-actions>
+</form>
