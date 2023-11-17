@@ -215,29 +215,36 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.user?.library.push(result);
+          // Save game into library Array
+          const library_index = this.user?.library.findIndex(g => g.gameId === result.gameId);
+          this.user?.library.splice(library_index!, 1, result);
+          console.log(this.user?.library[library_index!]);
+          const gameList_index = this.gameList.findIndex(g => g.gameId);
+          this.gameList.splice(gameList_index, 1, result);
+          console.log(this.gameList[gameList_index]);
+          // Save new content on the user object on the database
           this.userService.updateUserContent(this.user?._id!, this.user!)
-          .then(() => {
-            this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
-
-              const combinedGame = {
-                gameId: result.gameId,
-                name: retrievedGame[0].name,
-                releaseDate: retrievedGame[0].first_release_date,
-                cover: retrievedGame[0].cover,
-                own: result.own,
-                format: result.format,
-                state: result.state,
-                platforms: result.platform,
-                storefronts: result.storefront,
-                acquisitionDate: result.acquisitionDate,
-                acquisitionPrice: result.acquisitionPrice,
-                rating: result.rating,
-                time: result.time,
-                comment: result.comment
-              };
-              this.gameList.push(combinedGame);
-            });
+          // .then(() => {
+          //   // Retrieve game data
+          //   this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
+          //     const combinedGame = {
+          //       gameId: result.gameId,
+          //       name: retrievedGame[0].name,
+          //       releaseDate: retrievedGame[0].first_release_date,
+          //       cover: retrievedGame[0].cover,
+          //       own: result.own,
+          //       format: result.format,
+          //       state: result.state,
+          //       platforms: result.platform,
+          //       storefronts: result.storefront,
+          //       acquisitionDate: result.acquisitionDate,
+          //       acquisitionPrice: result.acquisitionPrice,
+          //       rating: result.rating,
+          //       time: result.time,
+          //       comment: result.comment
+          //     };
+          //     this.gameList.push(combinedGame);
+          //   });
 
             this.snackBar.open(
               "Game modified.", 
@@ -248,10 +255,10 @@ export class LibraryComponent implements OnInit {
                 panelClass: ['snackbar']
               }
             );
-          })
-          .catch(error => {
-            console.error("Error updating user content:", error);
-          });
+          // })
+          // .catch(error => {
+          //   console.error("Error updating user content:", error);
+          // });
         }
       });
     }

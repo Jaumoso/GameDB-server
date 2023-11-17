@@ -189,6 +189,9 @@
           </ng-template>
 
           <mat-spinner *ngIf="gameList.length == 0"></mat-spinner>
+          <div>
+            <h3 *ngIf="gameList.length == 0">There are no games in your library.</h3>
+          </div>
 
       </div>
     </div>
