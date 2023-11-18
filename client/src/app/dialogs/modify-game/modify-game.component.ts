@@ -84,8 +84,8 @@ export class ModifyGameComponent {
   // FORM VALIDATION
   gameId = new FormControl({value: this.data.game.gameId || null, disabled: true}, [Validators.required]);
   rating = new FormControl(this.data.game.rating);
-  platform = new FormControl(this.data.game.platform || null);
-  storefront = new FormControl(this.data.game.storefront || '');
+  platform = new FormControl(this.data.game.platforms || null); // TODO: NOT WORKING
+  storefront = new FormControl(this.data.game.storefronts || '');
   own = new FormControl(this.data.game.own, [Validators.required]);
   format = new FormControl(this.data.game.format);
   state = new FormControl(this.data.game.state || '', [Validators.required]);

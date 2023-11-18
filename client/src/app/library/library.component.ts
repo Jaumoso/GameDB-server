@@ -92,21 +92,18 @@ export class LibraryComponent implements OnInit {
                 time: game.time,
                 comment: game.comment
               };
-
-              // console.log(combinedGame.storefronts) //! TODO: esto necesita revisión
-              // console.log(combinedGame.platforms) //! TODO: esto necesita revisión
               
               // Step 4: Store the combined objects in the new array
               this.gameList.push(combinedGame);
 
               // Save game in platform counter
               if(combinedGame.platforms){
-                this.processPlatforms(combinedGame, 1);
+                this.processPlatforms(combinedGame, true);
               }
 
               // Save game in storefront counter
               if(combinedGame.storefronts){
-                this.processStorefronts(combinedGame, 1);
+                this.processStorefronts(combinedGame, true);
               }
 
               // Save game in State counter
@@ -117,22 +114,32 @@ export class LibraryComponent implements OnInit {
       })
   }
 
-  processPlatforms(combinedGame: any, change: number) {
+  processPlatforms(combinedGame: any, add: boolean) {
     combinedGame.platforms.forEach((platformName: string) => {
       const index = this.platforms.findIndex(p => p.name === platformName);
       if (index !== -1) {
-        this.platforms[index].counter+change;
+        if(add){
+          this.platforms[index].counter++;
+        }
+        else {
+          this.platforms[index].counter--;
+        }
       } else {
         this.platforms.push({ name: platformName, counter: 1});
       }
     });
   }
 
-  processStorefronts(combinedGame: any, change: number) {
+  processStorefronts(combinedGame: any, add: boolean) {
     combinedGame.storefronts.forEach((storefrontName: string) => {
       const index = this.storefronts.findIndex(s => s.name === storefrontName);
       if (index !== -1) {
-        this.storefronts[index].counter+change;
+        if(add){
+          this.storefronts[index].counter++;
+        }
+        else{
+          this.storefronts[index].counter--;
+        }
       } else {
         this.storefronts.push({name: storefrontName, counter: 1});
       }
@@ -184,8 +191,8 @@ export class LibraryComponent implements OnInit {
               };
               this.gameList.push(combinedGame);
               this.processStates(combinedGame.state, 1);
-              if(combinedGame.platforms){this.processPlatforms(combinedGame, 1);}
-              if(combinedGame.storefronts){this.processStorefronts(combinedGame, 1);}
+              if(combinedGame.platforms){this.processPlatforms(combinedGame, true);}
+              if(combinedGame.storefronts){this.processStorefronts(combinedGame, true);}
             });
 
             this.totalGames++;
@@ -242,14 +249,14 @@ export class LibraryComponent implements OnInit {
                 // Actualiza el juego en la lista de juegos
 
                 this.processStates(game.state, -1);
-                if(game.platforms){this.processPlatforms(game, -1);}
-                if(game.storefronts){this.processStorefronts(game, -1);}
+                if(game.platforms){this.processPlatforms(game, false);}
+                if(game.storefronts){this.processStorefronts(game, false);}
 
                 this.gameList.splice(gameList_index, 1, updatedGame);
 
                 this.processStates(updatedGame.state, 1);
-                if(updatedGame.platforms){this.processPlatforms(updatedGame, 1);}
-                if(updatedGame.storefronts){this.processStorefronts(updatedGame, 1);}
+                if(updatedGame.platforms){this.processPlatforms(updatedGame, true);}
+                if(updatedGame.storefronts){this.processStorefronts(updatedGame, true);}
               });
   
               this.snackBar.open(
@@ -289,8 +296,8 @@ export class LibraryComponent implements OnInit {
               // Decrease counters
               this.totalGames--;
               this.processStates(game.state, -1);
-              if(game.platforms){this.processPlatforms(game, -1);}
-              if(game.storefronts){this.processStorefronts(game, -1);}
+              if(game.platforms){this.processPlatforms(game, false);}
+              if(game.storefronts){this.processStorefronts(game, false);}
               this.totalCost = this.totalCost - result.acquisitionPrice;
               if(result.time){this.totalHours = this.totalHours - result.time;}
 

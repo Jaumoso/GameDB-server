@@ -64,6 +64,7 @@
 
   .right-column {
     grid-column: 2 / 4;
+    margin-right: 4%;
     
     /* View Type Buttons */
     mat-button-toggle-group {
@@ -103,6 +104,7 @@
             margin-top: 0;
             margin-left: 5px;
           }
+
           .game-text {
             margin-top: 0px;
             margin-bottom: 2px;
@@ -120,6 +122,14 @@
             width:fit-content;
           }
           
+          .game-owned {
+            color: rgba(24, 177, 10, 0.993);
+          }
+          
+          .game-not-owned {
+            color: #d33030;
+          }
+
           #not-interested {background-color: #e6e6e6;}
           #wishlist {background-color: #a7008b; color: white;}
           #backlog {background-color: #0a53a8; color: white;}
@@ -147,15 +157,110 @@
           cursor: pointer;
         }
 
-        .game-owned {
-          color: rgba(24, 177, 10, 0.993);
-        }
-
-        .game-not-owned {
-          color: #d33030;
-        }
-
       }
     }
   }
+}
+ 
+.card {
+  position: relative;
+  width: 100%; /* Adjusted width to fill the grid column */
+  height: 300px;
+  border-radius: 10px; /* rounded corners */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.05); /* Enlarge on hover */
+  }
+
+  .game-title {
+    margin-left: 10px;
+  }
+
+  .game-text {
+    margin-top: 0px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    font-size: 15px;
+  }
+  .game-rating {
+    margin-left: 10px;
+    margin-top: -2px;
+    display: inline-block; /* Ensure it only takes up the space of the stars */
+    font-size: 0; /* Remove any extra space around the stars */
+  }
+  .game-status {
+    border-radius: 5px;
+    padding: 1px;
+    width:fit-content;
+  }
+  
+  .game-owned {
+    color: rgba(24, 177, 10, 0.993);
+  }
+  
+  .game-not-owned {
+    color: #d33030;
+  }
+
+  /* Button Styles */
+  .modify-button:hover {
+    color: white;
+    background-color: #353659;
+    transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+  }
+
+  .delete-button:hover {
+    color: white;
+    background-color: #d33030;
+    transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+  }
+}
+ 
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* semi-transparent background */
+  color: white;
+  opacity: 0; /* initially hidden */
+  transition: opacity 0.3s ease; /* smooth transition */
+}
+
+.card:hover .card-info {
+  opacity: 1; /* show on hover */
+}
+
+.grid-item-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: -10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+
+  #not-interested {background-color: #e6e6e6; color: black;}
+  #wishlist {background-color: #a7008b;}
+  #backlog {background-color: #0a53a8;}
+  #tried {background-color: #e6cff2; color: black;}
+  #playing {background-color: #ffe5a0; color: black;}
+  #played {background-color: #d4edbc; color: black;}
+  #completed {background-color: #11734b;}
+  #retired {background-color: #bfe1f6; color: black;}
+  #shelved {background-color: #ffc8aa; color: black;}
+  #abandoned {background-color: #b10202; color: white;}
 }
