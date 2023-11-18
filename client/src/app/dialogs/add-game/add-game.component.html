@@ -34,6 +34,7 @@
                 </mat-option>
               </mat-autocomplete>
               <mat-error *ngIf="this.form.get('gameId')?.errors?.['required']">Required.</mat-error>
+              <mat-error *ngIf="gameId.hasError('isInLibrary')">This game is already on your library!</mat-error>
             </mat-form-field>
   
           <mat-slide-toggle formControlName="own">I own the game</mat-slide-toggle>
@@ -90,13 +91,13 @@
               <mat-label>Acquisition price</mat-label>
               <input matInput placeholder="price" formControlName="acquisitionPrice" type="number">
               <mat-icon matSuffix class="material-symbols-outlined">euro</mat-icon>
-              <mat-error *ngIf="acquisitionPrice.hasError('negativeNumberValidator')">Only positive values.</mat-error>
+              <mat-error *ngIf="acquisitionPrice.hasError('isNegative')">Only positive values.</mat-error>
           </mat-form-field>
   
           <mat-form-field appearance="outline" class="mat-time">
             <mat-label>Hours</mat-label>
             <input matInput aria-label="Hours put into the game" type="number" formControlName="time">
-            <mat-error *ngIf="time.hasError('negativeNumberValidator')">Only positive values.</mat-error>
+            <mat-error *ngIf="time.hasError('isNegative')">Only positive values.</mat-error>
           </mat-form-field>
   
           <mat-form-field appearance="outline" class="mat-textarea">

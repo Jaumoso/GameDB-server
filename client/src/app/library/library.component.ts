@@ -181,7 +181,7 @@ export class LibraryComponent implements OnInit {
   addGame() {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(AddGameComponent, {
-        // data: { library: this.user.library } // TODO:
+        data: { library: this.user.library }
       });
 
       dialogRef.afterClosed().subscribe((result) => {

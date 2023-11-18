@@ -42,6 +42,7 @@ export class AddGameComponent {
   loadedGames: any[] = [];
   selectedGamePlatforms: any[] = [];
   dlcTrigger: boolean = true;
+  alreadyOnLibrary: boolean = false;
 
   maxDate: Date | undefined;
   gameOwn: boolean = false;
@@ -83,7 +84,7 @@ export class AddGameComponent {
   }
 
   // FORM VALIDATION
-  gameId = new FormControl(null, [Validators.required]);
+  gameId = new FormControl(null, [Validators.required, this.notInLibraryValidator.bind(this)]);
   rating = new FormControl(0);
   platform = new FormControl(null);
   storefront = new FormControl(null);
@@ -98,6 +99,13 @@ export class AddGameComponent {
   negativeNumberValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value < 0) {
       return { isNegative: true };
+    }
+    return null;
+  }
+
+  notInLibraryValidator(control: AbstractControl): ValidationErrors | null {
+    if(this.data.library.findIndex(g => g.gameId === control.value) !== -1) {
+      return { isInLibrary: true };
     }
     return null;
   }
@@ -129,6 +137,14 @@ export class AddGameComponent {
       }
     });
 
+    // this.gameId.valueChanges.subscribe((value) => {
+    //   if (this.data.library.findIndex(g => g.gameId === value) !== -1) {
+    //     this.alreadyOnLibrary = true;
+    //   } else {
+    //     this.alreadyOnLibrary = false;
+    //   }
+    // })
+
     // TODO: DLCs
     //! this.gameId.valueChanges.subscribe(() => {
     //!   if(this.gameId.value != null) {
@@ -147,8 +163,7 @@ export class AddGameComponent {
 
   private setupSearchObserver(): void {
     this.form
-    .get('gameId')
-    ?.valueChanges.pipe(
+    .get('gameId')?.valueChanges.pipe(
       startWith(''), // Emit initial value
       debounceTime(300), // Delay to avoid rapid searches
       // distinctUntilChanged(), // Ignore same consecutive values
