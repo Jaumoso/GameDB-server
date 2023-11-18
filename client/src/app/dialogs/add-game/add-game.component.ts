@@ -129,6 +129,7 @@ export class AddGameComponent {
       }
     });
 
+    // TODO: DLCs
     //! this.gameId.valueChanges.subscribe(() => {
     //!   if(this.gameId.value != null) {
     //!     this.dlcTriggerFunction();
@@ -190,21 +191,6 @@ export class AddGameComponent {
     };
     this.closeDialog(game);
   }
-
-  // gameSearch(): void {
-  //   if (this.searchText !== '') {
-  //     this.gameService.gameSearch(this.searchText).subscribe((games: any[]) => {
-  //       this.loadedGames = games.map(game => ({
-  //         id: game.id,
-  //         name: game.name,
-  //         first_release_date: game.first_release_date,
-  //         cover: game.cover?.url,
-  //         platforms: game.platforms?.map((platform: { id: any; name: any; }) => ({ id: platform.id, name: platform.name }))
-  //       }));
-  //       console.log(this.loadedGames)
-  //     });
-  //   }
-  // }
 
   selectedGame(gameId: number) {
     const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
