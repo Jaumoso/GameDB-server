@@ -101,12 +101,12 @@ export class LibraryComponent implements OnInit {
 
               // Save game in platform counter
               if(combinedGame.platforms){
-                this.processPlatforms(combinedGame);
+                this.processPlatforms(combinedGame, 1);
               }
 
               // Save game in storefront counter
               if(combinedGame.storefronts){
-                this.processStorefronts(combinedGame);
+                this.processStorefronts(combinedGame, 1);
               }
 
               // Save game in State counter
@@ -117,22 +117,22 @@ export class LibraryComponent implements OnInit {
       })
   }
 
-  processPlatforms(combinedGame: any) {
+  processPlatforms(combinedGame: any, change: number) {
     combinedGame.platforms.forEach((platformName: string) => {
       const index = this.platforms.findIndex(p => p.name === platformName);
       if (index !== -1) {
-        this.platforms[index].counter++;
+        this.platforms[index].counter+change;
       } else {
         this.platforms.push({ name: platformName, counter: 1});
       }
     });
   }
 
-  processStorefronts(combinedGame: any) {
+  processStorefronts(combinedGame: any, change: number) {
     combinedGame.storefronts.forEach((storefrontName: string) => {
       const index = this.storefronts.findIndex(s => s.name === storefrontName);
       if (index !== -1) {
-        this.storefronts[index].counter++;
+        this.storefronts[index].counter+change;
       } else {
         this.storefronts.push({name: storefrontName, counter: 1});
       }
@@ -183,6 +183,9 @@ export class LibraryComponent implements OnInit {
                 comment: result.comment
               };
               this.gameList.push(combinedGame);
+              this.processStates(combinedGame.state, 1);
+              if(combinedGame.platforms){this.processPlatforms(combinedGame, 1);}
+              if(combinedGame.storefronts){this.processStorefronts(combinedGame, 1);}
             });
 
             this.totalGames++;
@@ -207,58 +210,62 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  modifyGame(game: Object) {
+  modifyGame(game: any) {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(ModifyGameComponent, {
         data: { game: game }
       });
-
+  
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          // Save game into library Array
+          // Encuentra el juego en la lista de la biblioteca del usuario
           const library_index = this.user?.library.findIndex(g => g.gameId === result.gameId);
-          this.user?.library.splice(library_index!, 1, result);
-          console.log(this.user?.library[library_index!]);
-          const gameList_index = this.gameList.findIndex(g => g.gameId);
-          this.gameList.splice(gameList_index, 1, result);
-          console.log(this.gameList[gameList_index]);
-          // Save new content on the user object on the database
-          this.userService.updateUserContent(this.user?._id!, this.user!)
-          // .then(() => {
-          //   // Retrieve game data
-          //   this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
-          //     const combinedGame = {
-          //       gameId: result.gameId,
-          //       name: retrievedGame[0].name,
-          //       releaseDate: retrievedGame[0].first_release_date,
-          //       cover: retrievedGame[0].cover,
-          //       own: result.own,
-          //       format: result.format,
-          //       state: result.state,
-          //       platforms: result.platform,
-          //       storefronts: result.storefront,
-          //       acquisitionDate: result.acquisitionDate,
-          //       acquisitionPrice: result.acquisitionPrice,
-          //       rating: result.rating,
-          //       time: result.time,
-          //       comment: result.comment
-          //     };
-          //     this.gameList.push(combinedGame);
-          //   });
+          // Encuentra el juego en la lista de juegos
+          const gameList_index = this.gameList.findIndex(g => g.gameId === result.gameId);
+  
+          if (library_index !== -1 && gameList_index !== -1) {
+            // Actualiza el juego en la lista de la biblioteca del usuario
+            this.user?.library.splice(library_index!, 1, result);
+  
+            this.userService.updateUserContent(this.user?._id!, this.user!)
+            .then(() => {
+              // Recupera los datos del juego
+              this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) => {
+                // Combina las propiedades del juego actualizado con las propiedades del juego existente
+                const updatedGame = {
+                  ...this.gameList[gameList_index],
+                  ...result,
+                  name: retrievedGame[0].name,
+                  releaseDate: retrievedGame[0].first_release_date,
+                  cover: retrievedGame[0].cover,
+                };
+                // Actualiza el juego en la lista de juegos
 
-            this.snackBar.open(
-              "Game modified.", 
-              "OK",
-              {
-                verticalPosition: 'top',
-                duration: 4000,
-                panelClass: ['snackbar']
-              }
-            );
-          // })
-          // .catch(error => {
-          //   console.error("Error updating user content:", error);
-          // });
+                this.processStates(game.state, -1);
+                if(game.platforms){this.processPlatforms(game, -1);}
+                if(game.storefronts){this.processStorefronts(game, -1);}
+
+                this.gameList.splice(gameList_index, 1, updatedGame);
+
+                this.processStates(updatedGame.state, 1);
+                if(updatedGame.platforms){this.processPlatforms(updatedGame, 1);}
+                if(updatedGame.storefronts){this.processStorefronts(updatedGame, 1);}
+              });
+  
+              this.snackBar.open(
+                "Juego modificado.", 
+                "OK",
+                {
+                  verticalPosition: 'top',
+                  duration: 4000,
+                  panelClass: ['snackbar']
+                }
+              );
+            })
+            .catch(error => {
+              console.error("Error al actualizar el contenido del usuario:", error);
+            });
+          }
         }
       });
     }
@@ -272,7 +279,7 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result => {
         if(result) {
-          const index = this.user?.library.findIndex(game => game.gameId === game.gameId);
+          const index = this.user?.library.findIndex(g => g.gameId === game.gameId);
           if (index !== -1) {
             this.user?.library.splice(index!, 1);
             this.userService.updateUserContent(this.user?._id!,this.user!)
@@ -281,10 +288,11 @@ export class LibraryComponent implements OnInit {
 
               // Decrease counters
               this.totalGames--;
-              this.processStates(result.state, -1);
+              this.processStates(game.state, -1);
+              if(game.platforms){this.processPlatforms(game, -1);}
+              if(game.storefronts){this.processStorefronts(game, -1);}
               this.totalCost = this.totalCost - result.acquisitionPrice;
               if(result.time){this.totalHours = this.totalHours - result.time;}
-              
 
               this.snackBar.open(
                 "Game deleted from library.", 
