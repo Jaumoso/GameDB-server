@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 export type UserDocument = User & Document;
 
@@ -22,11 +22,15 @@ export class User {
     lastSeen: Date;
 
     @Prop({type: [{ 
+        _id: mongoose.Types.ObjectId,
         gameId: Number, 
+        name: String,
+        releaseDate: Date,
+        cover: String,
         rating: Number,
-        platform: [String],
+        platforms: [String],
         // storefront: [{type: mongoose.Types.ObjectId, ref: 'Storefront'}],
-        storefront: [String],
+        storefronts: [String],
         acquisitionDate: Date,
         acquisitionPrice: Number,
         own: Boolean,
@@ -35,11 +39,15 @@ export class User {
         time: Number,
         comment: String
     }]})
-    library: { 
+    library: {
+        _id: mongoose.Types.ObjectId,
         gameId: number,
+        name: String,
+        releaseDate: Date,
+        cover: String,
         rating: number,
-        platform?: String[],
-        storefront?: String[],
+        platforms?: String[],
+        storefronts?: String[],
         acquisitionDate?: Date,
         acquisitionPrice?: number,
         own: boolean,

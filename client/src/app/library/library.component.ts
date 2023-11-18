@@ -54,11 +54,11 @@ export class LibraryComponent implements OnInit {
       this.userService.getUser(decodedToken._id)
       .then((user) => {
         this.user = user;
-        let gameIds: Number[] = [];
+        let gameIds: String[] = [];
 
         this.user.library?.forEach((libraryGame) => {
           // Get all the IDs from the games in the library
-          gameIds.push(libraryGame.gameId!)
+          gameIds.push(libraryGame._id!)
           // Save total number of games
           this.totalGames++;
           // Save total cost for all the games
@@ -67,55 +67,74 @@ export class LibraryComponent implements OnInit {
           this.totalHours += libraryGame.time!;
         });
 
-        // Search for the games in IGDB
-        this.gameService.getGamesById(gameIds).subscribe((retrievedGames) => {
-          // Combine the properties 
-          this.user?.library.forEach((game) => {
-            const retrievedGame = retrievedGames.find(
-              (retrieved) => retrieved.id === game.gameId
-            );
-            
-            if (retrievedGame) {
-              const combinedGame = {
-                gameId: game.gameId,
-                name: retrievedGame.name,
-                releaseDate: retrievedGame.first_release_date,
-                cover: retrievedGame.cover,
-                own: game.own,
-                format: game.format,
-                state: game.state,
-                platforms: game.platform,
-                storefronts: game.storefront,
-                acquisitionDate: game.acquisitionDate,
-                acquisitionPrice: game.acquisitionPrice,
-                rating: game.rating,
-                time: game.time,
-                comment: game.comment
-              };
-              
-              // Step 4: Store the combined objects in the new array
-              this.gameList.push(combinedGame);
+        this.gameList = this.user.library;
 
-              // Save game in platform counter
-              if(combinedGame.platforms){
-                this.processPlatforms(combinedGame, true);
-              }
+        this.user.library.forEach((game) => {
+          // Save game in platform counter
+          if(game.platforms){
+            this.processPlatforms(game, true);
+          }
 
-              // Save game in storefront counter
-              if(combinedGame.storefronts){
-                this.processStorefronts(combinedGame, true);
-              }
+          // Save game in storefront counter
+          if(game.storefronts){
+            this.processStorefronts(game, true);
+          }
 
-              // Save game in State counter
-              this.processStates(combinedGame.state!, 1);
-            }
-          });
+          // Save game in State counter
+          this.processStates(game.state!, 1);
         });
-      })
+
+
+
+        // // Search for the games in IGDB
+        // this.gameService.getGamesById(gameIds).subscribe((retrievedGames) => {
+        //   // Combine the properties 
+        //   this.user?.library.forEach((game) => {
+        //     const retrievedGame = retrievedGames.find(
+        //       (retrieved) => retrieved.id === game.gameId
+        //     );
+            
+        //     if (retrievedGame) {
+        //       const combinedGame = {
+        //         gameId: game.gameId,
+        //         name: retrievedGame.name,
+        //         releaseDate: retrievedGame.first_release_date,
+        //         cover: retrievedGame.cover,
+        //         own: game.own,
+        //         format: game.format,
+        //         state: game.state,
+        //         platforms: game.platform,
+        //         storefronts: game.storefront,
+        //         acquisitionDate: game.acquisitionDate,
+        //         acquisitionPrice: game.acquisitionPrice,
+        //         rating: game.rating,
+        //         time: game.time,
+        //         comment: game.comment
+        //       };
+              
+        //       // Step 4: Store the combined objects in the new array
+        //       this.gameList.push(combinedGame);
+
+        //       // Save game in platform counter
+        //       if(combinedGame.platforms){
+        //         this.processPlatforms(combinedGame, true);
+        //       }
+
+        //       // Save game in storefront counter
+        //       if(combinedGame.storefronts){
+        //         this.processStorefronts(combinedGame, true);
+        //       }
+
+        //       // Save game in State counter
+        //       this.processStates(combinedGame.state!, 1);
+        //     }
+        //   });
+        // });
+      });
   }
 
-  processPlatforms(combinedGame: any, add: boolean) {
-    combinedGame.platforms.forEach((platformName: string) => {
+  processPlatforms(game: any, add: boolean) {
+    game.platforms.forEach((platformName: string) => {
       const index = this.platforms.findIndex(p => p.name === platformName);
       if (index !== -1) {
         if(add){
@@ -130,8 +149,8 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  processStorefronts(combinedGame: any, add: boolean) {
-    combinedGame.storefronts.forEach((storefrontName: string) => {
+  processStorefronts(game: any, add: boolean) {
+    game.storefronts.forEach((storefrontName: string) => {
       const index = this.storefronts.findIndex(s => s.name === storefrontName);
       if (index !== -1) {
         if(add){
@@ -162,56 +181,52 @@ export class LibraryComponent implements OnInit {
   addGame() {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(AddGameComponent, {
-        // data: { library: this.user.library }
+        // data: { library: this.user.library } // TODO:
       });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.user?.library.push(result);
-          // console.log(this.user);
-          this.userService.updateUserContent(this.user?._id!, this.user!)
-          .then(() => {
-            this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
+          this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
 
-              const combinedGame = {
-                gameId: result.gameId,
-                name: retrievedGame[0].name,
-                releaseDate: retrievedGame[0].first_release_date,
-                cover: retrievedGame[0].cover,
-                own: result.own,
-                format: result.format,
-                state: result.state,
-                platforms: result.platform,
-                storefronts: result.storefront,
-                acquisitionDate: result.acquisitionDate,
-                acquisitionPrice: result.acquisitionPrice,
-                rating: result.rating,
-                time: result.time,
-                comment: result.comment
-              };
-              this.gameList.push(combinedGame);
-              this.processStates(combinedGame.state, 1);
-              if(combinedGame.platforms){this.processPlatforms(combinedGame, true);}
-              if(combinedGame.storefronts){this.processStorefronts(combinedGame, true);}
+            const combinedGame = {
+              gameId: result.gameId,
+              name: retrievedGame[0].name,
+              releaseDate: retrievedGame[0].first_release_date,
+              cover: retrievedGame[0].cover,
+              own: result.own,
+              format: result.format,
+              state: result.state,
+              platforms: result.platform,
+              storefronts: result.storefront,
+              acquisitionDate: result.acquisitionDate,
+              acquisitionPrice: result.acquisitionPrice,
+              rating: result.rating,
+              time: result.time,
+              comment: result.comment
+            };
+            this.gameList.push(combinedGame);
+            this.userService.updateUserContent(this.user?._id!, this.user!)
+            .then((user) => {
+              this.user!.library = user.library;
             });
-
-            this.totalGames++;
-            this.totalCost += result.acquisitionPrice;
-            this.totalHours += result.time;
-
-            this.snackBar.open(
-              "Game added to the library.", 
-              "OK",
-              {
-                verticalPosition: 'top',
-                duration: 4000,
-                panelClass: ['snackbar']
-              }
-            );
-          })
-          .catch(error => {
-            console.error("Error updating user content:", error);
+            this.processStates(combinedGame.state, 1);
+            if(combinedGame.platforms){this.processPlatforms(combinedGame, true);}
+            if(combinedGame.storefronts){this.processStorefronts(combinedGame, true);}
           });
+
+          this.totalGames++;
+          this.totalCost += result.acquisitionPrice;
+          this.totalHours += result.time;
+
+          this.snackBar.open(
+            "Game added to the library.", 
+            "OK",
+            {
+              verticalPosition: 'top',
+              duration: 4000,
+              panelClass: ['snackbar']
+            }
+          );
         }
       });
     }
@@ -231,33 +246,32 @@ export class LibraryComponent implements OnInit {
           const gameList_index = this.gameList.findIndex(g => g.gameId === result.gameId);
   
           if (library_index !== -1 && gameList_index !== -1) {
-            // Actualiza el juego en la lista de la biblioteca del usuario
-            this.user?.library.splice(library_index!, 1, result);
-  
-            this.userService.updateUserContent(this.user?._id!, this.user!)
-            .then(() => {
-              // Recupera los datos del juego
-              this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) => {
-                // Combina las propiedades del juego actualizado con las propiedades del juego existente
-                const updatedGame = {
-                  ...this.gameList[gameList_index],
-                  ...result,
-                  name: retrievedGame[0].name,
-                  releaseDate: retrievedGame[0].first_release_date,
-                  cover: retrievedGame[0].cover,
-                };
+            
+              // // Recupera los datos del juego
+              // this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) => {
+              //   // Combina las propiedades del juego actualizado con las propiedades del juego existente
+              //   const updatedGame = {
+              //     ...this.gameList[gameList_index],
+              //     ...result,
+              //     name: retrievedGame[0].name,
+              //     releaseDate: retrievedGame[0].first_release_date,
+              //     cover: retrievedGame[0].cover,
+              //   };
                 // Actualiza el juego en la lista de juegos
+                this.user?.library.splice(library_index!, 1, result);
+                // Actualiza el juego en la lista de la biblioteca del usuario
+                this.userService.updateUserContent(this.user?._id!, this.user!);
 
                 this.processStates(game.state, -1);
                 if(game.platforms){this.processPlatforms(game, false);}
                 if(game.storefronts){this.processStorefronts(game, false);}
 
-                this.gameList.splice(gameList_index, 1, updatedGame);
+                this.gameList.splice(gameList_index, 1, result);
 
-                this.processStates(updatedGame.state, 1);
-                if(updatedGame.platforms){this.processPlatforms(updatedGame, true);}
-                if(updatedGame.storefronts){this.processStorefronts(updatedGame, true);}
-              });
+                this.processStates(result.state, 1);
+                if(result.platforms){this.processPlatforms(result, true);}
+                if(result.storefronts){this.processStorefronts(result, true);}
+              // });
   
               this.snackBar.open(
                 "Juego modificado.", 
@@ -268,10 +282,6 @@ export class LibraryComponent implements OnInit {
                   panelClass: ['snackbar']
                 }
               );
-            })
-            .catch(error => {
-              console.error("Error al actualizar el contenido del usuario:", error);
-            });
           }
         }
       });

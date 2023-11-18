@@ -50,13 +50,16 @@ export class CreateUserDto {
     lastSeen: Date;
 
     @ApiProperty({
-        enum: () => [{ gameId: mongoose.Types.ObjectId, rating: Number }],
         description: 'Array de juegos y sus ratings',
         example: [{ 
+            _id: new mongoose.Types.ObjectId(),
             gameId: 12345,
+            name: "default name",
+            releaseDate: new Date(2018, 5, 15).toISOString(),
+            cover: "https://cover.png",
             rating: 8,
-            platform: ['PC'],
-            storefront: ['Steam'],
+            platforms: ['PC'],
+            storefronts: ['Steam'],
             acquisitionDate: new Date(2023, 8, 1).toISOString(),
             acquisitionPrice: 0,
             own: true,
@@ -67,10 +70,14 @@ export class CreateUserDto {
         }],
     })
     library: {
+        _id: mongoose.Types.ObjectId,
         gameId: number,
+        name: string,
+        releaseDate: Date,
+        cover: string,
         rating: number,
-        platform?: string[],
-        storefront?: string[],
+        platforms?: string[],
+        storefronts?: string[],
         acquisitionDate?: Date,
         acquisitionPrice?: number,
         own: boolean,

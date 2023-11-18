@@ -115,5 +115,4 @@ export class UserController {
             return response.status(err.status).json(err.response);
         }
     }
-    
 }

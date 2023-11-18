@@ -5,10 +5,14 @@ export class User{
     joined: Date | undefined;
     lastSeen: Date | undefined;
     library: {
+        _id: string | undefined;
         gameId: number | undefined;
+        name: string | undefined;
+        releaseDate: Date | undefined;
+        cover: string | undefined;
         rating: number | undefined;
-        platform: string[] | undefined;
-        storefront: string[] | undefined;
+        platforms: string[] | undefined;
+        storefronts: string[] | undefined;
         acquisitionDate: Date | undefined;
         acquisitionPrice: number | undefined;
         own: boolean | undefined;

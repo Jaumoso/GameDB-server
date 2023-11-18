@@ -86,7 +86,7 @@ export class AddGameComponent {
   gameId = new FormControl(null, [Validators.required]);
   rating = new FormControl(0);
   platform = new FormControl(null);
-  storefront = new FormControl('');
+  storefront = new FormControl(null);
   own = new FormControl(true, [Validators.required]);
   format = new FormControl('digital');
   state = new FormControl('', [Validators.required]);

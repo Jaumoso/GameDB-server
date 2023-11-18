@@ -171,6 +171,9 @@ export class ModifyGameComponent {
     const game = {
       gameId: this.gameId.value,
       rating: this.rating.value || 0,
+      name: this.data.game.name,
+      releaseDate: this.data.game.releaseDate,
+      cover: this.data.game.cover,
       platform: this.platform.value,
       storefront: this.storefront.value,
       acquisitionDate: this.acquisitionDate.value,
