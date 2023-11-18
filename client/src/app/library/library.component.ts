@@ -219,7 +219,7 @@ export class LibraryComponent implements OnInit {
           this.totalHours += result.time;
 
           this.snackBar.open(
-            "Game added to the library.", 
+            "Game added to the library.",
             "OK",
             {
               verticalPosition: 'top',
@@ -274,7 +274,7 @@ export class LibraryComponent implements OnInit {
               // });
   
               this.snackBar.open(
-                "Juego modificado.", 
+                "Game modified.", 
                 "OK",
                 {
                   verticalPosition: 'top',

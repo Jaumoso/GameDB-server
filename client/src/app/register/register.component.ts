@@ -18,7 +18,18 @@ export class RegisterComponent implements OnInit {
 
   username = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(18)]);
   password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-  passwordConfirmation = new FormControl('');
+  passwordConfirmation = new FormControl('', [Validators.required, this.passwordsMatchValidator.bind(this)]);
+
+  passwordsMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('passwordConfirmation')?.value;
+  
+    if (password !== confirmPassword) {
+      return { 'passwordsNotMatch': true };
+    }
+  
+    return null;
+  }
 
   constructor(
     private formBuilder: FormBuilder,

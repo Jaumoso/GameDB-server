@@ -4,11 +4,19 @@
     <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="mb-4">
         <label for="username">Username</label>
-        <input required [formControl]="username" id="username" type="text" placeholder="Enter your username">
+        <mat-form-field appearance="outline">
+          
+          <input matInput required [formControl]="username" id="username" type="text" placeholder="Enter your username">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">Username is required.</mat-error>
+        </mat-form-field>
       </div>
       <div class="mb-6">
         <label for="password">Password</label>
-        <input matInput required [formControl]="password" id="password" type="password" placeholder="Enter your password">
+        <mat-form-field appearance="outline">
+          
+          <input matInput required [formControl]="password" id="password" type="password" placeholder="Enter your password">
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required.</mat-error>
+        </mat-form-field>
       </div>
       <div class="button-container">
         <a href="#">¿Forgotten your password?</a>
