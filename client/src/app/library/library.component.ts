@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteGameComponent } from '../dialogs/delete-game/delete-game.component';
 import { Storefront } from '../shared/storefront';
 import { ModifyGameComponent } from '../dialogs/modify-game/modify-game.component';
+import { Game } from '../shared/game';
 
 @Component({
   selector: 'app-library',
@@ -25,6 +26,8 @@ export class LibraryComponent implements OnInit {
   isGridView: Boolean = false;
   viewType: String = 'list';
   storefrontInfo: Storefront[] | undefined;
+  searchText: String = '';
+  filteredGames: any[] | undefined;
 
   // Total variables
   totalGames: number = 0;
@@ -68,6 +71,7 @@ export class LibraryComponent implements OnInit {
         });
 
         this.gameList = this.user.library;
+        this.filteredGames = this.user.library;
 
         this.user.library.forEach((game) => {
           // Save game in platform counter
@@ -83,8 +87,6 @@ export class LibraryComponent implements OnInit {
           // Save game in State counter
           this.processStates(game.state!, 1);
         });
-
-
 
         // // Search for the games in IGDB
         // this.gameService.getGamesById(gameIds).subscribe((retrievedGames) => {
@@ -178,6 +180,30 @@ export class LibraryComponent implements OnInit {
     if(state == 'Abandoned') { this.states[9] = this.states[9]+change}
   }
 
+  searchGames(): any[] {
+    // If no search text is provided, return all games
+    if (!this.searchText) {
+      this.filteredGames = this.gameList; // Update the filteredGames array
+      return this.filteredGames;
+    }
+  
+    // Filter the collections based on the search text and category
+    const filteredGames = this.gameList.filter((game) => {
+      const match = game.name && this.isMatch(game.name);
+      return match;
+    });
+  
+    this.filteredGames = filteredGames;
+    return filteredGames;
+  }
+
+  isMatch(str: string): boolean {
+    const normalizedStr = str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const normalizedSearchText = this.searchText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    return normalizedStr.includes(normalizedSearchText);
+  }
+
   addGame() {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(AddGameComponent, {
@@ -189,6 +215,7 @@ export class LibraryComponent implements OnInit {
           this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
 
             const combinedGame = {
+              // _id: is created in the server service
               gameId: result.gameId,
               name: retrievedGame[0].name,
               releaseDate: retrievedGame[0].first_release_date,
@@ -241,9 +268,9 @@ export class LibraryComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           // Encuentra el juego en la lista de la biblioteca del usuario
-          const library_index = this.user?.library.findIndex(g => g.gameId === result.gameId);
+          const library_index = this.user?.library.findIndex(g => g._id === result._id);
           // Encuentra el juego en la lista de juegos
-          const gameList_index = this.gameList.findIndex(g => g.gameId === result.gameId);
+          const gameList_index = this.gameList.findIndex(g => g._id === result._id);
   
           if (library_index !== -1 && gameList_index !== -1) {
             
@@ -296,7 +323,7 @@ export class LibraryComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result => {
         if(result) {
-          const index = this.user?.library.findIndex(g => g.gameId === game.gameId);
+          const index = this.user?.library.findIndex(g => g._id === game._id);
           if (index !== -1) {
             this.user?.library.splice(index!, 1);
             this.userService.updateUserContent(this.user?._id!,this.user!)

@@ -71,6 +71,13 @@
       margin-bottom: 20px;
     }
 
+    mat-form-field {
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+      width: auto;
+    }
+
     .list-container {
       flex: 2;
       display: flex;

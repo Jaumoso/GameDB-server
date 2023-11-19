@@ -77,14 +77,29 @@ export class UserService {
     }
 
     async updateUserContent(userId: string, updateUserContentDto: UpdateUserContentDto) {
-        console.log(updateUserContentDto.library)
         try {
-            const updatedUser = await this.userModel.findByIdAndUpdate(userId, updateUserContentDto, { new: true });
+            // Extract the library field from the DTO
+            const { library, ...rest } = updateUserContentDto;
+    
+            // Ensure that each game in the library has an _id field
+            const updatedLibrary = library.map(game => ({
+                ...game,
+                _id: game._id || new mongoose.Types.ObjectId(), // Assign a new ObjectId if not present
+            }));
+    
+            // Use the extracted library in the update
+            const updatedUser = await this.userModel.findByIdAndUpdate(
+                userId,
+                { library: updatedLibrary, ...rest },
+                { new: true }
+            );
+    
             if (!updatedUser) {
                 throw new NotFoundException('User data not found!');
             }
             return updatedUser;
-        } catch(error) {
+            
+        } catch (error) {
             console.log(error);
         }
     }

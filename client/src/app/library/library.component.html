@@ -90,9 +90,18 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
 
+        <div>
+          <mat-form-field appearance="outline">
+              <mat-label>Search for a game in your library</mat-label>
+              <input matInput type="text" [(ngModel)]="searchText" (ngModelChange)="searchGames()">
+              <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
+          </mat-form-field>
+        </div>
+        <br>
+
            <div class="grid-container" *ngIf="viewType === 'grid'; else listView">
             <!-- Grid View Content -->
-            <div *ngFor="let game of gameList" class="card">
+            <div *ngFor="let game of filteredGames" class="card">
               <img *ngIf="game.cover" src="{{game.cover}}" alt="{{game.name}}" class="card-img">
               <div class="card-info">
                 <h2 class="game-title">{{game.name}}</h2>
@@ -133,7 +142,7 @@
 
           <ng-template #listView>
             <!-- List View Content -->
-            <div *ngFor="let game of gameList" class="list-container">
+            <div *ngFor="let game of filteredGames" class="list-container">
               <!-- Your list item content here -->
               <div class="list-item">
                 <div class="list-item-cover">
@@ -199,7 +208,8 @@
             </div>
           </ng-template>
 
-          <mat-spinner *ngIf="gameList.length == 0"></mat-spinner>
+          <!-- TODO: this needs refactor -->
+          <mat-spinner *ngIf="gameList == []"></mat-spinner>
           <div>
             <h3 *ngIf="gameList.length == 0">There are no games in your library.</h3>
           </div>
