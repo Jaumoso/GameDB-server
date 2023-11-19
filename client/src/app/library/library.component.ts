@@ -222,7 +222,7 @@ export class LibraryComponent implements OnInit {
             "Game added to the library.",
             "OK",
             {
-              verticalPosition: 'top',
+              verticalPosition: 'bottom',
               duration: 4000,
               panelClass: ['snackbar']
             }
@@ -277,7 +277,7 @@ export class LibraryComponent implements OnInit {
                 "Game modified.", 
                 "OK",
                 {
-                  verticalPosition: 'top',
+                  verticalPosition: 'bottom',
                   duration: 4000,
                   panelClass: ['snackbar']
                 }
@@ -315,7 +315,7 @@ export class LibraryComponent implements OnInit {
                 "Game deleted from library.", 
                 "OK",
                 {
-                  verticalPosition: 'top',
+                  verticalPosition: 'bottom',
                   duration: 4000,
                   panelClass: ['snackbar']
                 }

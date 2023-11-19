@@ -5,7 +5,6 @@
       <div class="mb-4">
         <label for="username">Username</label>
         <mat-form-field appearance="outline">
-          
           <input matInput required [formControl]="username" id="username" type="text" placeholder="Enter your username">
           <mat-error *ngIf="form.get('username')?.hasError('required')">Username is required.</mat-error>
         </mat-form-field>
@@ -13,8 +12,9 @@
       <div class="mb-6">
         <label for="password">Password</label>
         <mat-form-field appearance="outline">
-          
-          <input matInput required [formControl]="password" id="password" type="password" placeholder="Enter your password">
+          <input matInput required [formControl]="password" id="password" type="{{showPassword ? 'text' : 'password'}}" placeholder="Enter your password">
+          <mat-icon *ngIf="!showPassword" class="material-symbols-outlined" matTooltip="Show Password" matSuffix (click)="toggleShowPassword()">visibility</mat-icon>
+          <mat-icon *ngIf="showPassword" class="material-symbols-outlined" matTooltip="Hide Password" matSuffix (click)="toggleShowPassword()">visibility_off</mat-icon>
           <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required.</mat-error>
         </mat-form-field>
       </div>

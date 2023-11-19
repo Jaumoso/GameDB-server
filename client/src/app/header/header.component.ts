@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
       "Session closed", 
       "OK",
       {
-        verticalPosition: 'top',
+        verticalPosition: 'bottom',
         duration: 4000,
         panelClass: ['snackbar']
       }

@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
   invalidCredentials: boolean = false;
+  showPassword: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
           "Logged In", 
           "OK",
           {
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
             duration: 4000,
             panelClass: ['snackbar']
           }
@@ -53,13 +54,17 @@ export class LoginComponent implements OnInit {
           "Wrong username or password", 
           "OK",
           {
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
             duration: 6000,
             panelClass: ['snackbar']
           }
           );
       });
     }
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   ngOnInit(): void {

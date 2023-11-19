@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
   showPassword: boolean = false;
+  showRepeatPassword: boolean = false;
   user: User | undefined;
   invalidUser: boolean = false;
 
@@ -50,6 +51,14 @@ export class RegisterComponent implements OnInit {
     let pass = group.get('password')!.value;
     let confirmPass = group.get('passwordConfirmation')!.value
     return pass === confirmPass ? null : { notSame: true }
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleShowRepeatPassword() {
+    this.showRepeatPassword = !this.showRepeatPassword;
   }
 
   onSubmit() {
