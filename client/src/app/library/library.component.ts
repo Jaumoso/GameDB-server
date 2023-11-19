@@ -204,6 +204,11 @@ export class LibraryComponent implements OnInit {
     return normalizedStr.includes(normalizedSearchText);
   }
 
+  deleteSearch() {
+    this.searchText = '';
+    this.filteredGames = this.gameList;
+  }
+
   addGame() {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(AddGameComponent, {

@@ -44,6 +44,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { AddGameComponent } from './dialogs/add-game/add-game.component';
 import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component';
 import { ModifyGameComponent } from './dialogs/modify-game/modify-game.component';
+import { GamedetailsComponent } from './gamedetails/gamedetails.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ModifyGameComponent } from './dialogs/modify-game/modify-game.component
     AddGameComponent,
     DeleteGameComponent,
     ModifyGameComponent,
+    GamedetailsComponent,
   ],
   imports: [
     BrowserModule,

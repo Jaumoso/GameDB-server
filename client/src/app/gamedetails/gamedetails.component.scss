@@ -1,0 +1,49 @@
+.parallax-container {
+    position: absolute;
+    left: 0;
+    height: 300px;
+    margin-top: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.parallax-background {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    -moz-filter: blur(8px);
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+    transform: scale(1.1);
+}
+
+.gamepage-header-info {
+    position: relative;
+    margin-bottom: 15px;
+    padding-top: 15px;
+}
+
+.gamepage-cover {
+    float: left;
+    width: 264px;
+    margin-right: 15px;
+    margin-top: 90px;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.gamepage-summary {
+    float: left;
+    width: 560px;
+}
+
+.gamepage-gauge {
+    float: left;
+    margin-left: 15px;
+    width: 268px;
+}

@@ -137,14 +137,6 @@ export class AddGameComponent {
       }
     });
 
-    // this.gameId.valueChanges.subscribe((value) => {
-    //   if (this.data.library.findIndex(g => g.gameId === value) !== -1) {
-    //     this.alreadyOnLibrary = true;
-    //   } else {
-    //     this.alreadyOnLibrary = false;
-    //   }
-    // })
-
     // TODO: DLCs
     //! this.gameId.valueChanges.subscribe(() => {
     //!   if(this.gameId.value != null) {
