@@ -19,8 +19,8 @@
         <label for="password">Password</label>
         <mat-form-field appearance="outline">
           <input matInput required [formControl]="password" id="password" type="{{showPassword ? 'text' : 'password'}}" placeholder="Enter your password">
-          <mat-icon *ngIf="!showPassword" class="material-symbols-outlined" matTooltip="Show Password" matSuffix (click)="toggleShowPassword()">visibility</mat-icon>
-          <mat-icon *ngIf="showPassword" class="material-symbols-outlined" matTooltip="Hide Password" matSuffix (click)="toggleShowPassword()">visibility_off</mat-icon>
+          <mat-icon *ngIf="showPassword" class="material-symbols-outlined" matTooltip="Show Password" matSuffix (click)="toggleShowPassword()">visibility</mat-icon>
+          <mat-icon *ngIf="!showPassword" class="material-symbols-outlined" matTooltip="Hide Password" matSuffix (click)="toggleShowPassword()">visibility_off</mat-icon>
           <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required.</mat-error>
           <mat-error *ngIf="form.get('password')?.hasError('minLength')">Password must be > 8 chars.</mat-error>
         </mat-form-field>
@@ -29,8 +29,8 @@
         <label for="repeatPassword">Repeat Password</label>
         <mat-form-field appearance="outline">
           <input matInput [formControl]="passwordConfirmation" id="repeatPassword" type="{{showRepeatPassword ? 'text' : 'password'}}" placeholder="Repeat your password">
-          <mat-icon *ngIf="!showRepeatPassword" class="material-symbols-outlined" matTooltip="Show Password" matSuffix (click)="toggleShowRepeatPassword()">visibility</mat-icon>
-          <mat-icon *ngIf="showRepeatPassword" class="material-symbols-outlined" matTooltip="Hide Password" matSuffix (click)="toggleShowRepeatPassword()">visibility_off</mat-icon>
+          <mat-icon *ngIf="showRepeatPassword" class="material-symbols-outlined" matTooltip="Show Password" matSuffix (click)="toggleShowRepeatPassword()">visibility</mat-icon>
+          <mat-icon *ngIf="!showRepeatPassword" class="material-symbols-outlined" matTooltip="Hide Password" matSuffix (click)="toggleShowRepeatPassword()">visibility_off</mat-icon>
           <mat-error *ngIf="form.get('passwordConfirmation')?.hasError('required')">You must repeat the password.</mat-error>
           <mat-error *ngIf="form.get('passwordConfirmation')?.hasError('passwordsNotMatch')">Passwords do not match.</mat-error>
         </mat-form-field>

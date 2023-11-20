@@ -72,3 +72,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .flex-spacer {
   flex-grow: 1;
 }
+
+.dark-theme {
+  /* Define los estilos para el tema oscuro aquí */
+  background-color: #1a1a1a;
+  color: #ffffff;
+  /* Agrega cualquier otro estilo específico del tema oscuro que desees */
+}

@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
   username: String | undefined
   isSmallScreen = false;
   value: String = '';
+  theme: boolean = false;
 
   constructor(
     private loginStatusService: LoginStatusService,
@@ -27,7 +29,8 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private jwtService: JwtService,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +59,13 @@ export class HeaderComponent implements OnInit {
       this.loggedIn = loggedIn;
     });
 
+    this.themeService.themeChanges.subscribe((theme) => {
+      this.theme = theme;
+    });
+  }
+
+  toggleDarkTheme() {
+    this.themeService.setDarkTheme();
   }
 
   logOut(){

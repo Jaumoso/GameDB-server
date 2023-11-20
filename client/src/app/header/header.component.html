@@ -12,11 +12,12 @@
         </button>
       </mat-form-field>
       <span class="flex-spacer"></span>
+      <a *ngIf="!theme" (click)="toggleDarkTheme()">🌞</a>
+      <a *ngIf="theme" (click)="toggleDarkTheme()">🌚</a>
       <a *ngIf="loggedIn == true" mat-button [routerLink]="['/library']" routerLinkActive="active" matTooltip="My game library"><mat-icon class="material-symbols-outlined">save</mat-icon> My Library</a>
       <a *ngIf="loggedIn == true" [matMenuTriggerFor]="profileoptions" mat-button routerLinkActive="active" matTooltip="Profile options"><mat-icon class="material-symbols-outlined">person</mat-icon> Profile</a>
       <a *ngIf="loggedIn == false" mat-button (click)="openLoginForm()" [routerLink]="['/login']" routerLinkActive="active" matTooltip="Log into your account"><mat-icon class="material-symbols-outlined">login</mat-icon> Log In</a>
       <a *ngIf="loggedIn == false" mat-button [routerLink]="['/register']" routerLinkActive="active" matTooltip="Create an account"><mat-icon class="material-symbols-outlined">app_registration</mat-icon> Register</a>
-      <!-- <a mat-button *ngIf="loggedIn == true" routerLinkActive="active" (click)="logOut()" matTooltip="Cerrar la sesión actual"><mat-icon class="material-symbols-outlined">logout</mat-icon> Cerrar Sesión</a> -->
   </mat-toolbar>
 </div>
 

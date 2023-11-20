@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../shared/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -36,6 +37,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
+    private snackBar: MatSnackBar
   ) { 
     this.form = this.formBuilder.group({
       username: this.username,
@@ -81,6 +83,16 @@ export class RegisterComponent implements OnInit {
           this.userService.createUser(user)
           .then(() => {
             this.router.navigateByUrl('/login');
+
+            this.snackBar.open(
+              "New user registered", 
+              "OK",
+              {
+                verticalPosition: 'bottom',
+                duration: 6000,
+                panelClass: ['snackbar']
+              }
+              );
           });
         }
 
