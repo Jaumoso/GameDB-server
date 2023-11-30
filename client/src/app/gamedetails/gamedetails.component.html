@@ -1,19 +1,97 @@
-<img class="row-header-img" src="https://images.igdb.com/igdb/image/upload/t_screenshot_big/scgqt7.jpg" alt="header">
+<!-- <img class="row-header-img" src="https://images.igdb.com/igdb/image/upload/t_screenshot_big/scgqt7.jpg" alt="header">
 <div class="container">
   <div class="game-img-container">
-    <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lrl.png" alt="game-cover">
+    <img class="game-cover" src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lrl.png" alt="game-cover">
   </div>
   <div class="game-title-container">
     <div class="game-title">
-      <h1>Game Title</h1>
+      Chants of Sennaar
     </div>
     <div class="game-release-date">
       Sep 06, 2023 (3 months ago)
+    </div>
+    <div class="game-developer-container">
+      CD Project Red
     </div>
   </div>
   <div class="game-rating-container">
     <div class="game-rating">
       <h1>Game Rating</h1>
+    </div>
+  </div>
+</div> -->
+
+<img
+  class="row-header-img"
+  src="https://images.igdb.com/igdb/image/upload/t_screenshot_big/scgqt7.jpg"
+  alt="header"
+/>
+<div class="container">
+  <div class="game-img-container">
+    <img
+      class="game-cover"
+      src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lrl.png"
+      alt="game-cover"
+    />
+  </div>
+  <div class="game-title-container">
+    <div class="game-title">Chants of Sennaar</div>  
+    <div class="game-release-date">Sep 06, 2023 (3 months ago)</div>
+    <div class="game-developer-container">CD Project Red</div>
+  </div>
+  <div class="game-description-container">
+    Descripción del juego...
+  </div>
+
+  
+  <div class="game-rating-container">
+    <div class="game-rating">
+      <circle-progress
+        [percent]="85"
+        [radius]="60"
+        [space]="-15"
+        [outerStrokeWidth]="15"
+        [innerStrokeWidth]="15"
+        [outerStrokeColor]="'#4882c2'"
+        [outerStrokeGradientStopColor]="'#53a9ff'"
+        [innerStrokeColor]="'#e7e8ea'"
+        [animation]="true"
+        [animationDuration]="400"
+        [showUnits]="true"
+        [clockwise]="true"
+        [showSubtitle]="true"
+        subtitle="Rating"
+        subtitleFontSize="20"
+        subtitleColor="#212121"
+        subtitleFontWeight="bold"
+        titleFontWeight="bold"
+        titleFontSize="35"
+        backgroundColor="white"
+      ></circle-progress>
+      <circle-progress
+      [percent]="85"
+      [radius]="40"
+      [space]="-10"
+      [outerStrokeWidth]="10"
+      [innerStrokeWidth]="10"
+      [outerStrokeColor]="'#4882c2'"
+      [outerStrokeGradientStopColor]="'#53a9ff'"
+      [innerStrokeColor]="'#e7e8ea'"
+      [animation]="true"
+      [animationDuration]="400"
+      [showUnits]="true"
+      [clockwise]="true"
+      [showSubtitle]="true"
+      subtitle="Rating"
+      titleFontSize="25"
+      subtitleFontSize="15"
+      subtitleColor="#212121"
+      subtitleFontWeight="bold"
+      titleFontWeight="bold"
+      backgroundColor="white"
+    ></circle-progress>
+    <span>User Rating</span>
+    <span>Critc Rating</span>
     </div>
   </div>
 </div>

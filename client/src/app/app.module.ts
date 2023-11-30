@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { StarRatingModule } from 'angular-star-rating';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -91,7 +92,16 @@ import { GamedetailsComponent } from './gamedetails/gamedetails.component';
     MatTabsModule,
     ScrollingModule,
     MatProgressSpinnerModule,
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    NgCircleProgressModule.forRoot({
+      // defaults
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration: 300,
+    })
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL },
