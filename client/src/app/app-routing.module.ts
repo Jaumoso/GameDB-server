@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
   { path: 'settings', component: SettingsComponent},
-  { path: 'gamedetails/:id', component: GamedetailsComponent },
+  { path: 'gamedetails/:gameId', component: GamedetailsComponent },
 ];
 
 @NgModule({

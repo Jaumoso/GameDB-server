@@ -41,6 +41,24 @@ export class GameController {
         }
     }
 
+    @Post('getAllInfo')
+    @ApiCreatedResponse({ description: 'Gets all the info for a specific game.' })
+    async getAllGameInfo(@Res() response, @Body() { gameId }: { gameId: Number }) {
+      try {
+        const responsePayload = await this.gameService.getAllGameInfo(gameId);
+        const gameInfo = responsePayload.data[0];
+        return response.status(HttpStatus.CREATED).json({
+          message: 'Game info found successfully', gameInfo,
+        });
+      } catch (err) {
+        return response.status(HttpStatus.BAD_REQUEST).json({
+          statusCode: 400,
+          message: 'Game data NOT found',
+          error: 'Bad Request'
+        });
+      }
+    }
+
     // @Get()
     // @ApiCreatedResponse({ description: 'Toda la información de los juegos.' })
     // async getAllGames(@Res() response) {

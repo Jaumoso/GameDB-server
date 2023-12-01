@@ -42,6 +42,17 @@ import { Game } from '../shared/game';
       .pipe(map(games => games.gameList));
     }
 
+    getCompleteGameInfo(gameId: Number): Observable<any> {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
+      return this.http.post<any>(baseURL + 'game/getAllInfo/', { gameId }, httpOptions)
+        .pipe(map(response => response));
+    }
+    
+
     // async createGame(game: Game): Promise<Game> {
     //     const httpOptions = {
     //       headers: new HttpHeaders({

@@ -117,6 +117,32 @@ export class GameService {
         }
     }
 
+    async getAllGameInfo(gameId: Number): Promise<any> {
+        if(gameId){
+            try {
+                const igdbService = new IgdbService();
+                const accessToken = await apiAuth.useFactory(igdbService);
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://api.igdb.com/v4/games',
+                    headers: {
+                       'Client-ID': process.env.IGDB_CLIENT_ID,
+                       Authorization: 'Bearer ' + accessToken,
+                       Accept: 'application/json'
+                    }, 
+                    data: `fields *, cover.image_id, screenshots.image_id; where id = ${gameId};`
+                  });
+                //   console.log(response.data)
+                  return response;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        else {
+            console.log("No gameId provided.")
+        }
+    }
+
     // async createGame(gameDto: CreateGameDto ): Promise<GameDocument> {
     //     const newGame = await this.gameModel.create(gameDto);
     //     if (!newGame) {

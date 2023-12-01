@@ -21,37 +21,77 @@
   </div>
 </div> -->
 
-<img
+  <img *ngIf="!this.loading"
   class="row-header-img"
-  src="https://images.igdb.com/igdb/image/upload/t_screenshot_big/scgqt7.jpg"
-  alt="header"
-/>
-<div class="container">
-  <div class="game-img-container">
-    <img
-      class="game-cover"
-      src="https://images.igdb.com/igdb/image/upload/t_cover_big/co6lrl.png"
-      alt="game-cover"
-    />
-  </div>
-  <div class="game-title-container">
-    <div class="game-title">Chants of Sennaar</div>  
-    <div class="game-release-date">Sep 06, 2023 (3 months ago)</div>
-    <div class="game-developer-container">CD Project Red</div>
-  </div>
-  <div class="game-description-container">
-    Descripción del juego...
-  </div>
+  src="https://images.igdb.com/igdb/image/upload/t_screenshot_big/{{gameInfo.screenshots[0].image_id}}.jpg"
+  alt="header" />
 
-  
-  <div class="game-rating-container">
-    <div class="game-rating">
-      <circle-progress
-        [percent]="85"
-        [radius]="60"
-        [space]="-15"
-        [outerStrokeWidth]="15"
-        [innerStrokeWidth]="15"
+  <!-- White background to remove the bottom blur on the row-header-img -->
+  <div *ngIf="!this.loading" class="background-container"></div>
+
+  <div *ngIf="!this.loading" class="container">
+    <div class="game-img-container">
+      <img
+        class="game-cover"
+        src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{gameInfo.cover.image_id}}.png"
+        alt="game-cover"
+      />
+    </div>
+    <div class="game-title-container">
+      <div class="game-title">{{ gameInfo.name }}</div>  
+      <div class="game-release-date">Sep 06, 2023 (3 months ago)</div>
+      <div class="game-developer-container">CD Project Red</div>
+    </div>
+    <div class="game-description-container">
+      <div class="game-description">
+        <p>
+          There are many variations of passages of Lorem Ipsum available, 
+          but the majority have suffered alteration in some form, by 
+          injected humour, or randomised words which don't look even 
+          slightly believable. If you are going to use a passage of 
+          Lorem Ipsum, you need to be sure there isn't anything embarrassing
+          hidden in the middle of text. All the Lorem Ipsum generators on 
+          the Internet tend to repeat predefined chunks as necessary, 
+          making this the first true generator on the Internet. It uses 
+          a dictionary of over 200 Latin words, combined with a handful 
+          of model sentence structures, to generate Lorem Ipsum which 
+          looks reasonable. The generated Lorem Ipsum is therefore always 
+          free from repetition, injected humour, or non-characteristic words etc.
+        </p>
+      </div>
+    </div>
+
+    
+    <div class="game-rating-container">
+      <div class="game-rating">
+        <circle-progress
+          [percent]="gameInfo.rating"
+          [radius]="60"
+          [space]="-15"
+          [outerStrokeWidth]="15"
+          [innerStrokeWidth]="15"
+          [outerStrokeColor]="'#4882c2'"
+          [outerStrokeGradientStopColor]="'#53a9ff'"
+          [innerStrokeColor]="'#e7e8ea'"
+          [animation]="true"
+          [animationDuration]="400"
+          [showUnits]="true"
+          [clockwise]="true"
+          [showSubtitle]="true"
+          subtitle="User Rating"
+          subtitleFontSize="15"
+          subtitleColor="#212121"
+          subtitleFontWeight="bold"
+          titleFontWeight="bold"
+          titleFontSize="35"
+          backgroundColor="white"
+        ></circle-progress>
+        <circle-progress
+        [percent]="gameInfo.aggregated_rating"
+        [radius]="40"
+        [space]="-10"
+        [outerStrokeWidth]="10"
+        [innerStrokeWidth]="10"
         [outerStrokeColor]="'#4882c2'"
         [outerStrokeGradientStopColor]="'#53a9ff'"
         [innerStrokeColor]="'#e7e8ea'"
@@ -60,38 +100,17 @@
         [showUnits]="true"
         [clockwise]="true"
         [showSubtitle]="true"
-        subtitle="Rating"
-        subtitleFontSize="20"
+        subtitle="Critic Rating"
+        titleFontSize="25"
+        subtitleFontSize="10"
         subtitleColor="#212121"
         subtitleFontWeight="bold"
         titleFontWeight="bold"
-        titleFontSize="35"
         backgroundColor="white"
       ></circle-progress>
-      <circle-progress
-      [percent]="85"
-      [radius]="40"
-      [space]="-10"
-      [outerStrokeWidth]="10"
-      [innerStrokeWidth]="10"
-      [outerStrokeColor]="'#4882c2'"
-      [outerStrokeGradientStopColor]="'#53a9ff'"
-      [innerStrokeColor]="'#e7e8ea'"
-      [animation]="true"
-      [animationDuration]="400"
-      [showUnits]="true"
-      [clockwise]="true"
-      [showSubtitle]="true"
-      subtitle="Rating"
-      titleFontSize="25"
-      subtitleFontSize="15"
-      subtitleColor="#212121"
-      subtitleFontWeight="bold"
-      titleFontWeight="bold"
-      backgroundColor="white"
-    ></circle-progress>
-    <span>User Rating</span>
-    <span>Critc Rating</span>
+      </div>
     </div>
   </div>
-</div>
+
+<mat-spinner *ngIf="this.loading"></mat-spinner>
+
