@@ -57,11 +57,8 @@ export class LibraryComponent implements OnInit {
       this.userService.getUser(decodedToken._id)
       .then((user) => {
         this.user = user;
-        let gameIds: String[] = [];
-
+        
         this.user.library?.forEach((libraryGame) => {
-          // Get all the IDs from the games in the library
-          gameIds.push(libraryGame._id!)
           // Save total number of games
           this.totalGames++;
           // Save total cost for all the games
@@ -87,51 +84,6 @@ export class LibraryComponent implements OnInit {
           // Save game in State counter
           this.processStates(game.state!, 1);
         });
-
-        // // Search for the games in IGDB
-        // this.gameService.getGamesById(gameIds).subscribe((retrievedGames) => {
-        //   // Combine the properties 
-        //   this.user?.library.forEach((game) => {
-        //     const retrievedGame = retrievedGames.find(
-        //       (retrieved) => retrieved.id === game.gameId
-        //     );
-            
-        //     if (retrievedGame) {
-        //       const combinedGame = {
-        //         gameId: game.gameId,
-        //         name: retrievedGame.name,
-        //         releaseDate: retrievedGame.first_release_date,
-        //         cover: retrievedGame.cover,
-        //         own: game.own,
-        //         format: game.format,
-        //         state: game.state,
-        //         platforms: game.platform,
-        //         storefronts: game.storefront,
-        //         acquisitionDate: game.acquisitionDate,
-        //         acquisitionPrice: game.acquisitionPrice,
-        //         rating: game.rating,
-        //         time: game.time,
-        //         comment: game.comment
-        //       };
-              
-        //       // Step 4: Store the combined objects in the new array
-        //       this.gameList.push(combinedGame);
-
-        //       // Save game in platform counter
-        //       if(combinedGame.platforms){
-        //         this.processPlatforms(combinedGame, true);
-        //       }
-
-        //       // Save game in storefront counter
-        //       if(combinedGame.storefronts){
-        //         this.processStorefronts(combinedGame, true);
-        //       }
-
-        //       // Save game in State counter
-        //       this.processStates(combinedGame.state!, 1);
-        //     }
-        //   });
-        // });
       });
   }
 
@@ -278,42 +230,30 @@ export class LibraryComponent implements OnInit {
           const gameList_index = this.gameList.findIndex(g => g._id === result._id);
   
           if (library_index !== -1 && gameList_index !== -1) {
-            
-              // // Recupera los datos del juego
-              // this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) => {
-              //   // Combina las propiedades del juego actualizado con las propiedades del juego existente
-              //   const updatedGame = {
-              //     ...this.gameList[gameList_index],
-              //     ...result,
-              //     name: retrievedGame[0].name,
-              //     releaseDate: retrievedGame[0].first_release_date,
-              //     cover: retrievedGame[0].cover,
-              //   };
-                // Actualiza el juego en la lista de juegos
-                this.user?.library.splice(library_index!, 1, result);
-                // Actualiza el juego en la lista de la biblioteca del usuario
-                this.userService.updateUserContent(this.user?._id!, this.user!);
+            // Actualiza el juego en la lista de juegos
+            this.user?.library.splice(library_index!, 1, result);
+            // Actualiza el juego en la lista de la biblioteca del usuario
+            this.userService.updateUserContent(this.user?._id!, this.user!);
 
-                this.processStates(game.state, -1);
-                if(game.platforms){this.processPlatforms(game, false);}
-                if(game.storefronts){this.processStorefronts(game, false);}
+            this.processStates(game.state, -1);
+            if(game.platforms){this.processPlatforms(game, false);}
+            if(game.storefronts){this.processStorefronts(game, false);}
 
-                this.gameList.splice(gameList_index, 1, result);
+            this.gameList.splice(gameList_index, 1, result);
 
-                this.processStates(result.state, 1);
-                if(result.platforms){this.processPlatforms(result, true);}
-                if(result.storefronts){this.processStorefronts(result, true);}
-              // });
-  
-              this.snackBar.open(
-                "Game modified.", 
-                "OK",
-                {
-                  verticalPosition: 'bottom',
-                  duration: 4000,
-                  panelClass: ['snackbar']
-                }
-              );
+            this.processStates(result.state, 1);
+            if(result.platforms){this.processPlatforms(result, true);}
+            if(result.storefronts){this.processStorefronts(result, true);}
+
+          this.snackBar.open(
+            "Game modified.", 
+            "OK",
+            {
+              verticalPosition: 'bottom',
+              duration: 4000,
+              panelClass: ['snackbar']
+            }
+          );
           }
         }
       });
