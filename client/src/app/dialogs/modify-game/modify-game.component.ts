@@ -107,24 +107,24 @@ export class ModifyGameComponent {
     this.own.valueChanges.subscribe((value: boolean | null) => {
       if (value !== null && value) {
         this.platform.enable();
-        this.storefront.enable();
+        // this.storefront.enable();
         this.acquisitionDate.enable();
         this.acquisitionPrice.enable();
-        this.format.enable();
-        this.time.enable();
+        // this.format.enable();
+        // this.time.enable();
       } else {
         this.platform.disable();
         this.platform.reset();
-        this.storefront.disable();
-        this.storefront.reset();
+        // this.storefront.disable();
+        // this.storefront.reset();
         this.acquisitionDate.disable();
         this.acquisitionDate.reset();
         this.acquisitionPrice.disable();
         this.acquisitionPrice.reset();
-        this.format.disable();
-        this.format.reset();
-        this.time.disable();
-        this.time.reset();
+        // this.format.disable();
+        // this.format.reset();
+        // this.time.disable();
+        // this.time.reset();
       }
     });
 

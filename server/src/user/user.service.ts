@@ -81,16 +81,10 @@ export class UserService {
             // Extract the library field from the DTO
             const { library, ...rest } = updateUserContentDto;
     
-            // Ensure that each game in the library has an _id field
-            const updatedLibrary = library.map(game => ({
-                ...game,
-                _id: game._id || new mongoose.Types.ObjectId(), // Assign a new ObjectId if not present
-            }));
-    
             // Use the extracted library in the update
             const updatedUser = await this.userModel.findByIdAndUpdate(
                 userId,
-                { library: updatedLibrary, ...rest },
+                { library: library, ...rest },
                 { new: true }
             );
     

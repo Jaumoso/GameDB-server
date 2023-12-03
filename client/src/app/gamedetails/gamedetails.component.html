@@ -34,30 +34,44 @@
       <img
         class="game-cover"
         src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{gameInfo.cover.image_id}}.png"
-        alt="game-cover"
-      />
+        alt="game-cover"/>
+        
+      <!-- Game Genres -->
+      <div>
+        <p><b>Genres:</b>
+            <span *ngFor="let genre of gameInfo.genres">
+              {{ genre.name }}, 
+            </span>
+        </p>
+      </div>
+      <!-- Game Platforms -->
+      <div>
+        <p><b>Platforms:</b>
+          <span *ngFor="let platform of gameInfo.platforms">
+            {{ platform.abbreviation }},
+            <!-- <span *ngIf="platform.platform_logo">
+              <img height="15px" src="https://images.igdb.com/igdb/image/upload/t_thumb/{{ platform.platform_logo.image_id}}.png" alt="platform mini logo">
+            </span> -->
+          </span>
+        </p>
+      </div>
     </div>
     <div class="game-title-container">
-      <div class="game-title">{{ gameInfo.name }}</div>  
-      <div class="game-release-date">Sep 06, 2023 (3 months ago)</div>
-      <div class="game-developer-container">CD Project Red</div>
+      <div class="game-title">{{ gameInfo.name }}</div>
+      <div class="game-release-date">{{ gameInfo.first_release_date * 1000 | date }} ({{ gameInfo.first_release_date * 1000  | dateAgo }})</div>
+      <div class="game-developer-container" *ngFor="let involved_company of gameInfo.involved_companies">
+        <div *ngIf="involved_company.developer == true">{{ involved_company.company.name }}</div>
+      </div>
     </div>
     <div class="game-description-container">
-      <div class="game-description">
-        <p>
-          There are many variations of passages of Lorem Ipsum available, 
-          but the majority have suffered alteration in some form, by 
-          injected humour, or randomised words which don't look even 
-          slightly believable. If you are going to use a passage of 
-          Lorem Ipsum, you need to be sure there isn't anything embarrassing
-          hidden in the middle of text. All the Lorem Ipsum generators on 
-          the Internet tend to repeat predefined chunks as necessary, 
-          making this the first true generator on the Internet. It uses 
-          a dictionary of over 200 Latin words, combined with a handful 
-          of model sentence structures, to generate Lorem Ipsum which 
-          looks reasonable. The generated Lorem Ipsum is therefore always 
-          free from repetition, injected humour, or non-characteristic words etc.
-        </p>
+      <!-- Game Summary -->
+      <div *ngIf="gameInfo.summary">
+        <h3>Game Summary</h3>
+        <p>{{ gameInfo.summary }}</p>
+      </div>
+      <div *ngIf="gameInfo.storyline">
+        <h3>Game Storyline</h3>
+        <p>{{ gameInfo.storyline }}</p>
       </div>
     </div>
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { JwtService } from '../services/jwt.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../services/game.service';
-
 @Component({
   selector: 'app-gamedetails',
   templateUrl: './gamedetails.component.html',
@@ -15,6 +14,9 @@ export class GamedetailsComponent {
   loading: boolean = true;
   rating: number = 0;
   critic_rating: number = 0;
+  first_release_date: string | undefined;
+  diffTime: Number | undefined;
+  developers: String | undefined;
 
   constructor(
     private jwtService: JwtService,
@@ -40,6 +42,5 @@ export class GamedetailsComponent {
       this.gameInfo = gameInfo.gameInfo;
       this.loading = false;
     });
-
   }
 }

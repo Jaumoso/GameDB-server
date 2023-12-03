@@ -130,7 +130,22 @@ export class GameService {
                        Authorization: 'Bearer ' + accessToken,
                        Accept: 'application/json'
                     }, 
-                    data: `fields *, cover.image_id, screenshots.image_id; where id = ${gameId};`
+                    data: `
+                    fields *, 
+                    cover.image_id, 
+                    screenshots.image_id, 
+                    first_release_date, 
+                    genres.name,
+                    platforms.abbreviation, 
+                    involved_companies.developer,
+                    involved_companies.publisher,
+                    involved_companies.supporting,
+                    involved_companies.company.name
+                    ; 
+                    where id = ${gameId};`
+
+                    // Not used:
+                    // platforms.platform_logo.image_id,
                   });
                 //   console.log(response.data)
                   return response;

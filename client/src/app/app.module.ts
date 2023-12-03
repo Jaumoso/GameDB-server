@@ -46,6 +46,7 @@ import { AddGameComponent } from './dialogs/add-game/add-game.component';
 import { DeleteGameComponent } from './dialogs/delete-game/delete-game.component';
 import { ModifyGameComponent } from './dialogs/modify-game/modify-game.component';
 import { GamedetailsComponent } from './gamedetails/gamedetails.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { GamedetailsComponent } from './gamedetails/gamedetails.component';
     DeleteGameComponent,
     ModifyGameComponent,
     GamedetailsComponent,
+    DateAgoPipe,
   ],
   imports: [
     BrowserModule,

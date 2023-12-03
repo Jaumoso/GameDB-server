@@ -21,8 +21,7 @@ export class User {
     @Prop()
     lastSeen: Date;
 
-    @Prop({type: [{ 
-        _id: mongoose.Types.ObjectId,
+    @Prop({type: [{
         gameId: Number, 
         name: String,
         releaseDate: Date,
@@ -40,7 +39,6 @@ export class User {
         comment: String
     }]})
     library: {
-        _id: mongoose.Types.ObjectId,
         gameId: number,
         name: String,
         releaseDate: Date,

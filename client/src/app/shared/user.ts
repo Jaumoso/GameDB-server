@@ -1,5 +1,4 @@
 interface LibraryItem {
-    _id: string | undefined;
     gameId: number | undefined;
     name: string | undefined;
     releaseDate: Date | undefined;

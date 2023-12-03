@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteGameComponent } from '../dialogs/delete-game/delete-game.component';
 import { Storefront } from '../shared/storefront';
 import { ModifyGameComponent } from '../dialogs/modify-game/modify-game.component';
-import { Game } from '../shared/game';
 
 @Component({
   selector: 'app-library',
@@ -172,7 +171,6 @@ export class LibraryComponent implements OnInit {
           this.gameService.getGamesById([result.gameId]).subscribe((retrievedGame) =>{
 
             const combinedGame = {
-              // _id: is created in the server service
               gameId: result.gameId,
               name: retrievedGame[0].name,
               releaseDate: retrievedGame[0].first_release_date,
@@ -188,10 +186,11 @@ export class LibraryComponent implements OnInit {
               time: result.time,
               comment: result.comment
             };
-            this.gameList.push(combinedGame);
+            // this.gameList.push(combinedGame);
+            this.user!.library.push(combinedGame);
             this.userService.updateUserContent(this.user?._id!, this.user!)
-            .then((user) => {
-              this.user!.library = user.library;
+            .then(() => {
+              console.log('Game added to library.')
             });
             this.processStates(combinedGame.state, 1);
             if(combinedGame.platforms){this.processPlatforms(combinedGame, true);}
@@ -225,9 +224,9 @@ export class LibraryComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           // Encuentra el juego en la lista de la biblioteca del usuario
-          const library_index = this.user?.library.findIndex(g => g._id === result._id);
+          const library_index = this.user?.library.findIndex(g => g.gameId === result.gameId);
           // Encuentra el juego en la lista de juegos
-          const gameList_index = this.gameList.findIndex(g => g._id === result._id);
+          const gameList_index = this.gameList.findIndex(g => g.gameId === result.gameId);
   
           if (library_index !== -1 && gameList_index !== -1) {
             // Actualiza el juego en la lista de juegos
@@ -239,7 +238,7 @@ export class LibraryComponent implements OnInit {
             if(game.platforms){this.processPlatforms(game, false);}
             if(game.storefronts){this.processStorefronts(game, false);}
 
-            this.gameList.splice(gameList_index, 1, result);
+            // this.gameList.splice(gameList_index, 1, result);
 
             this.processStates(result.state, 1);
             if(result.platforms){this.processPlatforms(result, true);}
@@ -263,17 +262,17 @@ export class LibraryComponent implements OnInit {
   deleteGame(game: any) {
     if(this.user && this.user.library){
       const dialogRef = this.deleteGameDialog.open(DeleteGameComponent, {
-        data: { gameId: game.gameId, gameName: game.name, deleteGame: false }
+        data: { gameName: game.name, deleteGame: false }
       });
 
       dialogRef.afterClosed().subscribe((result => {
         if(result) {
-          const index = this.user?.library.findIndex(g => g._id === game._id);
+          const index = this.user?.library.findIndex(g => g.gameId === game.gameId);
           if (index !== -1) {
             this.user?.library.splice(index!, 1);
             this.userService.updateUserContent(this.user?._id!,this.user!)
             .then(() => {
-              this.gameList.splice(index!, 1);
+              // this.gameList.splice(index!, 1) 
 
               // Decrease counters
               this.totalGames--;

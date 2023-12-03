@@ -199,7 +199,7 @@
     margin-top: 65px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto; /* Ajustar según sea necesario */
+    grid-template-rows: auto auto auto auto auto auto auto auto; /* Ajustar según sea necesario */
     justify-content: center;
     align-items: start; /* Alinea los elementos en la parte superior del contenedor */
 }
@@ -212,6 +212,12 @@
     img {
         border-radius: 15px;
     }
+}
+
+.game-info-container {
+    display: grid;
+    grid-column: 3 / 4;
+    grid-row: 4 / span 3; /* Ocupa dos filas */
 }
 
 .game-title-container {
@@ -243,12 +249,13 @@
     }
 
     .game-developer-container {
-        grid-row: 3;
+        grid-row: 3 / span 4;
         grid-column: 2 / 12;
         font-size: 28px;
         font-weight: bold;
         color: white;
         text-shadow: 3px 2px 2px rgb(185, 185, 185);
+        display: inline-flex;
     }
 
 }
@@ -256,11 +263,8 @@
 .game-description-container {
     grid-row: 2 / span 2; /* Ocupa dos filas a partir de la fila 2 */
     grid-column: 4 / 9; /* Alineado con la imagen y ocupa desde la columna 3 hasta la 12 */
-
-    .game-description {
-        margin: 10px;
-        margin-top: 40px;
-    }
+    margin: 10px;
+    margin-top: 40px;
 }
 
 .game-rating-container {

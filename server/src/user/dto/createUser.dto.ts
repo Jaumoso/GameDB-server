@@ -51,8 +51,7 @@ export class CreateUserDto {
 
     @ApiProperty({
         description: 'Array de juegos y sus ratings',
-        example: [{ 
-            _id: new mongoose.Types.ObjectId(),
+        example: [{
             gameId: 12345,
             name: "default name",
             releaseDate: new Date(2018, 5, 15).toISOString(),
@@ -70,7 +69,6 @@ export class CreateUserDto {
         }],
     })
     library: {
-        _id: mongoose.Types.ObjectId,
         gameId: number,
         name: string,
         releaseDate: Date,
