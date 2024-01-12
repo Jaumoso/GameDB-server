@@ -59,6 +59,8 @@ export class UserService {
         'Content-Type': 'application/json'
       })
     };
+
+    console.log(user);
     const { _id, password, username, joined, lastSeen,... rest } = user;
     return new Promise((resolve, reject) => {
       this.http.put<{updatedUser: User}>(baseURL + 'user/update/content/' + userId, rest, httpOptions)

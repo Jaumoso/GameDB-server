@@ -51,6 +51,16 @@ import { Game } from '../shared/game';
       return this.http.post<any>(baseURL + 'game/getAllInfo/', { gameId }, httpOptions)
         .pipe(map(response => response));
     }
+
+    getPlatformsForCurrentGame(gameId: Number): Observable<any> {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
+      return this.http.post<any>(baseURL + 'game/getGamePlatforms/', { gameId }, httpOptions)
+        .pipe(map(response => response));
+    }
     
 
     // async createGame(game: Game): Promise<Game> {

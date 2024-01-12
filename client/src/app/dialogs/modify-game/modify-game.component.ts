@@ -40,13 +40,11 @@ export class ModifyGameComponent {
   library: Object[] | undefined;
   searchText: string = '';
   loadedGames: any[] = [];
-  selectedGamePlatforms: any[] = [];
 
   maxDate: Date | undefined;
   gameOwn: boolean = false;
-  platforms: any[] = [];
-  storefronts: any[] = [];
   gameStorefronts: Storefront[] = [];
+  gamePlatforms: any[] = [];
   gameStates: string[] = [
     'Not Interested',
     'Wishlist',
@@ -101,9 +99,17 @@ export class ModifyGameComponent {
     return null;
   }
 
-  ngOnInit(){
-    this.setupSearchObserver();
-    
+  getPlatforms(gameId: Number) {
+    const platformNames: any[] = [];
+    this.gameService.getPlatformsForCurrentGame(gameId).subscribe((result) => {
+      result.gamePlatforms.platforms.forEach((platform: any) => {
+        platformNames.push(platform.name);
+      })
+    });
+    return platformNames;
+  }
+
+  async ngOnInit(){
     this.own.valueChanges.subscribe((value: boolean | null) => {
       if (value !== null && value) {
         this.platform.enable();
@@ -135,36 +141,13 @@ export class ModifyGameComponent {
     this.storefrontService.getStorefronts().subscribe((storefronts) => {
       this.gameStorefronts = storefronts;
     });
-  }
 
-  private setupSearchObserver(): void {
-    this.form
-    .get('gameId')
-    ?.valueChanges.pipe(
-      startWith(''), // Emit initial value
-      debounceTime(300), // Delay to avoid rapid searches
-      // distinctUntilChanged(), // Ignore same consecutive values
-      switchMap(searchText => {
-        if (searchText === '') {
-          // If search text is empty, return an empty array
-          return of([]);
-        } else {
-          // Otherwise, perform the actual search
-          return this.gameService.gameSearch(searchText);
-        }
-      })
-    ).subscribe((games: any[]) => {
-        this.loadedGames = games.map(game => ({
-          id: game.id,
-          name: game.name,
-          first_release_date: game.first_release_date,
-          cover: game.cover,
-          platforms: game.platforms?.map((platform: { id: any; name: any }) => ({
-            id: platform.id,
-            name: platform.name
-          }))
-        }));
-      });
+    // GET LIST OF PLATFORMS
+
+    this.gameService.getPlatformsForCurrentGame(this.data.game.gameId).subscribe((result) => {
+      result.gamePlatforms.platforms.forEach((platform: any) => {
+        this.gamePlatforms.push(platform.name);
+      })});
   }
 
   onSubmit() {
@@ -187,14 +170,8 @@ export class ModifyGameComponent {
     this.closeDialog(game);
   }
 
-
-  selectedGame(gameId: number) {
-    const targetGame = this.loadedGames.find((game: any) => game.id === gameId);
-    this.selectedGamePlatforms = targetGame?.platforms;
-  }
-
   closeDialog(game: any): void {
-    console.log(game);
+    // console.log(game);
     this.dialogRef.close(game);
   }
 

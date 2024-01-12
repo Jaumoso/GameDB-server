@@ -215,7 +215,7 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  modifyGame(game: any) {
+  async modifyGame(game: any) {
     if (this.user && this.user.library) {
       const dialogRef = this.addGameDialog.open(ModifyGameComponent, {
         data: { game: game }

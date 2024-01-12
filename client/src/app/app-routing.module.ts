@@ -11,7 +11,6 @@ import { GamedetailsComponent } from './gamedetails/gamedetails.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
   // { path: '**', redirectTo: '/home' }, Unknown routes go to home
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'games', component: GamesComponent },
   { path: 'login', component: LoginComponent },

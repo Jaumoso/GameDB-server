@@ -17,7 +17,7 @@
                    [matAutocomplete]="auto">
             <mat-icon matPrefix class="material-symbols-outlined">search</mat-icon>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let game of loadedGames" [value]="game.id" (onSelectionChange)="selectedGame(game.id)">
+              <mat-option *ngFor="let game of loadedGames" [value]="game.id">
                 <div class="option-container">
                   <div class="option-image">
                     <img *ngIf="game.cover" class="option-img" alt="{{game.name}}" [src]="game.cover">
@@ -61,7 +61,7 @@
             <mat-label>Select a platform</mat-label>
             <mat-select multiple formControlName="platform">
                 <!-- <mat-option>None</mat-option> -->
-                <mat-option *ngFor="let platform of selectedGamePlatforms" [value]="platform.name">{{platform.name}}</mat-option>
+                <mat-option *ngFor="let platform of gamePlatforms" [value]="platform">{{platform}}</mat-option>
             </mat-select>
         </mat-form-field>
 

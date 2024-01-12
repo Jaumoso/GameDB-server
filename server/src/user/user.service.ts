@@ -84,7 +84,7 @@ export class UserService {
             // Use the extracted library in the update
             const updatedUser = await this.userModel.findByIdAndUpdate(
                 userId,
-                { library: library, ...rest },
+                { $set: { library: library }, ...rest },
                 { new: true }
             );
     
@@ -92,7 +92,6 @@ export class UserService {
                 throw new NotFoundException('User data not found!');
             }
             return updatedUser;
-            
         } catch (error) {
             console.log(error);
         }
