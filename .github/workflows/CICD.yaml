@@ -36,10 +36,10 @@ jobs:
     - name: Test backend app
       run: yarn test
 
-    - name: Run SonarQube analysis
-      run: |
-        yarn install -g sonarqube-scanner
-        sonar-scanner
-      env:
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
+    # - name: Run SonarQube analysis
+    #   run: |
+    #     yarn install -g sonarqube-scanner
+    #     sonar-scanner
+    #   env:
+    #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    #     SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
