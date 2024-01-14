@@ -1,5 +1,7 @@
 # GameDB Web Application
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Jaumoso_GameDB-server&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Jaumoso_GameDB-server)
+
 Welcome to the GameDB Web Application GitHub repository! This is an ongoing project aimed at providing gamers with a powerful tool to track the games they play, own, and want. As an enthusiast of MongoDB, NestJS, and Angular, you'll find this repository a perfect fit for your development needs.
 
 ## Features (Work in Progress)
